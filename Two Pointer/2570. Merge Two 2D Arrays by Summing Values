@@ -1,0 +1,54 @@
+class Solution {
+public:
+    vector<vector<int>> mergeArrays(vector<vector<int>>& nums1, vector<vector<int>>& nums2) {
+        
+        int idx1=0,idx2=0;
+
+        vector<vector<int>> res;
+        while(idx1<nums1.size() && idx2<nums2.size()){
+            
+            if(nums1[idx1][0] == nums2[idx2][0]){
+              res.push_back({ nums1[idx1][0] , nums1[idx1][1] +
+                              nums2[idx2][1] });
+              idx1++;
+              idx2++;
+            }  
+
+
+            else if(nums1[idx1][0] < nums2[idx2][0]){
+              res.push_back(nums1[idx1]);
+              idx1++;
+            }  
+
+            else{
+               res.push_back(nums2[idx2]);
+               idx2++; 
+            }
+
+
+        }
+
+        while(idx1<nums1.size())  {
+            res.push_back(nums1[idx1]);
+            idx1++;
+        }
+
+
+        while(idx2<nums2.size()){
+            res.push_back(nums2[idx2]); 
+            idx2++;
+        }
+
+        return res;
+        
+    }
+};
+
+
+
+// nums1 = [[1,2],[2,3],[4,5]]
+// nums2 = [[1,4],[1,5],[3,2],[4,1]]
+
+// [1 6][2 3][3 2][4 6] 
+
+
