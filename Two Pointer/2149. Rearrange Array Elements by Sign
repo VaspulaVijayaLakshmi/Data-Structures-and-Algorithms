@@ -1,0 +1,55 @@
+//2-Pointer
+class Solution {
+public:
+    vector<int> rearrangeArray(vector<int>& nums) {
+      
+    //    neg index and pos index
+          int pos=0, neg=1;
+          int n=nums.size();
+          vector<int> res(n);
+
+          for(int i=0;i<n;i++){
+
+            if(nums[i]<0){
+                res[neg] = nums[i];
+                neg+=2;
+            }
+
+
+            if(nums[i]>0){
+                res[pos] = nums[i];
+                pos+=2;
+            }
+
+
+          }
+
+          return res;
+       
+    }
+};
+
+
+//Lets ignore this condition for a sec
+
+// For all integers with the same sign, the order in which they
+// were present in nums is preserved.
+
+
+// then we would have sorted the array first
+// eg:[3,1,-2,-5,2,-4]
+
+// => [-5,-4,-2,1,2,3]
+
+// =>since we know we have equal no of +ve and -ve numbers
+
+//so we strt from middle and swap 
+
+// and we swap [-5,1 , -4,2 , -2,3]
+
+//but here we need to preserve the order
+
+
+//[3,1,-2,-5,2,-4]
+
+//so we need to find one odd and one even number
