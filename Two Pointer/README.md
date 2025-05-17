@@ -1,6 +1,3 @@
-https://www.linkedin.com/posts/mohammadfraz_2-pointer-problems-pattern-cheat-sheet-based-activity-7328764287584296960-WwK5/?utm_source=share&utm_medium=member_ios&rcm=ACoAAC4DiGsB5isiUOIm5N4wiyDf3s-QMgXxR-Y
-
-
 On Arrays:
 
 
