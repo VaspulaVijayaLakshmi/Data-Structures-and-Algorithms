@@ -1,0 +1,38 @@
+class Solution {
+public:
+    int minimumRefill(vector<int>& plants, int capacityA, int capacityB) {
+        int l = 0, h = plants.size() - 1;
+        int capA = capacityA, capB = capacityB;
+        int refil = 0;
+
+        while (l <= h) {
+            if (l == h) {
+                // Only one person needs to water the middle plant
+                if (max(capA, capB) < plants[l]) {
+                    refil++;
+                }
+                break; // Important: we must break here
+            }
+
+            // Left person
+            if (capA < plants[l]) {
+                capA = capacityA;
+                refil++;
+            }
+            capA -= plants[l];
+            l++;
+
+            // Right person
+            if (capB < plants[h]) {
+                capB = capacityB;
+                refil++;
+            }
+            capB -= plants[h];
+            h--;
+        }
+
+        return refil;
+    }
+};
+
+
