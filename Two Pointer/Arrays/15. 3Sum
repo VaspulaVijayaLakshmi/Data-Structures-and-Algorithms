@@ -1,0 +1,52 @@
+class Solution {
+public:
+    vector<vector<int>> threeSum(vector<int>& nums) {
+       
+       int n=nums.size();
+       sort(nums.begin(),nums.end());
+       vector<vector<int>> res;
+
+       for(int i=0;i<n;i++){
+
+            if(nums[i]>0) break;
+
+            if(i!=0 && nums[i] == nums[i-1]) 
+              continue;
+
+            int l=i+1,h=n-1;  
+            while(l<h){
+
+                int sum = nums[i] + nums[l] + nums[h]; 
+
+                if(sum == 0){
+                    res.push_back({nums[i],nums[l],nums[h]});
+
+                // we can do only (if) this, but we want to remove duplicate subset, so we can use while loop
+// to skip chekcing overall, duplicates.
+
+
+                l++;
+                h--;
+
+                while(l<h && nums[l] == nums[l-1]) l++;
+                while(l<h && nums[h] == nums[h+1]) h--;
+
+                }
+
+
+                else if(sum<0) l++;
+                else if(sum>0) h--;
+                
+
+            }
+
+       }
+        
+        return res;
+        
+    }
+};
+
+// [-4,-1,-1,0,1,2,2]
+
+// I will tAKE -4 and then so 2 sum kind of thing on array
