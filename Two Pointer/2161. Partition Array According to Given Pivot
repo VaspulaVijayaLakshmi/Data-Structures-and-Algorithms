@@ -1,0 +1,55 @@
+//quicksort is unstable so we cant use it here
+
+// In this problem quick sort won't work coz quick sort won't maintain the relative 
+// order of the list since it is swapping the elements based on the pivot.
+
+
+class Solution {
+public:
+    vector<int> pivotArray(vector<int>& nums, int pivot) {
+      
+       int n=nums.size();
+       int numsPivot = 0, numsLessPivot=0 ;
+
+       for(int i=0;i<n;i++){
+
+        if(nums[i] == pivot) numsPivot++;
+
+        else if(nums[i]<pivot) numsLessPivot++;
+
+       }
+
+       int lp=0;
+       int ep=numsLessPivot;
+       int gp=numsLessPivot+numsPivot;
+
+       vector<int> res(n);
+
+       for(int i=0;i<n;i++){
+
+        if(nums[i]<pivot){
+            res[lp] = nums[i];
+            lp++;
+        }
+
+        else if(nums[i]==pivot){
+             res[ep] = nums[i];
+             ep++; 
+        }
+
+        else if(nums[i]>pivot){
+             res[gp] = nums[i];
+             gp++;
+        }
+
+       }
+
+       return res;
+
+       
+    }
+};
+
+
+// in these problems simplest approach - maintain 2 array'
+// then merge these arrays
