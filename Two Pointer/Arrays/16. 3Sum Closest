@@ -1,0 +1,58 @@
+class Solution {
+public:
+    int threeSumClosest(vector<int>& nums, int target) {
+
+
+        sort(nums.begin(),nums.end());
+        // since it doesnt not have the condition that, we should not 
+        // have duplicate sets and all
+        // we can ignore skipping duplicates
+        int n=nums.size()-1;
+        int minDiff = INT_MAX;
+        int closest=0;
+        
+        for(int i=0;i<n-1;i++){
+           
+            int l=i+1;
+            int h=n;
+
+            while(l<h){
+
+             int sum=nums[i]+nums[l]+nums[h];
+
+             if(sum==target) return sum;
+
+             else if(sum<target) l++;
+             else h--;
+
+             int currDiff = abs(target-sum);
+
+             if(minDiff > currDiff){
+                minDiff =currDiff;
+                closest = sum;
+             }
+
+
+            }
+
+
+        }
+
+        return closest;
+        
+    }
+};
+
+
+
+// [-1,-1,1,2]
+
+// sort the array
+
+// pick one elemnt then from i+1 to n-1 , do 2 pointer.
+
+
+// if element is > target -  break
+
+
+// for triplet sum it and take it diff closest to min
