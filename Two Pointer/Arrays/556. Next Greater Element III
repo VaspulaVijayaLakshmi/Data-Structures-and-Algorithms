@@ -1,0 +1,66 @@
+class Solution {
+public:
+
+    void  nextPermutation(string& nums) {
+        int i = nums.size()-2;
+       
+    //    find break point
+    while(i>=0 && nums[i]>=nums[i+1]) i--;
+
+
+    if(i>=0){
+        // Step 2: Find the smallest element larger than nums[i]
+
+
+        // we are checking from (n-1), so the first element, thats greater than 
+        // nums[i], will be the smallest element greater
+          int j=nums.size()-1;
+          while(nums[j] <= nums[i]) j--;
+
+          swap(nums[i],nums[j]);
+    }
+
+      
+// reverse the right array
+       reverse(nums.begin()+i+1,nums.end());
+
+    }
+
+
+
+    int nextGreaterElement(int n) {
+
+        string num = to_string(n);
+        string original = num;
+
+
+        // IN PLACE TRANSFORMATIONS
+        nextPermutation(num);
+
+          // to convert the string to long long integer
+        long long res = stoll(num);
+        long long ori_num = stoll(original);
+
+        if (res>INT_MAX || res<=ori_num) return -1;
+
+        return (int)res;
+        
+    }
+};
+
+
+
+// 12 -  21
+
+// 121 - 112, 121, 211 - 211
+
+// 324 - 234 , 243 , 324 , 423, 432 
+
+// so same like next permutation
+
+
+// This problem is same as next permutation with two additional conditions.
+
+// if current number is greatest number possible with given digits return -1
+// if next permutation exceeds Integer limit return -1
+// Thats it :)
