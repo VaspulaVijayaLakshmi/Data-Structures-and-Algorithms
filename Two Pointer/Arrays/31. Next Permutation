@@ -1,0 +1,102 @@
+class Solution {
+public:
+    void nextPermutation(vector<int>& nums) {
+
+      int i=nums.size()-2;
+
+// find the break point
+      while(i>=0 && nums[i] >= nums[i+1])
+          i--;
+
+
+    if(i>=0){
+        // Step 2: Find the smallest element larger than nums[i]
+
+
+        // we are checking from (n-1), so the first element, thats greater than 
+        // nums[i], will be the smallest element greater
+          int j=nums.size()-1;
+          while(nums[j] <= nums[i]) j--;
+
+          swap(nums[i],nums[j]);
+    }
+
+
+// Reverse the subarray to the right of i
+// to get the least subarray
+    reverse(nums.begin() + i + 1, nums.end());
+    }
+
+};
+
+
+// 14532 - NP -  15423
+
+// 14235 - NP - 14325
+
+
+// I need to start from end and 
+// need to find an element ,where this condition is wrong..
+// nums[i] < nums[i+1] 
+
+
+// Eg: lets say 14532 - NP - 32 are in place
+//                           532 are in place, we can change, they are in perfect places
+//                           4532 - now the next element would be 5432 
+
+// now check the element is 4, now check what is smallest element greater than 4 that we can replace
+// we cant directly swap with 5
+
+
+//                           after doing this - 5 432 (needs to be sorted in asceding order) -  to get the JUST NEXT permutation
+//                           => 5234
+
+//                           => so final ans => 15234
+
+                            
+
+
+
+// 2154300 - 
+
+
+
+// 1.Break POINT
+
+// cant swap 00
+// cant swap 300 as there is no element greater than 3 to its right
+// cant swap - 4300
+// cant swap - 54300
+// we can swap - 154300 - as there is an element right to 1 which is greater
+
+// why r we not comparing elemnts, all towards to its right, why only next eleennt
+// nums[i+1]> nums[i]
+
+
+// because we r doing this process for each element , so we have already checked each element 
+
+
+// we found out our break point
+
+// (1)
+
+
+
+
+
+
+// 2. 
+
+// now we need to find the smallest, element greater than 1 to right.
+
+// 154300
+
+// ofcourse not 0
+// so its 3
+
+
+
+// 354100
+// so the number is we need to reduce from 54100
+// 2300145
+
