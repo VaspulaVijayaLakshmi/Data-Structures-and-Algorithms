@@ -1,0 +1,42 @@
+class Solution {
+public:
+    int compress(vector<char>& chars) {
+
+        int loc=0;
+         
+        for(int i=0;i<chars.size();){
+
+            char ch = chars[i];
+            int count=1;
+
+            i+=1;
+            while(i<chars.size() && chars[i] == ch)
+            { i++; count++; }
+
+
+            chars[loc]=ch;
+            loc++;
+
+            if(count>1){
+                
+                string num = to_string(count);
+
+                for(int j=0;j<num.length();j++){
+                  chars[loc] = num[j];
+                  loc++;
+                }
+
+            }
+
+        }
+
+      return loc;
+        
+    }
+};
+
+// "Since the character "a" does not repeat, it is not compressed. 
+// "bbbbbbbbbbbb" is replaced by "b12". 
+// "12" need to be two digit separately not one" .
+//  I found that part simply bizzar and stupid somehow, why we cannot have "12"
+//   as one string and that shorten the entire input string length even more.
