@@ -1,0 +1,46 @@
+class Solution {
+public:
+    bool canMakeSubsequence(string s1, string s2) {
+
+        int n1=s1.size(),n2=s2.size();
+
+        if(n2>n1) return false;
+       
+       int i=0,j=0;
+        while(j<n2 && i<n1){
+
+            if(s1[i]==s2[j]){
+                i++;
+                j++;
+            }
+
+            else if( ((s1[i] - 'a' + 1) % 26 + 'a') == s2[j] ){
+                    i++;
+                    j++;
+            }
+
+
+            else i++;
+
+        }  
+
+        if(j==n2) return true; 
+
+        return false;
+        
+    }
+};
+
+
+
+
+// c - 'a' gives you a number between 0 and 25.
+
+// Adding 1 shifts to the next character.
+
+// % 26 wraps around at 'z'.
+
+// Adding 'a' converts back to a character.
+
+
+
