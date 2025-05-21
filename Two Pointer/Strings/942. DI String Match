@@ -1,0 +1,54 @@
+class Solution {
+public:
+    vector<int> diStringMatch(string s) {
+
+        vector<int> perm(s.length()+1);
+
+        int Imin=0;
+        int Dmax=s.length();
+
+        int i=0;
+        for(i=0;i<s.length();i++){
+            if(s[i] =='I'){
+                perm[i] = Imin;
+                Imin++;
+            }
+
+            else if(s[i]=='D'){
+                perm[i]=Dmax;
+                Dmax--;
+            }
+        }
+
+        if(s[i-1]=='D') perm[i] = Imin;
+
+        else if(s[i-1]=='I') perm[i]=Dmax;
+
+        return perm;
+        
+    }
+};
+
+
+
+
+
+// A permutation perm of n + 1 integers intergers i range - [0-n]
+
+// so for a string of size - 4
+// perm will be of size - 5
+
+// elements should be in range [0-4]
+
+
+// So the smallest number that can be formed is - IIII - 1234
+// largest number that can be formed - DDDD - 4321
+
+
+// also the question missed each element should be used only once
+
+
+
+// so if its I, we will take min number thats poosible , in the remaining elments
+//and if its D we will take max number possible , i the remaining 
+
