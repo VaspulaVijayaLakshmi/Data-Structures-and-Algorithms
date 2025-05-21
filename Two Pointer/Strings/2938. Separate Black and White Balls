@@ -1,0 +1,55 @@
+class Solution {
+public:
+    long long minimumSteps(string s) {
+
+        // 1 - black
+        // 0- white
+
+        long count = 0;
+        long zeroNum = 0;
+        for(int i = s.length() - 1; i >= 0; i--){
+            char c = s[i];
+
+            if(c == '0'){
+                zeroNum++;
+            } 
+            
+            else{
+                count += zeroNum;
+            }
+
+        }
+        return count;
+
+        
+        
+    }
+};
+
+
+
+
+// Realize that when we look at the string 101 from the back, the first 1 from the right doesnt need to be swapped, because there aren't any zeros to its right. When we reach the second 1, we have a 0 in between and it results in a swap needed.
+
+// What this means is that for each 1, the number of swaps to shift it to the right is the number of 0s on its right.
+
+// With that we can start coding and these are the steps:
+
+// Initialize a count to keep track of our answer
+// Keep track of the total number of 0s encountered with zeroNum
+// Loop through each char c in the string from right to left, starting from the character at index s.length() - 1 and ending at index 0
+// If c =='0', increment our number of 0s encountered with zeroNum++
+// Else, we found a 1 and we need to add the total number of 0s encountered to our answer
+// Once we are done with the string, return count and profit
+
+
+// 110001
+
+// swaps -> 
+
+// 110001 -> 101001 -> 100101 -> 100011  - 3swaps
+
+// 100011 -> 3swaps
+
+
+// total 6 swaps
