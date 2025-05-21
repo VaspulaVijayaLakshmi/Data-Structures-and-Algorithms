@@ -1,0 +1,83 @@
+class Solution {
+public:
+    void sortColors(vector<int>& nums) {
+           
+        int n=nums.size();
+        
+        int l=0, h=n-1, i=0;
+
+        // // red - 0, white - 1, blue -2
+        while(i<=h){
+
+        // if nums[l] = 2 push it to end 
+            if(nums[i] == 2){
+                  swap(nums[i],nums[h]);
+                  h--;
+
+                //   we dont increment 'i' yet,because we could get a 1 in i place if we 
+                // swap, then we need to reprocess this to to bring 0 to its place
+            }
+
+        // if nums[h] =0 , push it to front
+            else if(nums[i] == 0 ){
+                swap(nums[l],nums[i]);
+                l++;
+                i++;
+            }
+
+        //what if nums[i]=1
+            else i++;
+
+        }
+        
+    }
+};
+
+
+// 1)- use three pointers one for left end , one for right end and one for iteration.
+// 2)-if you see 0 swap it with left pointer and increase the left pointer by one.
+// 3)-if you see 2 swap it with right pointer and decrease right pointer by one.
+
+
+// for loop is giving wrong resukt because
+
+
+// we are iterating till i<n , but once we put right eleemnt in the end , still 
+// array willbe  going to the 'r' indies and try swapping when r value is n and all
+// bringing the 2s again to the kiddoe swapping with 1s
+
+
+        // for(int i=0;i<n;){
+
+        //     if(nums[i]==0) {
+        //         swap(nums[l],nums[i]);
+        //         l++;
+        //         i++;
+        //     }
+
+        //     else if(nums[i]==2){
+        //         swap(nums[i],nums[r]);
+        //         r--;
+        //     }
+
+        //     else i++;
+
+        // }
+
+
+
+
+
+
+
+
+detailed hint below
+
+1)- use three pointers one for left end , one for right end and one for iteration.
+2)-if you see 0 swap it with left pointer and increase the left pointer by one.
+3)-if you see 2 swap it with right pointer and decrease right pointer by one.
+4)-else increase the iterating pointer.
+5)-run this loop while the iterating pointer<=right pointer.
+right pointer=n-1
+left pointer=0
+iterating pointer =0 runs while it is<=right pointer.
