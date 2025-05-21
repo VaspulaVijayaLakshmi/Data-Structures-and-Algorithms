@@ -1,0 +1,47 @@
+class Solution {
+public:
+    int minimumLength(string s) {
+        
+        string sm = s;
+        int l=0,h=sm.length()-1;
+        while(l<h && sm[l] == sm[h]){
+
+// if they match, find the strings that can be delete for prefix and suffix
+            char c=sm[l];
+
+            while(l<=h && sm[l]==c)l++;
+            while(l<=h && sm[h]==c) h--;
+        }
+
+        return  h-l+1;
+    }
+};
+
+
+// eg1:
+// cabaabac
+// delete c
+
+// abaaba
+// delete a
+
+// baab 
+// delete b
+
+// aa
+// delete a
+
+
+
+// eg2:
+// "aabccabba"
+
+// delete aa and a
+
+// bccabb - delete b and bb
+
+// sol - cca
+
+
+
+
