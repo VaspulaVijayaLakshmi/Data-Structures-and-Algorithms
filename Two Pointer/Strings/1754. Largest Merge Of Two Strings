@@ -1,0 +1,45 @@
+class Solution {
+public:
+    string largestMerge(string word1, string word2) {
+        
+         string res="";
+
+         int i=0,j=0;
+         while(i<word1.size() && j<word2.size()){
+
+            //  if(word1[i]-'0' >= word2[j]-'0') res+=word1[i++];
+            //  else res+=word2[j++];
+
+// so at everypoint if eleemnts are equal in both string
+//  we need to choose the str which is bigger, so tht we increment
+// tht strings index
+            if(word1.substr(i) >= word2.substr(j)){
+                res += word1[i];
+                i++;
+            }
+
+
+            else {
+                res += word2[j];
+                j++;
+            }
+         }
+
+          while(i<word1.size()) res+= word1[i++];
+          while(j<word2.size()) res+= word2[j++];
+
+          return res;
+
+    }
+};
+
+
+
+// Example: "daaa" and "caaac". 
+// Making "dc" is easy, but then we need to draw from the second string 
+// ("aaac" > "aaa") so the result is "dcaaacaaa" instead of "dcaaaaaac".
+
+// word1= "abcabc"
+// word2 = "abdcaba"
+
+
