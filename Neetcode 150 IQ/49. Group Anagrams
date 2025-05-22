@@ -1,0 +1,35 @@
+class Solution {
+public:
+    vector<vector<string>> groupAnagrams(vector<string>& strs) {
+
+        // without sorting
+
+        unordered_map<string,vector<string>> mp;
+
+        for(int i=0;i<strs.size();i++){
+
+            vector<int> v(26,0);
+            for(int j=0;j<strs[i].length();j++){
+              
+              v[strs[i][j]-'a']++;
+            }
+
+            string str_formed = "";
+            for(int j=0;j<26;j++){
+                if(v[j]) str_formed+= string(v[j],j+'a');
+            }
+
+            mp[str_formed].push_back(strs[i]);
+
+
+        }
+
+vector<vector<string>> res;
+        for(auto v:mp){
+            res.push_back(v.second);
+        }
+
+        return res;
+        
+    }
+};
