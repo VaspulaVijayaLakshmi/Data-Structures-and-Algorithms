@@ -1,0 +1,41 @@
+class Solution {
+public:
+    bool increasingTriplet(vector<int>& nums) {
+
+        int num1=INT_MAX;
+        int num2=INT_MAX;
+        int num3=0;
+
+        for(int i=0;i<nums.size();i++){
+
+            num3 = nums[i];
+
+            if(num1>=num3){
+                num1=num3;
+            }
+
+            else if(num2>=num3){
+                num2=num3;
+            }
+
+            else return true;
+
+            
+
+        }
+
+        return false;
+        
+    }
+};
+
+
+
+// If you know the optimal solution for 'Longest Increasing Subsequence' this is a 
+// very similar problem. If you have not seen that before, imo,
+//  it can be very challenging to come up with the optimal solution
+
+
+
+
+// https://www.youtube.com/watch?v=-tqUs4Qt9TU&list=PLpIkg8OmuX-K6A0sEPFxOSJh4_AjCGAFf&index=19
