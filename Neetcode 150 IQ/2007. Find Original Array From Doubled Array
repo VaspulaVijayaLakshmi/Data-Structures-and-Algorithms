@@ -1,0 +1,40 @@
+class Solution {
+public:
+    vector<int> findOriginalArray(vector<int>& changed) {
+
+      int n = changed.size();  
+      vector<int> res;
+
+      unordered_map<int,int> mp;
+
+
+      for(int i=0;i<n;i++){
+          mp[changed[i]]++;
+      }
+
+// sort the array, so that we prcoess elements first, and doubled element late
+// if we dont sort, lets say the array is 4  4 2 2
+// then 4's doube is not there, so we can proceed...
+// if we sort, it will be  2 2 4 4 , so we will count the 2*2
+
+      sort(changed.begin(),changed.end());
+
+      for(int i=0;i<n;i++){
+
+          if(mp[changed[i]] == 0) continue;
+
+          int element = changed[i]*2;
+          mp[changed[i]]--;
+          if( mp.find(element) == mp.end() || mp[element]==0) return {};
+
+          res.push_back(changed[i]);
+          mp[element]--;
+
+      }
+
+
+
+      return res;
+        
+    }
+};
