@@ -39,3 +39,22 @@ public:
 
 
 // https://www.youtube.com/watch?v=-tqUs4Qt9TU&list=PLpIkg8OmuX-K6A0sEPFxOSJh4_AjCGAFf&index=19
+
+
+// [1,2,3,4,5]
+
+// num1 = INF
+// nums2 = INF          num1=1,num2=INF,num3=1
+// nums3 = 1
+
+ 
+// num1=1                    
+// num2=INF.   num2>num3     num1=1,num2=2,num3=2
+// num3=2
+
+
+// num1 = 1
+// num2=2
+// num3=3
+
+// we found our pair
