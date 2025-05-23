@@ -1,0 +1,56 @@
+class Solution {
+public:
+    vector<int> sumEvenAfterQueries(vector<int>& nums, vector<vector<int>>& queries) {
+        
+        int n=nums.size();
+        int sumEven=0;
+        for(int i=0;i<n;i++){
+
+            if(nums[i]%2==0) sumEven+=nums[i];
+        }
+
+
+        int q=queries.size();
+        vector<int> res;
+
+        for(int i=0;i<q;i++){
+
+           int val=queries[i][0];
+           int idx=queries[i][1];
+
+// if its not already even number, then we can add directly 
+           if(nums[idx]%2!=0){
+            nums[idx] +=val;
+            
+            if(nums[idx]%2==0) sumEven+=nums[idx];
+           
+           }
+
+
+           else{
+
+            sumEven -= nums[idx];
+            nums[idx] += val;
+
+            if(nums[idx]%2==0) sumEven+=nums[idx];
+            
+           }
+
+           res.push_back(sumEven);
+
+
+
+        }
+
+
+
+        return res;
+    }
+};
+
+
+// nums = [1,2,3,4], queries = [[1,0],[-3,1],[-4,0],[2,3]]
+
+// sumEVen = 6
+
+// [1,0] - [2,2,3,4]
