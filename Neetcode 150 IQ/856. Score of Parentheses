@@ -1,0 +1,107 @@
+class Solution {
+public:
+    int scoreOfParentheses(string s) {
+
+        int n=s.size();
+        int score =0;
+        stack<int> stk;
+
+        for(int i=0;i<s.length();i++){
+
+            if(s[i] == '('){
+                stk.push(score);
+                score=0;
+            }
+
+            else{
+
+                score = stk.top() + max(1,2*score);
+                stk.pop();
+
+            }
+        }
+
+
+        return score;
+        
+    }
+};
+
+
+// () -> 1
+
+// ()() -> 1+1 = 2
+
+// (()) -> 2*A
+
+
+
+
+
+
+
+
+
+
+// (())()
+//   1
+
+
+
+// when an opening char - push score, when closing bracket pop and now we need do we need
+// to do 
+
+// also make score to 0 - to start new 
+
+// if i find closing bracket - )
+// then calculate the score
+
+// 2*score
+
+// (())
+
+// push 1, 1, 
+
+// closing brakcet -   we cant do 2*1, beause we dont know if its always
+// nested parentheses .
+
+// ()() - 1 ,when we find ) , we will do (2*1) - but this is wrong
+
+// // 
+
+
+
+//  so if we find ( we can push 0.
+
+// if we find, ), we can do like max - max(2*score , 1).
+
+
+
+
+// ((()))()
+
+// push -  0
+// score = 0
+
+// push - 0
+// push - 0
+// push - 0
+
+
+// score -1
+
+// score - max(1,2*1) - 2
+
+// score - max(2, 2*2) - 4 
+
+
+
+// now stk - '('
+
+// stk - 4
+// score - 0 
+
+// score - 4 + max( 0*2, 1 )
+// score - 5
+
+
