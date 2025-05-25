@@ -1,0 +1,57 @@
+// User function template for C++
+class Solution {
+  public:
+  
+   bool equal(vector<int> v1, vector<int> v2){
+       
+       for(int i=0;i<v1.size();i++){
+           
+           if(v1[i] != v2[i]) return false; 
+           
+       }
+       return true;
+   }
+   
+   
+   
+  
+    int search(string &pat, string &txt) {
+        
+        if(pat.size()>txt.size()) return 0;
+        
+
+        vector<int> v1(26,0),v2(26,0);
+        int c=0;
+        
+        
+        for(int i=0;i<pat.length();i++)
+            v1[pat[i]-'a']++;
+
+        
+        
+        int i=0,j=0;
+        int n=txt.length();
+        
+        while(j<n){
+            
+            v2[txt[j] - 'a']++;
+            
+            if(j-i+1==pat.size()){
+                
+                
+                // check equal
+                if(equal(v1,v2)) c++;;
+                
+                // slide the window
+                v2[txt[i] - 'a']--;
+                i++;
+            }
+            
+            j++;
+            
+        }
+        
+        return c;
+        
+    }
+};
