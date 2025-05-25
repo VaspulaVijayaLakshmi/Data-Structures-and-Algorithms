@@ -1,0 +1,39 @@
+// This doesnt work for array with negativ elements
+
+class Solution {
+  public:
+    int longestSubarray(vector<int>& arr, int k) {
+        // code here
+        
+        int i=0,j=0;
+        int n=arr.size();
+        int ssum=0;
+        int maxi=0;
+        
+        while(j<n){
+            
+            ssum+=arr[j];
+            
+            if(ssum>k){
+                ssum-=arr[i];
+                i++;
+            }
+            
+            if(ssum==k){
+                maxi=max(maxi,j-i+1);
+            }
+            
+            
+            
+           j++;
+           
+            
+        }
+        
+        return maxi;
+        
+    }
+};
+
+
+
