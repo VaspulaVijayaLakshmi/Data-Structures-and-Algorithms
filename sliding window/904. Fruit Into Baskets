@@ -1,0 +1,38 @@
+class Solution {
+public:
+    int totalFruit(vector<int>& fru) {
+    
+        int i=0,j=0;
+        int maxi=0;
+        unordered_map<int,int> mp;
+        int n=fru.size();
+        
+        while(j<n){
+
+            mp[fru[j]]++;
+
+            while(mp.size()>2){
+                mp[fru[i]]--;
+
+                if(mp[fru[i]]==0) mp.erase(fru[i]);
+
+                i++;
+            }
+
+            maxi =max(maxi,j-i+1);
+
+            j++;
+            
+           
+        }
+        
+        return maxi;
+    }
+};
+
+
+
+
+//calculating longest possible subarray with atmost 2 distinct characters
+//using hashmap to always keep count of unique trees to 2
+//and removing if the count increases
