@@ -1,0 +1,50 @@
+class Solution {
+public:
+    bool checkEqual(vector<int> v1,vector<int> v2){
+
+        for(int i=0;i<26;i++){
+
+            if(v1[i] != v2[i])
+              return false;
+        }
+
+         return true;
+    }
+
+
+
+    bool checkInclusion(string s1, string s2) {
+  
+        int n1 = s1.size();
+        int n2= s2.size();
+
+        vector<int> v1(26,0),v2(26,0);
+
+        for(int i=0;i<s1.size();i++)
+          v2[s1[i]-'a']++;
+
+
+        int i=0,j=0;    
+        while(j<s2.size()){
+
+            v1[s2[j]-'a']++;
+
+            if(j-i+1 == n1){
+
+                // if size hits, check if 2 vectors are equal
+                if(checkEqual(v1,v2)) return true;
+
+
+                v1[s2[i]-'a']--;
+                i++;
+
+            }
+
+            j++;
+
+        }
+
+        return false;
+        
+    }
+};
