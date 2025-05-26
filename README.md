@@ -34,10 +34,6 @@ Maximum Subarray Problem  [problem link](https://leetcode.com/problems/maximum-s
 
 Pattern Identification/Variations:
 
-https://www.linkedin.com/posts/thecreatorsir_leetcode-coding-programming-activity-7329814345356324866-ELuH/?utm_source=share&utm_medium=member_ios&rcm=ACoAAC4DiGsB5isiUOIm5N4wiyDf3s-QMgXxR-Y
-
-
-https://www.linkedin.com/posts/mohammadfraz_2-pointer-problems-pattern-cheat-sheet-based-activity-7328764287584296960-WwK5/?utm_source=share&utm_medium=member_ios&rcm=ACoAAC4DiGsB5isiUOIm5N4wiyDf3s-QMgXxR-Y
 
 
 https://www.linkedin.com/posts/karan-saxena-466b07190_i-solved-900-leetcode-problems-during-my-activity-7313903802279972864-2IAX/?utm_source=share&utm_medium=member_ios&rcm=ACoAAC4DiGsB5isiUOIm5N4wiyDf3s-QMgXxR-Y
@@ -53,3 +49,40 @@ https://www.linkedin.com/posts/karan-saxena-466b07190_greedy-problems-cheatsheet
 
 
 
+
+Pattern Identification/Variations:
+
+https://www.linkedin.com/posts/thecreatorsir_leetcode-coding-programming-activity-7329814345356324866-ELuH/?utm_source=share&utm_medium=member_ios&rcm=ACoAAC4DiGsB5isiUOIm5N4wiyDf3s-QMgXxR-Y
+
+
+
+Dynamic Programming Patterns: https://lnkd.in/gVNgiDWH
+
+Tree Patterns: https://lnkd.in/gYB7zUX6
+
+Graph Patterns: https://lnkd.in/geZGw4Vt
+
+Substring Problem Patterns: https://lnkd.in/gt23kRen
+
+Backtracking Problem Pattern: https://lnkd.in/gk6JqQD4
+
+Two Pointers Patterns: https://lnkd.in/gfea3T9v
+
+Binary Search Patterns: https://lnkd.in/gHhq5MrR
+
+Cloning Problems Patterns: https://lnkd.in/gJWqTDV8
+
+Bit Manipulation Pattern: https://lnkd.in/gE6cdc-g
+
+Heap Patterns: https://lnkd.in/gugVTJsT
+
+Sliding Window Patterns: https://lnkd.in/gb5NeskQ
+
+
+
+
+
+
+2 pointer 
+
+https://www.linkedin.com/posts/mohammadfraz_2-pointer-problems-pattern-cheat-sheet-based-activity-7328764287584296960-WwK5/?utm_source=share&utm_medium=member_ios&rcm=ACoAAC4DiGsB5isiUOIm5N4wiyDf3s-QMgXxR-Y
