@@ -1,0 +1,36 @@
+class Solution {
+public:
+    int maximumUniqueSubarray(vector<int>& nums) {
+
+        int s=0;
+        int i=0,j=0;
+        int n=nums.size();
+        int maxi=0;
+
+        unordered_map<int,int> mp;
+
+        while(j<n){
+
+            s+=nums[j];
+
+            // if element is in map, shrink the window
+                while(mp[nums[j]]>0){
+
+                    mp[nums[i]]--;
+                    s-=nums[i];
+
+
+                    i++;
+                }
+
+            // if elment is not in map,expand the window
+            mp[nums[j]]++;
+            maxi = max(maxi,s);
+            j++;
+        
+        }
+
+        return maxi;
+        
+    }
+};
