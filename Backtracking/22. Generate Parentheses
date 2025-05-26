@@ -1,0 +1,38 @@
+class Solution {
+public:
+    
+    
+    void generate(string s,vector<string> &res,int open,int close,int max){
+        
+       if(s.size()==max*2){
+        res.push_back(s);
+        return ;
+       } 
+
+
+       if(open<max)
+        generate(s+'(',res,open+1,close,max);
+
+       if(close<open)
+        generate(s+')',res,open,close+1,max); 
+        
+    }
+    
+    
+    vector<string> generateParenthesis(int n) {
+        
+        vector<string> res;
+        string s="";
+        
+        generate(s,res,0,0,n);
+        return res;
+    }
+};
+
+
+// 0 1  2   1 2.  3
+// ( (  (  )  )   )
+
+
+// 0 1. 2.  
+// ( (  ). ( )
