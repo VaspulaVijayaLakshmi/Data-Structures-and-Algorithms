@@ -1,0 +1,42 @@
+class Solution {
+public:
+    int longestSubarray(vector<int>& s) {
+
+        int k=0;
+        int i=0,j=0;
+        int n=s.size();
+        int maxi=0;
+        bool zeroPresent=false;
+
+        while(j<n){
+                 
+            if(s[j]==0){
+             k++;
+             zeroPresent=true;
+
+            } 
+
+            while(k>1){
+
+               if(s[i]==0)
+                k--;
+
+                i++;
+             } 
+
+             maxi = max(maxi,j-i+1-k);   
+             j++;
+        }
+
+        // for test case , [1,1,1]
+        // output -> 2 not three
+       // so check if  atleast zero is present once and maxi is not 0
+
+        if(maxi!=0 && !zeroPresent)
+        return maxi-1;
+
+
+        return maxi;
+        
+    }
+};
