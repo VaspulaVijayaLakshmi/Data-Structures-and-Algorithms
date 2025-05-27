@@ -1,0 +1,161 @@
+class Solution {
+public:
+    int numberOfSubstrings(string s) {
+
+       unordered_map<char,int> mp;
+       int i=0,j=0;
+       int count=0;
+       int n=s.length();
+
+// fixed sliding  window
+        while(j<n){
+
+            mp[s[j]]++;
+
+            while(mp['a']>=1 && mp['b']>=1 && mp['c']>=1){
+
+                count +=  (n-j);
+                
+                mp[s[i]]--;
+                i++;
+                
+            }          
+            j++;
+            
+        }
+
+        return count;
+        
+    }
+};
+
+
+
+// s = "abcabc"
+
+// abc
+// abca
+// abcab
+// abcabc
+// bca
+// bcab
+// bcabc
+// cab
+// cabc
+// abc
+
+
+
+// Approach 1:
+// Hint:
+// (total no of substrings possible - total no of substrings not containing at least one of the three characters)
+
+
+
+// Approach 2:
+// https://leetcode.com/problems/number-of-substrings-containing-all-three-characters/
+
+// if we find theres a substring has all A,B,C
+// all the remaining substring following that will aslo definitely
+// have all 3 chars
+
+// so directly add them
+
+// and shrink the window
+
+
+
+
+
+// Approach 3 : 
+// Striver:
+// This is a little reverse to the above approach.
+
+// instead of considering the the substrings to the right side of the
+// window, we will calculate all the substring left to the window
+
+
+
+
+// like lets say
+// We have 
+
+
+// "b b a c b a"
+//  0 1 2 3 4 5
+
+
+// now lets say the first substring that has all 3 chars is
+// "acb" - (2-3)
+
+
+// so all substring before this will have abc for sure
+// so we need to keep track of where this substring strted.
+
+// so , we will store the index of the a,b,c
+// once we find this , where idx[a]!=-1 and idx[b]!=-1 and idx[c]!=-1
+
+// and we do min(idx[a],idx[b],idx[c]) thats where the window starts from
+
+// in the above case its 2 - idx[a]
+
+
+// so we can count the window starting from 0 , 1, 2 substring all are valid substrs that have all 3 chars
+
+// count+=(j)
+
+//  in this one more minor tweak is, we need to find the smallest
+// substring that statisfies this condiition
+
+
+// eg: 
+
+// 0 1 2 3 4
+// b b a c b
+
+// we can keep expanding till  idx[a]!=-1 and idx[b]!=-1 and idx[c]!=-1
+// now which index of 'b', i need to store
+
+// 0 or 1, but we need to store b's index as 1 so keep updating indcies
+// we need last seen indices only
+
+//                  1 2 3
+// so if we find   "b a c"
+
+// so that we can find more substring to left that can be formed
+// ending at 'c'
+
+
+
+
+
+
+
+class Solution {
+public:
+    int numberOfSubstrings(string s) {
+
+       vector<int> v = {-1,-1,-1};
+       int i=0,j=0;
+       int count=0;
+       int n=s.length();
+
+// fixed sliding  window
+        while(j<n){
+
+           v[s[j]-'a'] = j;
+
+           if( v[0] !=-1  && v[1] !=-1 &&  v[2] != -1) {
+              
+              count += (1 + min({ v[0],v[1],v[2]}));
+              
+            }
+
+           j++;
+            
+        }
+
+        return count;
+        
+    }
+};
