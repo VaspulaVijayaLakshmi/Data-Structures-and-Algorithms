@@ -1,0 +1,106 @@
+//https://leetcode.com/problems/maximum-points-you-can-obtain-from-cards/discuss/2198002/C%2B%2B-Solution-Using-Sliding-Window
+
+
+
+class Solution {
+public:
+    int maxScore(vector<int>& cardPoints, int k) {
+        int sum = 0;
+        int n=cardPoints.size();
+
+        for(int i=0;i<k;i++)
+            sum+=cardPoints[i];
+
+        int maxSum=sum;
+        int idx=0;
+		
+	    for(int i=k-1;i>=0;i--){
+
+            sum -= cardPoints[i];
+            sum += cardPoints[n-1-idx];
+
+            maxSum=max(sum,maxSum);
+            idx++;
+            
+
+            
+        }
+
+        return maxSum;
+    }
+};
+
+
+//so this is a lot of work
+
+//[1,2,3,4,5,6,1], k = 3
+
+// we can select choose any 1 => [2,3,4,5,6,1] or [1,2,3,4,5,6]
+    
+//     case 1: 1  [2,3,4,5,6,1]                    case 2: 1  [1,2,3,4,5,6] 
+                
+//             2   [3,4,5,6,1]                             6   [1,2,3,4,5]
+            
+//             3   [4,5,6,1]                               5   [1,2,3,4]
+            
+//          ____________________                        _____________________
+          
+//          sum= 6                                        sum=12
+
+
+
+     
+        
+//[11,49,100,20,86,29,72]  k=4    //232 ans
+
+
+// case 1:  11  [49,100,20,86,29,72]                                         case 2: 72  [11,49,100,20,86,29]
+                 
+         // now again we have 2 cases
+         // we can either pick 49 ,72
+
+//     case 1.1 49  [100,20,86,29,72]     case 1.2  72   [49,100,20,86,29]
+
+//so we repeat this process taking into consideration all element until k=0.
+     
+   
+
+
+
+//              0 1 2 3 4 5 6
+//lets say eg: [1,2,3,4,5,6,1] and k=3
+
+// now since k=3 all possibilities we have are:
+
+// [1,2,3] we chose first 3 elements 
+// [1,2,1] we may choose elements at idx at 0,1,6
+// [1,1,6] we may choose elements at idx 0,6,5    
+
+
+// [1,6,5] we chose last 3 elements 
+// [1,6,1] last 2 and idx 0
+// [1,1,2] last 1 and idx 0,1    
+
+
+
+
+
+
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+         
