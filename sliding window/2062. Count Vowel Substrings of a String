@@ -1,0 +1,48 @@
+// Refer this, this is similar
+// 1358. Number of Substrings Containing All Three Characters
+
+// This is slightly complicated version of that problem as
+// this has constoannts as well.
+
+// here they want subarrays , having only vowels
+
+// so if a constants come we need to cler map
+
+class Solution {
+public:
+
+    bool isVowel(char s){
+       
+       return s =='a' || s == 'e' || s == 'i' || s == 'o' || s == 'u'; 
+    }
+
+
+    int countVowelSubstrings(string word) {
+
+       int n=word.length();
+       set<char> st;
+       int c=0;
+
+       for(int i=0;i<n;i++){
+         for(int j=i;j<n;j++){
+              
+            if(!isVowel(word[j]))
+                break;
+
+            st.insert(word[j]);
+
+            if(st.size()==5)
+             c++;
+
+         }
+
+          st.clear();
+
+       }
+        
+        return c;
+    }
+};
+
+
+// https://leetcode.com/problems/count-vowel-substrings-of-a-string/solutions/1563764/well-commented-c-code-with-explanation-using-set/
