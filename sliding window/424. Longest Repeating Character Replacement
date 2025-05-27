@@ -1,0 +1,104 @@
+class Solution {
+public:
+    int characterReplacement(string s, int k) {
+
+        int i=0,j=0;
+        int maxFreq =0 ;
+        int n=s.length();
+        int maxLen=0;
+
+       unordered_map<int,int> freq;
+       
+       while(j<n){
+
+        freq[s[j]]++;
+        maxFreq = max( maxFreq, freq[s[j]]);
+
+        while(i<=j && (j-i+1)-maxFreq > k){
+
+            // shrink the window
+            freq[s[i]]--;
+            i++;
+
+        }
+        
+        maxLen = max(maxLen, j-i+1);
+        j++;
+
+       }
+       
+       return maxLen;    
+        
+    }
+};
+
+
+// s = "AABABBA", k = 2
+
+// AABAB ->     freq map -> A - 3
+//                          B - 2
+
+
+// So we have to maintain a freq map , to find the longest repeating char
+// we need to find the min freq elemnt in the map,
+
+
+// but since there could be  AABCABBA and k=2
+
+// AABCA - A - 2
+//         B - 1
+//         C - 1
+
+//         So we cannot go and calculate the freq hasmap everytime
+       
+
+//         lets say , we have substr of length 5 (AABCA) -
+//         now we are use we need to replace B,C
+
+//         So to find the no.of chars that -  needs to be replace is
+        
+//         (len size of substr - Max freq char in this substr )
+//         (5-3) - 2
+
+        // 2 chars needs to be replaced in this substr
+
+
+
+
+// formula :  (len size of substr - Max freq char in this substr ) 
+
+
+// this val should be les than or equal to K
+
+
+// if its less than or equal to K we can expand
+
+
+// or else shrink the window
+
+// DRY RUN :  
+
+// "AABCABBA"
+
+//  keep updating maxFeq
+//                                                                    len of substr - max freq
+// A     freq[A] - 1  maxfreq=1                                                    1-1 =0  
+// A     freq[A] - 2  maxfreq-2                                                    2-2 =0
+// B     freq[B] - 1 , freq[A] = 2                 maxfrq - 2                      3-2 = 1  - 1 char needs to be replaced(since K=2 we can still expand the window) 
+// C     freq[B] - 1 , freq[A] = 2,  freq[C] - 1   maxfreq -2                      4-2 = 2 - 2 char needs to be replaced , k=2 so we can expand still
+// A     freq[B] - 1 , freq[A] = 3,  freq[C] - 1   maxfeq - 3                      5-3 = 2 - 2 chars replacement still ok
+// B     freq[B] - 2 , freq[A] = 3,  freq[C] - 1   maxFreq - 3                     6-3 = 3 > K so shrink the window             
+// ...
+
+
+
+// https://leetcode.com/problems/longest-repeating-character-replacement/
+
+
+
+
+
+
+
+
+
