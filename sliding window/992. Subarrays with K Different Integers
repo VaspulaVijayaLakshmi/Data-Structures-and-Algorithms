@@ -1,0 +1,113 @@
+class Solution {
+public:
+
+    int subarrayWIthAtmostKDistinct(vector<int>& nums, int k){
+
+        int l=0,r=0;
+        int res=0;
+        unordered_map<int,int> mp;
+
+        while(r<nums.size()){
+
+            mp[nums[r]]++;
+
+            while(mp.size()>k){
+
+                mp[nums[l]]--;
+
+                if(mp[nums[l]]==0)
+                  mp.erase(nums[l]);
+
+                l++;
+
+            }
+            
+            // atmost K 
+            res += (r-l+1);
+
+           r++;
+
+        }
+
+        return res;
+
+    }
+
+
+
+    int subarraysWithKDistinct(vector<int>& nums, int k) {
+
+        return subarrayWIthAtmostKDistinct(nums,k) - subarrayWIthAtmostKDistinct(nums,k-1);
+    }
+};
+
+
+// [1,2,1,2,3] k =2
+
+// [1,2]
+// {1:1 , 2:1} res = 1
+
+
+// [1,2,1]
+
+// so subarray ending here
+// [1,2,1]
+// [2,1]
+
+// {1:2,2:1}  res = 1+2 
+
+
+
+
+
+// WHy the above approach is wrong???
+
+// You have a window from l to r
+
+// You check that mp.size() == k
+
+// You add (r - l + 1) to res
+
+// This counts all subarrays ending at r, starting from l to r.
+//  But only a few of them may actually have EXACTLY 'k' distinct elements.
+
+// You’re assuming every subarray within the current window is valid — which is only true when 
+// counting subarrays with at most k distinct elements, not exactly k.
+
+// Eg:
+// nums = [1,2,1,3,4], k = 3
+
+// at -> [1,2,1,3] the window hits k=3
+
+// so the no of subarray with k distinct chars we were calulating were
+// the subarray tht end at '3' index 
+
+
+// i.e,
+// [1,2,1,3]
+// [2,1,3]
+// [1,3] - but this does not have exactly  'K' elements
+
+// Hence this appraoch is wrong
+
+// The above approach is for ATMOST K DISTINCT CHARS
+// not EXACTLY K DISTINCT CHARS
+
+
+// Why atMostK - atMostK-1 Works
+// This is a mathematical trick that gives the exact count by subtraction:
+
+
+// subarrays with exactly K distinct =
+//     subarrays with at most K distinct -
+//     subarrays with at most (K - 1) distinct
+// Why?
+
+// Because:
+
+// "At most k" includes all subarrays with 1, 2, ..., k distinct elements
+
+// "At most k-1" includes only those with fewer than k
+
+// So subtracting gives you just those with exactly k.
+
