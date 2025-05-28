@@ -25,4 +25,16 @@ IMP pATTERNS
 https://leetcode.com/problems/subarray-sum-equals-k/description/
 
 https://leetcode.com/problems/subarrays-with-k-different-integers/
-930. Binary Subarrays With Sum
+
+
+
+
+// https://leetcode.com/problems/contiguous-array/description/
+// https://leetcode.com/problems/subarray-sum-equals-k/description/
+// https://leetcode.com/problems/subarrays-with-k-different-integers/description/
+// https://leetcode.com/problems/count-number-of-nice-subarrays/description/
+// https://leetcode.com/problems/binary-subarrays-with-sum/description/
+// https://leetcode.com/problems/subarray-product-less-than-k/description/
+// https://leetcode.com/problems/count-subarrays-where-max-element-appears-at-least-k-times/description/
+//https://leetcode.com/problems/longest-substring-with-at-least-k-repeating-characters/description/
+
