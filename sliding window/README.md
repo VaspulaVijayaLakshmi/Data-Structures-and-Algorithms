@@ -17,3 +17,12 @@ r-l+1
 
 
 // so its 3
+
+
+
+IMP pATTERNS
+
+https://leetcode.com/problems/subarray-sum-equals-k/description/
+
+https://leetcode.com/problems/subarrays-with-k-different-integers/
+930. Binary Subarrays With Sum
