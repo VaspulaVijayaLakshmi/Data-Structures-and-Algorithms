@@ -1,0 +1,81 @@
+class Solution {
+public:
+
+    int AtMostGoal(vector<int>& nums, int goal){
+     
+     int l=0,r=0;
+        int n=nums.size();
+        int res=0;
+        
+        int temp_sum=0;
+    
+        while(r<n){
+            
+            temp_sum+=nums[r];
+            
+            while(l<=r && temp_sum>goal){
+                temp_sum-=nums[l];
+                l++;
+            }
+            
+            res += (r-l+1);
+            r++;
+            
+        }
+        
+        return res;
+
+    }
+
+
+
+    int numSubarraysWithSum(vector<int>& nums, int goal) {
+
+        return AtMostGoal(nums,goal) - AtMostGoal(nums,goal-1);
+      
+    }
+};
+
+
+// Input: nums = [0,0,0,0,0], goal = 0
+// Output: 15
+    
+// idx= 0
+//     [0]
+    
+// idx= 1   [0,1]
+//     [0]  [0,0]
+        
+// idx= 2   [1,2] [0,1,2] 
+//     [0]  [0,0] [0,0,0]
+    
+// idx= 3   [2,3] [1,2,3] [0,1,2,3]    
+//     [0]  [0,0] [0,0,0] [0,0,0,0]
+    
+// idx= 4   [3,4] [2,3,4] [1,2,3,4] [0,1,2,3,4]     
+//     [0]  [0,0] [0,0,0] [0,0,0,0] [0,0,0,0,0]
+    
+    
+//  total subsets=15   
+    
+    
+
+// The same logic applies here    
+// https://leetcode.com/problems/subarrays-with-k-different-integers/
+
+
+// [1,0,1,0,1] - goal =2
+
+// so [1,0,1] hits the window with goal - 2
+
+// so that doesnt mean all the substring tht end here are eligible
+
+
+// [1,0,1]
+// [0,1] - is not eleigible
+
+// so same conditon
+
+
+// this logic works with ATMOST scenarios not EXACTLY
+//  res += (r-l+1);
