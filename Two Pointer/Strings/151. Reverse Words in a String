@@ -1,0 +1,46 @@
+class Solution {
+public:
+    
+    
+    //method-1:
+    //reverse the whole string and then traverse this string 
+    //and reverse each word
+    
+    
+   string reverse(string s){
+       
+       int len=s.length()-1;
+       
+       for(int i=0;i<=len/2;i++){
+           swap(s[i],s[len-i]);
+       }
+       
+       return s;
+   }  
+ 
+    string reverseWords(string s) {
+        
+        s=reverse(s);
+        
+        stringstream ss(s);
+        string word;
+        
+        
+        string str="";
+        
+        while(ss>>word){
+           
+            cout<<word<<"\n";
+            str=str+reverse(word);
+            str+=" ";
+        }
+        
+        s="";
+        for(int i=0;i<str.length()-1;i++){
+            s+=str[i];
+        }
+        
+        return s;
+        
+    }
+};
