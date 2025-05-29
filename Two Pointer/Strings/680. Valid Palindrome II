@@ -1,0 +1,62 @@
+class Solution {
+public:
+
+    bool checkPalindrome(string s,int l,int r){
+
+        while(l<r){
+
+            if(s[l]!=s[r])
+             return false;
+
+            l++;
+            r--; 
+
+        }
+
+        return true;
+    }
+
+
+
+    bool validPalindrome(string s) {
+
+        int l=0, r=s.length()-1;
+
+        while(l<r){
+
+        //if s[l] !=s[r] not equal means we have this opputunity only
+        // if one of 2 scenarios pass then we can continue
+        // or else break 
+            if(s[l] != s[r]){
+                return checkPalindrome(s,l+1,r) || checkPalindrome(s,l,r-1);
+            }
+
+            l++;
+            r--;
+        }
+        
+        return true;
+    }
+};
+
+
+
+// We can delete , one char , so if s[i]!= s[j]
+// what we can do
+// We would have 2 possibilities
+
+
+// l=0
+// r=n
+// "abccca"
+
+
+// a==a
+// b!=c  so we can do (l+1,r)  
+//       or we can do (l,r-1)
+
+
+// i.e, bccc -> ccc
+//           -> bcc
+
+
