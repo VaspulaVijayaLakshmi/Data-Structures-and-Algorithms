@@ -59,6 +59,5 @@ ONLINE OA - tough
 https://leetcode.com/problems/count-binary-substrings/description/
 
 
-Intrestign LOGIC :
+Intrestign LOGIC :  Separate Black and White Balls→https://lnkd.in/euuvp_Ey
 
-2938. Separate Black and White Balls
