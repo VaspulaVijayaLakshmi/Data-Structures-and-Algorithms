@@ -43,3 +43,12 @@ https://leetcode.com/problems/subarrays-with-k-different-integers/
  
 https://leetcode.com/problems/longest-substring-with-at-least-k-repeating-characters/description/
 
+
+
+
+
+
+
+
+https://leetcode.com/problems/frequency-of-the-most-frequent-element/description/
+
