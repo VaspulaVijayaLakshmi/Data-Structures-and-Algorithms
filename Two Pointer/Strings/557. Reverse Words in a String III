@@ -1,0 +1,30 @@
+class Solution {
+public:
+   // method-1
+    string reverse(string s){
+        
+        int left=0,right=s.length()-1;
+        
+        while(left<right){
+            
+            swap(s[left],s[right]);
+            left++;
+            right--;
+        }
+        return s;
+    }
+    
+    string reverseWords(string s) {
+          stringstream ss(s);
+        
+        string ans="";
+        
+        while(ss>>s){
+           ans+= reverse(s);
+           ans+=" ";
+        }
+        
+         ans.erase(ans.size() - 1);
+        return  ans;
+    }
+};
