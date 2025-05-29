@@ -57,3 +57,8 @@ On Strings :
 
 ONLINE OA - tough
 https://leetcode.com/problems/count-binary-substrings/description/
+
+
+Intrestign LOGIC :
+
+2938. Separate Black and White Balls
