@@ -1,0 +1,74 @@
+class Solution {
+public:
+   int AtMostK(vector<int>& nums, int k) {
+        
+     int l=0,r=0,res=0;
+     int oddCount=0;
+
+     while(r<nums.size()){
+
+        if(nums[r]%2!=0){
+            oddCount++;
+        }
+
+        while(l<=r && oddCount>k){
+
+            if(nums[l]%2!=0)
+              oddCount--;
+
+            l++;
+        }
+
+        res+=(r-l+1);
+        r++;
+
+
+    }
+
+     return res;
+        
+    }
+
+    int numberOfSubarrays(vector<int>& nums, int k) {
+
+    return AtMostK(nums,k) - AtMostK(nums,k-1);
+
+        
+    }
+};
+
+
+// Exactly K odd number
+
+// So count subarray with atmost k odd numbers . i.e,  1,2,3...K
+// And count subaaray with atmost K-1 odd numers i.e,   1,2,3..k-1
+
+// to calculate subarrays with exactly K odd numbers  then 
+
+// Substract the above 2
+
+
+
+
+
+// ANOTHER APPROACH
+
+// Hint: If we will replace all odds with 1 and all evens woth 0, then prefix sum could help us to indicate number of corresponding odds in a subarray.
+
+// Hint: What if we try to find subarrays with sums equal to k? (Since sum = number of odds)
+
+// SIMILAR to Subaarray containing equal No of zeroes and 1 s
+
+// https://leetcode.com/problems/contiguous-array/description/
+
+
+
+// 713. Subarray Product Less Than K
+// 2302. Count Subarrays With Score Less Than K
+// 2958. Length of Longest Subarray With at Most K Frequency
+// 2962. Count Subarrays Where Max Element Appears at Least K Times
+
+
+
+
+
