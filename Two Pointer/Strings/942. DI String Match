@@ -52,3 +52,63 @@ public:
 // so if its I, we will take min number thats poosible , in the remaining elments
 //and if its D we will take max number possible , i the remaining 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// Given string s 
+
+// Reconstruct the perm , perm should be in the range [0,n]
+// string len (n) , string len  (n+1)
+
+//      0123
+// Eg: "IDID"
+
+// len = 4
+// perm of length -  [0,4]
+
+
+// s[i] == "I" , if its 'I' , the next element should be greater than curr
+// s[i] == "D" , if its 'D' , the next elemnt should be smaller than curr
+
+
+
+// Watch the pattern
+// *********
+// SO if 'IIII' - [0,1,2,3,4]
+// SO if 'DDDD' - [4,3,2,1,0]
+
+// // so if we have - ['IDID'] - [010]
+// //                               ^ here I cant have 0, because 0 is already used.
+
+// so I=0 and D=4
+
+// SO eevrtime we see a 'D' we decrement and eberytime I see 'I'
+// I increment
+
+
+
+// so lets see we have ["IDID"]
+
+// I=0  D=4
+
+// 04132
+
+
+
+
+
+
+
+
