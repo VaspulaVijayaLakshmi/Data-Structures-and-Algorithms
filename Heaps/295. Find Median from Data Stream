@@ -1,0 +1,162 @@
+class MedianFinder {
+public:
+
+    priority_queue<int> maxHeap;
+    priority_queue<int, vector<int>, greater<int>> minHeap;
+
+    MedianFinder() {}
+    
+    void addNum(int num) {
+
+        maxHeap.push(num);
+
+        //check if all elements in maxHeap are smaller than all in minHeap.
+        //if not, then pop the top from maxHeap and push it to minHeap.
+        if(!minHeap.empty() &&maxHeap.top()> minHeap.top()){
+            int top = maxHeap.top();
+            maxHeap.pop();
+            minHeap.push(top);
+        }
+
+
+//check for balancing size of the heaps
+        if(maxHeap.size()>minHeap.size()+1){
+            int top = maxHeap.top();
+            maxHeap.pop();
+            minHeap.push(top);
+        }
+
+        else if(minHeap.size()>maxHeap.size()+1){
+            int top = minHeap.top();
+            minHeap.pop();
+            maxHeap.push(top);
+        }
+        
+    }
+    
+    double findMedian() {
+
+        if(minHeap.size() > maxHeap.size()) return minHeap.top();
+        if(maxHeap.size() > minHeap.size()) return maxHeap.top();
+        else return ( minHeap.top() + maxHeap.top())/2.0;
+        
+    }
+};
+
+/**
+ * Your MedianFinder object will be instantiated and called as such:
+ * MedianFinder* obj = new MedianFinder();
+ * obj->addNum(num);
+ * double param_2 = obj->findMedian();
+ */
+
+
+
+//  Brute force - 
+
+//  Sort the array each time
+
+
+// Heap 
+
+// 2 heaps 
+
+// first half elements in 1st heap - that should be max heap
+
+// second half elements in 2nd heap - this should be min heap
+
+
+// Eg: [1,2,3,,4,5,] 
+
+
+// [1]
+// heap size -  1 
+// put in 1st heap
+
+// meidan - 1
+
+
+
+// [2]
+// Total elements - 2
+// elemnts in heap 1 - n/2 
+// so put 2 in 2nd heap
+
+// median = (1+2)/2 = 
+
+// so if its total elemnts == even , then median == (top of 1st + top of 2nd)/2
+
+
+
+
+
+// [3]
+// total - 3
+// first sz=1 <= (3/2) 
+// second sz=1 
+
+// put 3 in 2nd heap
+
+// elekmnts == odd so median will be top of 2nd heap?
+
+
+
+
+
+
+// [4]
+
+// sz of heap 1 - 1 < (4/2) -> transer top of heap2 to heap1
+
+// sz of heap 1 - 2 -> (1,2) element
+
+
+// sz of heap 2 -> 1 now (3)
+
+// so insert 4
+
+// median = (2+3)/2
+
+
+
+// [5]
+
+
+// sz of 1 is fine == n/2
+
+// now sz 2 , put in heap 2
+
+// so media will be  - top of heap2 -> [3]
+
+
+
+
+
+
+// In real world streaming application. The data amount will be huge so it is impossible to hold all the data in the stream into memory.
+
+// I think it is a good open-end question to ask. What if the memory is not allowed to hold all the data from the beginning.
+//  Some data needs to go to hard drive. How will we optmize that.
+
+
+// My sol^:
+//  in this case we can use sliding window, older window values can be pushed out to harddrive or some memory
+// https://leetcode.com/problems/sliding-window-median/
+
+
+
+
+// Heap utilities:
+// using a heap for a data set helps to get the smallest/largest element fastly
+// using 2 heaps: if we divide the random data (non sorted data) into 2 heaps
+//  (1 min and other max) such that the first half of sorted data (data if it had
+//   been sorted) is in max heap and second half of sorted data (data if it had been sorted) is in min heap, we could easily get the middle element of the sorted data 
+//   (data if it had been sorted).
+
+
+
+// follow-up, I'm asked how to improve it and make sure the method is thread-safe
+//  if the two heaps are shared.
+
+
+// Use read and write locks - can we use synchonized??
