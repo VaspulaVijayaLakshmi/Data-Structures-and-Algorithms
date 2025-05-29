@@ -91,7 +91,7 @@ https://www.linkedin.com/posts/mohammadfraz_2-pointer-problems-pattern-cheat-she
 
 
 
-
+__________________________________________________________________________________________________________________
 
 
 Take you forward
@@ -100,6 +100,52 @@ Code STory WIth MIK
 
 
 
+______________________________________________________________________________________________________________________
+
+
+
+Insertion Sort +  Binary Search
+
+
+This is sometimes called Binary Insertion Sort.
+
+We use Binary Search to find the correct index to insert each element in the sorted portion.
+But shifting elements to make space still takes O(n) time.
+
+
+So Overall Time Complexity of Binary Insertion Sort  -->   
+
+Search: O(log n)
+Insert (shift): O(n)
+For n elements: O(n × log n) for search + O(n²) for shifting = still O(n²)
+
+
+
+________________________________________________________________________________________________________________________
+
+
+
+LAZY INSERTION
+
+
+
+// Lazy deletion in a heap is a technique used to simulate deletion of elements without immediately removing them from the heap's internal structure.
+
+// Why Use Lazy Deletion?
+// Standard binary heaps (like std::priority_queue in C++) do not support efficient removal of arbitrary elements — only the top element (O(log n) for pop,
+//  but arbitrary removal is not supported efficiently).
+
+// When you need to delete arbitrary elements (e.g. outdated values in a sliding window), 
+// you can use lazy deletion.
+
+// How It Works (Lazy Deletion Strategy):
+// Maintain a secondary data structure (e.g., a map or unordered_map) to record how many times an element has been "logically deleted".
+
+// When popping or peeking the top of the heap:
+
+// If the top is marked as deleted (i.e., exists in the delete map), skip it and remove it from both the heap and the delete map.
+
+// Otherwise, it's valid, and you use it.
 
 
 
