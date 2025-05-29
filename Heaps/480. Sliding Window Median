@@ -1,0 +1,107 @@
+class Solution {
+public:
+    vector<double> medianSlidingWindow(vector<int>& nums, int k) {
+         
+         vector<double> res;
+         int i=0;
+         int j=k-1;
+         int n = nums.size();
+
+        vector<int> temp = {nums.begin(), nums.begin() + k - 1};
+        sort(temp.begin(), temp.end());
+
+        while(j<n){
+
+        // slide the window, find the pos, to insert in temps 
+        temp.insert(lower_bound(temp.begin(), temp.end(), nums[j]),
+                        nums[j]);
+
+
+        // after inserting the element,
+        // if k is even push 
+        if(k%2!=0){
+            double median = (double) temp[k/2];
+            res.push_back(median);
+        }
+
+        else{
+            double median1 = (double) temp[k/2];
+            double median2 = (double) temp[k/2-1];
+            res.push_back((median1 + median2) / 2);
+        }
+         
+
+    //    temp is now sorted so the values changed and ORDER CHANGED
+    //    eg : lets say the array was [1,2,3] and 0 came
+    // array changed to [0,1,2,3] , so we can remove temp[i]
+    // we need to remove nums[i]
+
+// lower bound because there could be duplicates
+
+        temp.erase(lower_bound(temp.begin(), temp.end(), nums[i]));
+         i++;
+         j++;                
+
+
+        }
+
+         return res;
+    }
+};
+
+
+
+// BRUTE FORCE _ 
+
+
+// BINARY SEARCH APPRAOCH :
+
+// We can store the first 0 to k - 1 elements in a data structure,
+// and sort it. Then as we move the window, we remove the number to the left that exited the window 
+// and we can find the spot to add the new rightmost number using binary search. 
+// Add it and then calculate the new median for each window.
+
+// https://leetcode.com/problems/sliding-window-median/solutions/6759946/sliding-window-median-process-250-ms-beats-95-21/
+// https://leetcode.com/problems/sliding-window-median/solutions/4622495/beginner-friendly-c-java-python-solution-with-detailed-explanation/
+
+
+
+
+
+
+// You can also use Binary Search to find the spot to remove the num that
+// exited the window.
+
+// https://leetcode.com/problems/sliding-window-median/solutions/4622495/beginner-friendly-c-java-python-solution-with-detailed-explanation/
+
+
+
+
+
+
+
+
+// HEAP APPROACH : 
+
+// Use min heap for smaller half and max heap for greater half and for 
+// removing keep count of element , if it is zero then remove, 
+// (use lazy deletion)
+
+
+// Lazy deletion in a heap is a technique used to simulate deletion of elements without immediately removing them from the heap's internal structure.
+
+// Why Use Lazy Deletion?
+// Standard binary heaps (like std::priority_queue in C++) do not support efficient removal of arbitrary elements — only the top element (O(log n) for pop,
+//  but arbitrary removal is not supported efficiently).
+
+// When you need to delete arbitrary elements (e.g. outdated values in a sliding window), 
+// you can use lazy deletion.
+
+// How It Works (Lazy Deletion Strategy):
+// Maintain a secondary data structure (e.g., a map or unordered_map) to record how many times an element has been "logically deleted".
+
+// When popping or peeking the top of the heap:
+
+// If the top is marked as deleted (i.e., exists in the delete map), skip it and remove it from both the heap and the delete map.
+
+// Otherwise, it's valid, and you use it.
