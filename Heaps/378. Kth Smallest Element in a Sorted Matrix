@@ -1,0 +1,69 @@
+class Solution {
+public:
+    int kthSmallest(vector<vector<int>>& matrix, int k) {
+        
+    
+        int r=matrix.size();
+        int c=matrix[0].size();
+        
+        priority_queue<int> q;
+        
+        
+        for(int i=0;i<r;i++){
+            for(int j=0;j<c;j++){
+                
+                if(q.size()<k)
+                  q.push(matrix[i][j]);
+
+                 else if (q.top() > matrix[i][j]){
+                    q.push(matrix[i][j]);
+                    q.pop();
+                 }
+
+                 else
+                    break;  
+    
+                
+            }
+        }
+        
+        return q.top();
+    }
+};
+
+// brute force approach would be:
+// put all those in vector and sort and return kth elemnt
+
+
+// since araay is sorted - 
+
+
+// matrix = [[1,5,9],[10,11,13],[12,13,15]], k = 8
+
+
+// we will go through the matrix
+// 1,2,9,10,11,13,12,13
+
+// -> 1,2,9,10,11,12,13,13
+
+// we will maintain a max heap
+
+// if size<K , add to heap
+// if size>K , check if top of heap has bigger element than curr element
+//             then add to queue and pop
+
+// if element at  matrix[i][j] > max of heap, then all emelements next would be greater only   
+
+
+
+
+
+
+
+A normal approach also works, but added optimzation
+
+The similar method will work on
+
+https://leetcode.com/problems/find-k-pairs-with-smallest-sums/description/
+
+
