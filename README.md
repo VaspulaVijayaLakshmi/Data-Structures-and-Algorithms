@@ -178,9 +178,57 @@ struct Comparator {
 ______________________
 
 
+EG1 : 
+Sort words by length, then lexicographically:
+
+
+bool compareWords(const string& a, const string& b) {
+
+   if (a.length() == b.length())
+        return a < b;  // lex smaller first
+        
+   return a.length() < b.length();  // shorter first
+}
+
+sort(words.begin(), words.end(), compareWords);
 
 
 
+EG2: 
+Use a set that stores points sorted by x, then y:
+
+bool comparator(pair<int,int> &point1 , pair<int,int> &point2){
+
+
+   if(point1.first == point2.first)
+      return point1.second < point2.second;
+
+      
+   return point1.first < point2.first;
+      
+}
+
+
+
+EG3:
+Prioity_QUEUE
+
+1. Sort elements by freq ,  if freq is same , then smalleer element should come first
+
+  ( pair<intint> - freq,int)
+
+
+bool comparator( pair<int,int> &p1, pair<int,int> &p2 ){
+
+//freq is equal
+   if(p1.first == p2.first){
+        return p1.second > p2.second;
+   }
+
+   else 
+   return p1.first <  p2.first;
+
+}
 
 
 
