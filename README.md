@@ -210,26 +210,42 @@ bool comparator(pair<int,int> &point1 , pair<int,int> &point2){
 
 ____________________________
 
-EG3:
-Prioity_QUEUE
+EG3 :
 
-1. Sort elements by freq ,  if freq is same , then smalleer element should come first
+1. Sort elements by freq descending ,  if freq is same , then smalleer element should come first
 
-  ( pair<intint> - freq,int)
+  ( pair<int, int> - freq,int)
 
 
 bool comparator( pair<int,int> &p1, pair<int,int> &p2 ){
 
-//freq is equal
+//freq is equal, then smaller element should come first
    if(p1.first == p2.first){
-        return p1.second > p2.second;
+        return p1.second < p2.second;
    }
 
    else 
-   return p1.first <  p2.first;
+   return p1.first >  p2.first;
 
 }
 
+______________
+
+EG4:
+
+SOrt elements by freq descending, and then by lexicograpghically
+
+
+bool comparator( pair<int,string> &p1, pair<int,string> &p2 ){
+
+
+if(p1.first == p2.first)
+ return p1.second < p2.second;
+
+ return p1.first > p2.first;
+
+
+}
 
 
 
