@@ -1,4 +1,7 @@
 What is a Heap?
+____
+
+
 A Heap is a special tree-based data structure primarily used to implement priority queues. It is represented as a Binary Tree, where each node has at most two children. Specifically, Heaps are complete binary trees, meaning all levels are completely filled except possibly the last, which is filled from left to right.
 
 Heaps can be efficiently represented using an array, where indices correspond to positions in the binary tree.
@@ -49,3 +52,18 @@ Useful in problems like finding the median from a stream of numbers.
 
 ->Minimum Number Pattern
 Problems involving task scheduling, meeting rooms, etc., where minimum values are frequently accessed.
+
+
+
+
+
+
+
+______________________________________________
+
+
+Max Heap :  priority_queue<int> maxHeap;
+
+
+
+Min Heap : priority_queue<int, vector<int>, greater<int>> minHeap; 
