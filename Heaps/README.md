@@ -1,35 +1,50 @@
-What is Heap?
+What is a Heap?
+A Heap is a special tree-based data structure primarily used to implement priority queues. It is represented as a Binary Tree, where each node has at most two children. Specifically, Heaps are complete binary trees, meaning all levels are completely filled except possibly the last, which is filled from left to right.
 
-It is mainly used to represent a priority queue.
-It is represented as a Binary Tree (a tree structure where a node of a tree has a maximum of two child nodes). Heaps are complete binary trees.
-A simple array can be used to represent a Heap where array indices refer to the node position in the tree.
-
+Heaps can be efficiently represented using an array, where indices correspond to positions in the binary tree.
 
 
 
-Parent and child nodes can be accessed with indices:
+Array Representation
+For a node at index i:
 
+Root node: i = 0 (first element of the array)
 
--> A root node｜i = 0, the first item of the array
--> A parent node｜parent(i) = i / 2
--> A left child node｜left(i) = 2i
--> A right child node｜right(i)=2i+1
+Parent node: parent(i) = ⌊(i - 1) / 2⌋
 
+Left child: left(i) = 2i + 1
 
-
-
-Two type of Heaps — Min Heap, Max Heap
-
--> Min Heap — the parent node always has a smaller value than the child nodes.
--> Max Heap — the parent node is always larger than the child node value.
+Right child: right(i) = 2i + 2
 
 
 
 
 
-Different questions where HEAP is common data structure to use can be categorized in following 4 categories:
+Types of Heaps:
 
--> Top K Pattern
--> Merge K Sorted Pattern
--> Two Heaps Pattern
--> Minimum Number Pattern
+-> Min Heap: The parent node is less than or equal to its children. The smallest element is at the root.
+-> Max Heap: The parent node is greater than or equal to its children. The largest element is at the root.
+
+
+
+
+Common Heap Use Cases
+Heaps are commonly used to solve problems in the following patterns:
+
+Top K Pattern
+
+Finding the top K largest/smallest elements.
+
+Examples: Kth largest number, Top K frequent elements.
+
+Merge K Sorted Lists Pattern
+
+Efficiently merge multiple sorted lists or arrays.
+
+Two Heaps Pattern
+
+Useful in problems like finding the median from a stream of numbers.
+
+Minimum Number Pattern
+
+Problems involving task scheduling, meeting rooms, etc., where minimum values are frequently accessed.
