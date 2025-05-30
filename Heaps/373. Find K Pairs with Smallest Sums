@@ -1,0 +1,85 @@
+class Solution {
+public:
+    vector<vector<int>> kSmallestPairs(vector<int>& nums1, vector<int>& nums2, int k) {
+
+      vector<vector<int>> res;
+
+      priority_queue<pair<int,pair<int,int>>,
+                vector< pair<int,pair<int,int>>> > pq;
+
+    //  In heap we need to store - sum, and pair<nums1[x],nums2[y]>
+
+      for(int i=0;i<nums1.size();i++){
+        for(int j=0;j<nums2.size();j++){
+
+            int sum=nums1[i] + nums2[j];
+
+            if(pq.size()<k)
+               pq.push({sum, {nums1[i],nums2[j]} });
+
+            
+            // if pq.size()>k , then we pop and balance size
+            else if(pq.top().first > sum){
+                pq.pop();
+                pq.push({sum, {nums1[i],nums2[j]} });
+            }
+
+            else {
+                // if those conditions are false
+                // tht means sum is greater than top
+                // nowonwards the sum would be greater 
+                // moving forward so we can break here
+                break;
+            }
+
+
+        }
+
+      }
+
+      while(pq.size()>0){
+
+        auto p = pq.top().second;
+        res.push_back({p.first , p.second});
+        pq.pop();
+      }
+       
+
+       return res;
+
+    }
+};
+
+
+
+// In case anyone else started down the same wrong path I did -
+//  I thought I could use two pointers and compare the values of the next 
+//  numbers in each list to find the smaller value. 
+//  But this will not work because it will not search all possible pairs
+//   - need to think of a new approach
+
+
+
+
+// The smallest sum will be formed by index 0 of nums1 and index 0 of nums2.
+// The next smaller sum will be either from {index 0 of nums1 and index1 of nums2} or {index 1 of nums1 and index 0 of nums2}.
+
+
+
+
+// Input: nums1 = [1,7,11], nums2 = [2,4,6], k = 3
+// Output: [[1,2],[1,4],[1,6]]
+
+// Explanation: The first 3 pairs are returned from the sequence: 
+//              [1,2] , [1,4] , [1,6] , [7,2] , [7,4] , [11,2],
+//              [7,6] , [11,4] , [11,6] ]
+
+
+
+// so yeah 2 pointer we cant have
+
+
+
+// APPROACH : 
+// so we can have 2 heaps, and we can have have top elements match
+// but we need to  to match the top of 1st heap to 2nd elemnt in heap also
