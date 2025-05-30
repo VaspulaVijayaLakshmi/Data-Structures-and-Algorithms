@@ -1,0 +1,115 @@
+class Solution {
+public:
+
+    vector<string> splitWords(string sentence){
+        sentence += " ";
+        vector<string> ans;
+
+        string word = "";
+        for(int i=0;i<sentence.size();i++){
+            if(sentence[i]==' '){
+                ans.push_back(word);
+                word="";
+            }
+            else{
+                word += sentence[i];
+            }
+        }
+
+        return ans;
+    }
+
+
+    bool areSentencesSimilar(string sentence1, string sentence2) {
+        
+         // Split both sentences into words
+        vector<string> words1 = splitWords(sentence1);
+        vector<string> words2 = splitWords(sentence2);
+
+        // Ensure words1 is the longer sentence
+        if (words1.size() < words2.size()) swap(words1, words2);
+        
+
+        int l1=0,l2=0;
+        int n1 = words1.size(), n2 = words2.size();
+        int r1=n1-1,r2=n2-1;
+
+        
+        // Compare from the start
+        while (l1 < n1 && l2<n2 && words1[l1] == words2[l2]){
+            l1++;
+            l2++;
+        }
+        
+        // Compare from the end
+        while (r1>=0 && r2>=0 && words1[r1] == words2[r2]){
+            r1--;
+            r2--;
+        }
+    
+
+    // small string needs to be fininshed
+        return  l2>r2;
+    
+    }
+};
+
+
+// sentence1 = "My name is Haley"
+// sentence2 = "My Haley"
+
+
+// Input: sentence1 = "of"
+// sentence2 = "A lot of words"
+
+
+// Input: sentence1 = "Eating right now"
+// sentence2 = "Eating" 
+
+
+
+// COnvert the string to words first.
+// then match prefix and suffixes
+
+
+//  Tokenize both strings into word tokens,
+//   set a single left pointer to the start of both strings and two right pointers,
+//    one each for the right side of each string. 
+   
+   
+//    Iterate first from left while tokens of both strings match, 
+//    break when condition fails. 
+   
+//    Do the same from the right side of both strings. 
+   
+   
+
+// Eg: 
+// sentence1 = "My name is Haley"
+// sentence2 = "My Haley"
+
+
+// [My, name,is,Haley]
+// [My,Haley]
+
+
+// l1=0,l2=0
+// r1=3 , r2=1
+
+// l1=1
+// l2=1
+
+// r1=2
+// r2=0
+
+
+
+
+
+//    Afterward, if the left pointer equals at least one of the right pointers, 
+//    the sentences are similar.
+
+
+
+
+// https://leetcode.com/problems/sentence-similarity-iii/solutions/5875276/step-by-step-guide-to-cracking-sentence-similarity/
