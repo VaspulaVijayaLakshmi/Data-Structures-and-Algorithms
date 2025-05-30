@@ -1,0 +1,94 @@
+class Solution {
+public:
+    int findMaximizedCapital(int k, int w, vector<int>& profits, vector<int>& capital) {
+        
+    }
+};
+
+
+
+// Highlights : 
+
+// it can only finish at most 'K' distinct projects.
+
+
+// N projects
+// profit - profit[i]
+// to start it, I need to atleast have a captital captial[i]
+
+
+
+// Initially I have a captial 'w' 
+// and when I finish tht project - i will get profit  capital + project[i]
+
+
+// K distict projects..
+// Not repetitve projects
+
+
+
+
+
+// APPROACH : 
+
+// create an array with pair - <capital,profit>
+// sort by capital in ascending and profit descending
+
+// so with given capital, I can pick, the most profitable one
+// since the profit is descending, we will pick the first once
+
+// and move the ptr where the, the capital is different ad not same
+
+
+
+
+// EG : 
+
+// Input: k = 2, w = 0, 
+
+//        initally I have captial 'w'
+//        profits = [1,2,3]
+//        capital = [0,1,1]
+
+
+// ssorted by captial ascending, and profit descending
+// [[0,2],[1,3],[1,2],[2,4],[2,2]]
+
+
+
+// SInce w=0
+
+// SO I need to pick - 0th one [0,1] so my w=2
+// now i can pick, 
+
+// now i can use  any of these [[1,3],[1,2],[2,4],[2,2]]
+
+// SO can we use DP - pick and not Pick
+
+// COnstraint is on 'K' elemnts to be picked
+ 
+
+
+
+// ATMost 'K' - because , we may still have some capital, bt not enough to pick a new project
+
+
+// can we iterate through the array, until we have captial tht we can afford
+
+
+
+
+
+
+       
+
+
+
+
+
+
+
+
+
+
+// https://leetcode.com/problems/ipo/solutions/5316955/lc-hard-made-easy-well-explained/
