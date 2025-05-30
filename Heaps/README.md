@@ -9,9 +9,14 @@ Parent and child nodes can be accessed with indices:
 
 
 A root node｜i = 0, the first item of the array
+
 A parent node｜parent(i) = i / 2
+
 A left child node｜left(i) = 2i
+
 A right child node｜right(i)=2i+1
+
+
 Two type of Heaps — Min Heap, Max Heap
 
 Min Heap — the parent node always has a smaller value than the child nodes.
