@@ -149,4 +149,45 @@ LAZY INSERTION
 
 
 
+___________________________________________________________
+
+
+
+Custom Comparator Class
+
+A comparator is a function or object that tells the STL how to order two values a and b.
+
+
+The rule is:
+
+Return true if a should come before b (i.e., a < b in your custom logic).
+
+
+
+struct Comparator {
+
+   bool operator()(const Type& a, const Type& b) const {
+        return a.property > b.property;  
+   
+  }
+  
+};
+
+//This property behaviour can be -> a is less than b, a comes before b, a had less priority  than b
+
+______________________
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
