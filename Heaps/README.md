@@ -1,3 +1,11 @@
+Common Heap Patterns
+
+https://leetcode.com/discuss/post/1127238/master-heap-understanding-4-patterns-whe-fb8z/
+
+
+_________________
+
+
 What is a Heap?
 ____
 
@@ -67,3 +75,9 @@ Max Heap :  priority_queue<int> maxHeap;
 
 
 Min Heap : priority_queue<int, vector<int>, greater<int>> minHeap; 
+
+
+
+
+
+
