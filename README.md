@@ -192,7 +192,7 @@ bool compareWords(const string& a, const string& b) {
 
 sort(words.begin(), words.end(), compareWords);
 
-
+_______________________
 
 EG2: 
 Use a set that stores points sorted by x, then y:
@@ -208,7 +208,7 @@ bool comparator(pair<int,int> &point1 , pair<int,int> &point2){
       
 }
 
-
+____________________________
 
 EG3:
 Prioity_QUEUE
