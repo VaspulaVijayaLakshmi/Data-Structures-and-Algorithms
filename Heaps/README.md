@@ -83,5 +83,9 @@ Min Heap : priority_queue<int, vector<int>, greater<int>> minHeap;
 
 
 
+_____________
 
+https://leetcode.com/problems/furthest-building-you-can-reach/description/
+
+https://leetcode.com/problems/minimum-number-of-refueling-stops/description/
 
