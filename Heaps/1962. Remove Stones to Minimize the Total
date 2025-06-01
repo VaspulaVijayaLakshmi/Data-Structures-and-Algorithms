@@ -1,0 +1,57 @@
+class Solution {
+public:
+    int minStoneSum(vector<int>& piles, int k) {
+
+        priority_queue<int> pq;
+
+        for(int i=0;i<piles.size();i++){
+            pq.push(piles[i]);
+        }
+
+        while(k--){
+
+            int stones = pq.top();
+            int remove=ceil(stones/2);
+            pq.pop();
+            
+            pq.push(stones-remove);
+
+        }
+
+        int res=0;
+        while(pq.size()>0){
+
+            res+=pq.top();
+            pq.pop();
+
+        }
+
+        return res;
+
+        
+    }
+};
+
+
+// for min poosible total no of stones - 
+
+
+
+// its MIN no of stons, not MIN no of PILES
+
+// we can remove the piles with larger number of stones  ,
+//  so tht quickly we will remove as manay as poosible.
+
+
+
+// this wouldnt work
+// we can sort the array, remove the elemnts, and apply the operation 'k' times.
+
+
+
+// because -  lets say we remove a pile with larger no of  stones
+// then after removing, there would be removing stones
+// but instead of removing this, we can remove  pile with larger stones
+
+// so everytime, we need to find Larger stone, so we use heap.
+
