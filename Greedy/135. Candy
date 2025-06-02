@@ -1,0 +1,72 @@
+class Solution {
+public:
+    int candy(vector<int>& ratings) {
+       
+      int n=ratings.size();
+      vector<int> left(n,1),right(n,1);
+        
+        for(int i=1;i<n;i++){
+            
+            if(ratings[i]>ratings[i-1])
+              left[i]=left[i-1]+1;
+        }
+        
+        
+        for(int i=n-2;i>=0;i--){
+            
+            if(ratings[i]>ratings[i+1]){
+                right[i]=right[i+1]+1;
+            }
+            
+        }
+        
+        
+        int res=0;
+        for(int i=0;i<n;i++){
+            
+           // cout<<left[i]<<"  "<<right[i]<<"\n";
+            res+=max(left[i],right[i]);
+        }
+            
+        return res;
+    }
+};
+
+
+
+
+
+//we will maintain 2 arrays
+//left and right and intiliaze them with 1,because each child should be given atleast 1 candy
+
+// eg: [1,0,2]
+
+
+//so left = [1,1,1]
+ 
+// [1,0,2]   
+
+// idx=0    1 candy is good                                              [1,1,1]
+// idx=1    1>0 so we should not add candies to it,
+//          (dont delete also)     
+//          (because we need to add candies to idx=0,because             [1,1,1]
+//          its right eleemnt is less than itself
+//          but this can be taken care in right idx)
+
+// idx=2   2>0,so it needs to get extra candy,so we add 1                [1,1,2]
+            
+     
+
+//right = [1,1,1]
+
+
+// idx=2   1 candy is good                                              [1,1,1]
+// idx=1    1>0 so we should not add candies to it,                      [1,1,1]
+// idx=0   1>0,so it needs to get extra candy,so we add 1                [2,1,1]
+
+
+
+// left=[1,1,2]
+// right=[2,1,1]
+
+//so we need to find max of left and right
