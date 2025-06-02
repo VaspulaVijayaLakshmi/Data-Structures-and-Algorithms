@@ -1,0 +1,57 @@
+class Solution {
+public:
+   
+    vector<int> partitionLabels(string s) {
+       int loc,i,j,x;
+       vector<int> ans;
+        
+       for(i=0;i<s.size();i++){
+           
+            loc=s.find_last_of(s[i]);//last occurence of the character
+           
+            for(j=i+1;j<loc;j++){
+                
+                x=s.find_last_of(s[j]);
+                loc=max(loc,x);
+            }
+              
+            ans.push_back(loc-i+1);
+            i=loc;
+        }
+        
+        return ans;
+    }
+};
+
+
+
+//how we are solving this ?
+
+
+//ababcbacadefegdehijhklij
+
+// lets say we are starting with 'a' -> 0
+//     now we need to find the last index of 'a' => 8
+    
+    
+//     //so can we say the end of the string would be 8 
+    
+//     so the string is from 0-8 =>size =9
+    
+    
+//  /now lets go with the next string i.e idx=9 =>'d'
+//     and last idx of d is 14
+//     //so this should be the string
+    
+    
+//     //but if you observe carefully => "defegd"
+//     this is with 'd'
+    
+//     //but at idx 15 we have 'e' => so we dididnt count 'e'
+    
+    
+    
+    
+//     =>thats why what we do is,we strt with 'd' and find last idx of 'd'
+//         and in this range we will see if there are elelemnts if cross this substr
+//         //so we take max of them
