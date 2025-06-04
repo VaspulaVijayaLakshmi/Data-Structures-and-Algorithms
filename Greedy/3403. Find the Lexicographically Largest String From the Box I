@@ -1,0 +1,112 @@
+class Solution {
+public:
+
+    string answerString(string word, int numFriends) {
+        
+        int n = word.length();
+        if(numFriends==1) return word;
+
+
+        int m = n - numFriends + 1;
+        int l=0,r=0;
+        string maxi;
+        
+        // Check all substrings of length 1 up to n - numFriends + 1, and return the lex greatest one.
+        // since here the lexicographic has dif meaning
+
+        // so size doesnt matter
+
+        for(int i=0;i<n;i++)
+        {
+            maxi=max(maxi,word.substr(i,m));
+        }
+ 
+
+// abc
+// bcd
+// cde
+// de   ← only 2 characters
+// e    ← only 1 character
+
+
+// so this will for sizes less than m, also towards the end
+// if letters are vaailbale definetely Ill take m letter ones, but if letters are elss, Ill take whatever is there
+
+        return maxi;
+        
+    }
+};
+
+
+// spilt the string into n parts
+
+
+// eg :  s= dbca , n=2
+
+// d bca
+// db ca
+// dbc a
+
+
+
+// eg :   s= dbca , n=3
+
+// d b ca
+
+// db c a
+
+// dbc a - not possible, to split
+
+
+
+
+// The problem requires us to return the lexicographically maximum substring of a given string 
+// that can be shared among a number of friends. 
+// If there's only one friend, the entire word is the result. 
+// If there are multiple friends, we must divide the word into numFriends parts, 
+// each of at least one character.
+
+// To maximize lexicographic order, we try all possible substrings of 
+// length m = n - numFriends + 1 and return the one that is greatest.
+
+
+// Eg:    s= dbca , n=2
+// n=4-2+1 -> 3 
+
+
+// so we need to find the max length of the split thats possible
+
+
+// lexicographically largest substring starts from largest char
+
+
+// GREEDY
+
+// Why is the maximum any one person can get n - numFriends + 1?
+// You're dividing a string of length n into numFriends contiguous non-empty parts.
+
+// To minimize what others get, and maximize what one person gets, you'd give just 1 character to each of the other numFriends - 1 friends.
+
+// That uses up numFriends - 1 characters.
+
+// The remaining string length is:
+// n - (numFriends - 1) = n - numFriends + 1.
+
+// So, in the most unbalanced (greedy) split, one friend can get at most n - numFriends + 1 characters.
+
+
+
+
+
+
+
+// LEXICOGRAPHIC HERE MEANS
+
+// What This Means for "ann" vs "nn":
+// Compare them character by character:
+
+// "ann" starts with 'a', "nn" starts with 'n'
+
+// 'a' < 'n' → so "ann" < "nn"
+
+// So "nn" is indeed lexicographically greater than "ann"
