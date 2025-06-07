@@ -1,0 +1,69 @@
+class Solution {
+public:
+    string clearStars(string s) {
+
+// map stores the char -  and its indices in string
+        unordered_map<char, vector<int>> mp;
+        unordered_set<int> toRemove;
+
+        for(int i=0;i<s.length();i++){
+
+            if(s[i]=='*'){
+
+                for(char ch='a';ch<='z';ch++){
+
+                    if(mp[ch].size()!=0){
+                         toRemove.insert(mp[ch].back());
+                        //  since tht index is used already pop it from map
+                         mp[ch].pop_back();
+                         break;   
+                    }
+                }
+
+            }
+
+            else{
+                mp[s[i]].push_back(i);
+            }
+        }
+
+        string res="";
+        for(int i=0;i<s.length();i++){
+               if( !toRemove.contains(i) && s[i]!= '*')
+                 res+=s[i];
+        }
+
+
+        return res;
+    }
+};
+
+
+
+
+
+// smallest to the left
+
+
+
+// too complicated
+
+// For every char we need to find smallest to left
+// stack
+
+
+// ______________________
+
+// for very time , a * appears find chars from a-z..if any lement is found, delete it
+
+
+// HASHMAP SOLUTION
+// https://leetcode.com/problems/lexicographically-minimum-string-after-removing-stars/solutions/6818879/simple-c-solution-hash-map-min-heap/
+
+
+
+
+MIN HEAP
+
+
+
