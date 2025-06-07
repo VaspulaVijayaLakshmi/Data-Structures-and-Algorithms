@@ -264,4 +264,28 @@ https://blog.algomaster.io/p/master-graph-algorithms-for-coding
 
 
 
+_______
+
+
+
+Never assume details that aren’t explicitly mentioned in the problem statement.
+
+Common clarifications include:
+
+Are there duplicate values?
+
+Can the input be empty? If so, what should the output be?
+
+Should the solution handle negative numbers?
+
+Should the output maintain the original order of elements?
+
+Is the graph directed or undirected?
+
+Does the input contain only lowercase English letters, or can it have uppercase, digits, or special characters?
+
+What should happen if multiple solutions exist? Should I return any valid solution, or does the problem have specific requirements?
+
+
+
 
