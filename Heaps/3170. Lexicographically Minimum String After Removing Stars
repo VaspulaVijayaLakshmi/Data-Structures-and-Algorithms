@@ -66,4 +66,90 @@ public:
 MIN HEAP
 
 
+class Solution {
+public:
+    string clearStars(string s) {
+
+    //    we need min heap
+    // with custom comparator, if chars are same
+    // we sort based on larger indices
+
+    struct Comparator{
+
+       bool operator()(pair<int,int> &a,pair<int,int> &b){
+
+            if(a.first==b.first){
+                return b.second>a.second;
+
+            }
+
+// this is a min heap, so a only should come first
+            return a.first>b.first;
+        }
+    };
+    
+
+    priority_queue<pair<int,int>, vector<pair<int,int>>, Comparator> pq;
+    unordered_set<int> remove; 
+    for(int i=0;i<s.length();i++){
+
+        if(s[i]=='*'){
+
+
+           if(!pq.empty()){
+            auto top = pq.top();
+            // pr.pop , becase conider tht index alreayd removed for tht give star
+            pq.pop();
+            remove.insert(top.second);
+           }
+        }
+
+        else {
+            pq.push({s[i],i});
+        }
+
+
+    }
+
+    string res;
+    for(int i=0;i<s.length();i++){
+
+        if(s[i]!='*' && !remove.contains(i)){
+            res+=s[i];
+        }
+
+    }
+
+    return res;
+
+    }
+
+};
+
+
+
+
+
+
+
+
+// We need to find the MIN HEAP
+
+// at every star we need to fidn the min char to its left, so min char ot of the chars we already saw
+// now if 2 indices are same, we can remove the one wih the latest index.
+// because we want to form the  lexicigraphically smaller string.
+
+
+// eg: abdac*
+
+// now which one we will remove
+
+// abdc
+// bdac
+
+
+// ******IMP
+// abdc is only smallest string..so we need to keep , latest occuing ones
+
+
 
