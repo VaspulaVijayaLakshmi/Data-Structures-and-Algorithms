@@ -1,0 +1,31 @@
+int maxLen(int a[], int n)
+{
+    // Your code here
+    int sum=0,maxi=0;
+    unordered_map<int,int> mp;
+    for(int i=0;i<n;i++)
+    {
+       sum+=a[i];
+       
+       
+    //   if prefix sum is zero = that means from 0-currIdx - would be the maxlen
+    //  then no.of elements = i+1
+       if(sum==0)
+         maxi = i+1;
+       
+       
+    //   if I have seen tht element before, tht means , we added and subtracted elelemnts
+    // which resulted in sum 0 , so adding lets say 15+0 -> 15
+    
+    // so there was a subarray tht has sum =0
+    
+       if(mp.find(sum) != mp.end())
+         maxi = max(maxi,i-mp[sum]);
+       
+       else
+         mp[a[i]]=i;
+        
+        
+    }
+    return maxi;
+}
