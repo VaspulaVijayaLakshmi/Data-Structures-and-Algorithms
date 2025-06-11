@@ -90,10 +90,10 @@ class Solution {
 // time - 3
 // 25,1 - cant finish
 
+_____________________________
 
 
-
-ERROR : 
+SOLUTION : 
 
 //      Some jobs with later deadlines can be placed in earlier time slots (if those are still free).
 // Your current approach can't handle that at all — because you're not tracking what slots are filled.     
@@ -101,6 +101,94 @@ ERROR :
 
 How It Should Work:
 You need to track which slots (days) are available for scheduling.
+
+
+
+
+
+class Solution {
+public:
+    struct Comparator {
+        bool operator()(pair<int, int>& a, pair<int, int>& b) {
+            return a.first > b.first; // Sort by profit descending
+        }
+    };
+
+    vector<int> jobSequencing(vector<int>& deadline, vector<int>& profit) {
+        int n = deadline.size();
+        vector<pair<int, int>> jobs;
+
+        // Step 1: Pair profit with deadline
+        for (int i = 0; i < n; i++) {
+            jobs.push_back({profit[i], deadline[i]});
+        }
+
+        // Step 2: Sort by profit descending
+        sort(jobs.begin(), jobs.end(), Comparator());
+
+        // Step 3: Find max deadline to know how many slots we need
+        int maxDeadline = *max_element(deadline.begin(), deadline.end());
+        
+        
+        vector<bool> slot(maxDeadline + 1, false); // slot[1..maxDeadline]
+
+
+
+        int totalJobs = 0, totalProfit = 0;
+
+        // Step 4: Schedule each job in the latest available time before its deadline
+        for (auto& job : jobs) {
+            
+            int d = job.second; // deadline
+            
+            
+            // fill this job in whichver slot is empty
+            // start filling from end - end means - not the end ,
+            // from the deadline of the project
+            
+            // eg:lets say maxDealine - 6
+            // but my curr project deadline - 3 -  tht means it can be worked 
+            // on 1/2/3
+            // so I need to start from 3rd slot onwards, lets say 3rd slot is filled, check, 2nd
+            // then check 1st....., until we find any empty slot.
+            
+            
+            
+            // WHy from end?
+            // Why not strat filling from 1....maxDealine
+            
+            // because lets say first project  deadline was 3
+            // and 1st slot is free and i filled this project
+            // next project deadline was 1, but i is filled and i can tit...
+            // so fill from max time we could get
+            
+            
+            // why start filling from end, 
+            for (int t = d; t >= 1; t--) {
+                
+                if (!slot[t]) {
+                    
+                    slot[t] = true; // Mark slot as used
+                    totalJobs++;
+                    totalProfit += job.first;
+                    break;
+                }
+            }
+        }
+
+        return {totalJobs, totalProfit};
+    }
+};
+
+
+
+
+_____________________________
+
+
+
+
+
 
 
 
