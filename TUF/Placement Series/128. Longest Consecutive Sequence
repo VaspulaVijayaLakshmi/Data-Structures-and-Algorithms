@@ -1,0 +1,33 @@
+class Solution {
+public:
+    int longestConsecutive(vector<int>& nums) {
+
+        unordered_set<int> mp(nums.begin(),nums.end());
+        int maxi=0;
+        for (int num : mp) {
+
+            // check if element less than 1 is present
+            // if its present, then dont do anything,
+            // if its not present this is the min no.
+            // for tht sequnce, so until we find
+            // an elemnt tht continuos to this we will keep iterating 
+            int c=0;
+            if(mp.find(num-1) ==  mp.end()){
+
+                int ele=num+1;
+                c++;
+
+                while(mp.find(ele) != mp.end()){
+                    c++;
+                    ele=ele+1;
+                }
+
+                maxi = max(maxi,c);
+            }
+
+        } 
+
+        return maxi;
+        
+    }
+};
