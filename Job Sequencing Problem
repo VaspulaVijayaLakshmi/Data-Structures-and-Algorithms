@@ -1,0 +1,108 @@
+ERROR
+
+
+class Solution {
+  public:
+    struct Comparator{
+        
+        bool operator()(pair<int,int> a,pair<int,int> b){
+            
+            if(a.first==b.first)
+                a.second<  b.second;
+            
+            return a<b;
+            
+        }
+    };
+  
+    vector<int> jobSequencing(vector<int> &deadline, vector<int> &profit) {
+        // code here
+        
+        vector<pair<int,int>> v;
+        for(int i=0;i<deadline.size();i++){
+            v.push_back({profit[i],deadline[i]});
+        }
+        
+        sort(v.begin,v.end(),Comparator());
+        
+        int time=0;
+        
+        int totalProfit=0;
+        int totalJobs=0;
+        for(int i=0;i<v.size();i++){
+            
+            // within deadline
+            if(time>=v[i][1]){
+                totalProfit+=v[i][0];
+                totalJobs++;
+            }
+            
+            time++;
+            
+        }
+        
+        return {totalJobs,totalProfit};
+        
+    }
+};
+
+
+
+// sort by end time
+// ,and try to finish a smany jobs as poosible
+
+
+
+// in these type of scenarios
+
+
+// there are 2 poosibilties
+
+// 1.finish as many jobs as possible, and make profits
+
+
+// or sort by profits
+
+
+// so ill sort by profits, if prfots are same sort by time interval
+
+
+// because if we finish the lest deadline one first, then we can take later deadline ones later
+
+
+// Eg : [2,1,2,1,1]
+// profot =  [100, 19, 27, 25, 15]
+
+
+// [{100,2},{27,2},{25,1},{19,1},{15,1}]
+
+
+
+// time =1
+
+// 100,2 -   i can finish because it will take 1 unit to finsh the time
+//           and deadline is 2 , so ill finish
+          
+
+// time=2
+// 27,2 -  I can finish.
+
+// time - 3
+// 25,1 - cant finish
+
+
+
+
+ERROR : 
+
+//      Some jobs with later deadlines can be placed in earlier time slots (if those are still free).
+// Your current approach can't handle that at all — because you're not tracking what slots are filled.     
+
+
+How It Should Work:
+You need to track which slots (days) are available for scheduling.
+
+
+
+
+
