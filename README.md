@@ -294,7 +294,29 @@ ___________
 
 BoOk:
 
-
 https://github.com/VaspulaVijayaLakshmi/Leetcode_FAANG/tree/main/Books
+
+
+__________
+
+
+
+
+DSU : 
+
+
+
+This is imp in prblms like JOB SEQUENCING PROBLEM
+
+BRODEN YOUR HORIZON :
+
+
+
+find(x) = "Hey, what's the last free day I can use that’s ≤ x?"
+merge(x, x-1) = "Okay, I used day x, so next time don’t return x, return x-1"
+
+
+
+
 
 
