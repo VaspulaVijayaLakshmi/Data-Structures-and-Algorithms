@@ -188,9 +188,174 @@ _____________________________
 
 
 
+DSU  : 
+
+profit =  [100, 90, 80]
+deadline = [3, 2, 1]
+
+
+Processing Job 1 (deadline 3):
+
+Edit
+int avail = find(3); // What is the latest free slot ≤ 3?
+
+find(3):
+    parent[3] = 3 → it's free
+So we schedule it at time 3.
+
+Now time 3 is used → update DSU:
+
+merge(3, 2); // means: now the latest free slot ≤ 3 is 2
+So:
+
+parent[3] = 2
+
+
+_________
+
+
+Processing Job 2 (deadline 2):
+
+int avail = find(2);
+
+find(2):
+    parent[2] = 2 → it's free
+We schedule it at time 2.
+
+Update DSU:
+merge(2, 1); → parent[2] = 1
+
+
+_______
+
+Processing Job 3 (deadline 1):
+
+
+int avail = find(1);
+
+find(1):
+    parent[1] = 1 → it's free
+We schedule it at time 1.
+
+Update DSU:
+
+merge(1, 0); → parent[1] = 0
+
+
+❌ Now all time slots are used
+If a new job comes with deadline = 3:
+
+
+int avail = find(3);
+It will check:
+
+parent[3] = 2
+
+parent[2] = 1
+
+parent[1] = 0 ← No available slot
+
+So avail = 0 → we skip the job.
+
+_____________
 
 
 
+class Solution {
+public:
+    struct Comparator {
+        bool operator()(pair<int, int>& a, pair<int, int>& b) {
+            return a.first > b.first; // Sort by profit descending
+        }
+    };
+
+    vector<int> parent;
+
+    // DSU find with path compression
+    
+//     parent[i] means the latest free time slot ≤ i.
+
+// Initially: parent[i] = i (i.e., all time slots are free).
+    int find(int x) {
+        if (parent[x] == x) return x;
+        return parent[x] = find(parent[x]);
+    }
+
+
+
+    // DSU union
+    void merge(int u, int v) {
+        parent[u] = v;
+    }
+    
+    
+
+    vector<int> jobSequencing(vector<int>& deadline, vector<int>& profit) {
+        int n = deadline.size();
+        vector<pair<int, int>> jobs;
+
+        for (int i = 0; i < n; i++) {
+            jobs.push_back({profit[i], deadline[i]});
+        }
+
+        // Sort by descending profit
+        sort(jobs.begin(), jobs.end(), Comparator());
+
+        // Find max deadline
+        int maxDeadline = *max_element(deadline.begin(), deadline.end());
+
+
+
+
+        // DSU parent initialization
+        parent.resize(maxDeadline + 1);
+        for (int i = 0; i <= maxDeadline; i++) parent[i] = i;
+        
+        
+
+        int totalProfit = 0, totalJobs = 0;
+
+        for (auto& job : jobs) {
+           
+           
+           
+        //   THIS iS the key here  , find the before slot which is free and merge those,both
+            int avail = find(job.second); // Find latest available slot ≤ deadline
+            
+           
+            if (avail > 0) {
+                totalProfit += job.first;
+                totalJobs++;
+                
+                
+                // merge is imp
+                merge(avail, avail - 1); // Mark this slot as used
+            }
+            
+            
+        }
+
+        return {totalJobs, totalProfit};
+    }
+};
+
+
+
+
+// Now suppose:
+
+// Job1 has deadline 4 → find(4) returns 4, assign it there.
+
+// Mark 4 as used → redirect parent[4] = 3
+
+// Job2 has deadline 4 → find(4) → finds 3, assign it → redirect parent[3] = 2
+
+// Job3 has deadline 2 → find(2) → gets 2, assign → parent[2] = 1
+
+// Now if another job comes with deadline 4:
+
+
+// find(4) → 3 → 2 → 1 → available!
 
 
 
