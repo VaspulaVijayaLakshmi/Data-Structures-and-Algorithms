@@ -1,0 +1,79 @@
+class Solution {
+public:
+    vector<vector<int>> fourSum(vector<int>& nums, int target) {
+        
+        int n=nums.size();
+       sort(nums.begin(),nums.end());
+
+       vector<vector<int>> res;
+        for(int i=0;i<=n-4;i++){
+
+            if (i > 0 && nums[i] == nums[i - 1]) continue;
+            
+            for(int j=i+1;j<=n-4+1;j++){
+
+                 if (j > i + 1 && nums[j] == nums[j - 1]) continue;
+
+                // next 2 elements - 2 pointer
+
+                int k=j+1;
+                int l=n-1;
+                while(k<l){
+ 
+                   long long fourSum = (long long)nums[i]+nums[j]+nums[k]+nums[l];
+                  if(fourSum ==target){
+
+                      res.push_back({nums[i],nums[j],nums[k],nums[l]});
+
+                      // SKip duplicates, since we inserted this pair
+                      k++;
+                      l--;
+
+
+                      while(k<l && nums[k]==nums[k-1]) k++;
+                      while(k<l&& nums[l]==nums[l+1]) l--;
+                  }
+
+                  if(fourSum>target) l--;
+
+                  if(fourSum<target) k++;    
+                
+                }
+  
+            }
+
+        }
+
+        return res;
+    }
+};
+
+
+// nums = [1,0,-1,0,-2,2], target = 0
+
+// SO we sort the array
+
+// take i=0,j=i+1,k=j+1
+// [0,0,-2,-1,1,2]
+
+// now 4th element would be in the range k+1 to n
+
+
+// but since the array is sorted we can do - biary search for the 4th eleemnt
+// since we know the sum of nums[i]+nums[j]+nums[k]
+
+
+
+// TC :  sorting - NLOG(N) + 3 pointers  - N^3.log(N) - logN is binarr search  for eveyr pair
+
+
+
+
+
+// Unique quadraplets
+// - since array is sorted skip quadraplets
+// - i+j+k > target - then u can break the loop
+
+
+// - instead of binary search on the numbers tht may/maynt be present, we can do
+// - 2 pointer , since array is sorted 
