@@ -1,0 +1,44 @@
+class Solution {
+public:
+    int numSpecial(vector<vector<int>>& mat) {
+
+        int n=mat.size();
+        int m= mat[0].size();
+
+
+        vector<int> zeroesRow(n,0) , zeroesCol(m,0);
+
+        for(int i=0;i<n;i++){
+            for(int j=0;j<m;j++){
+
+                if(mat[i][j]==0){
+                     zeroesRow[i]++;
+                     zeroesCol[j]++;
+                }
+
+            }
+        }
+
+        int count=0;
+        for(int i=0;i<n;i++){
+            for(int j=0;j<m;j++){
+
+                if(mat[i][j]==1){
+                    if(zeroesRow[i]==m-1 && zeroesCol[j]==n-1)
+                      count++;
+                }
+            }
+        }
+
+        return count;
+
+
+    }
+};
+
+// Preprocessing Step:
+// count zeroes in each row and col
+
+
+// if arr[i][i]==1
+//     if no.of zeroesInRows[]==n-1 && zeroesInCol[]=m-1
