@@ -1,3 +1,8 @@
+SImilar question
+
+https://leetcode.com/problems/difference-between-ones-and-zeros-in-row-and-column/
+
+
 class Solution {
 public:
     int numSpecial(vector<vector<int>>& mat) {
