@@ -107,4 +107,75 @@ public:
 
 // Apply k1 + k2 total operations to reduce these diffs
 
+
+
+
+
+
+
+
+
+
+
+
+
+// APPROACH 2:
+
+class Solution {
+public:
+    long long minSumSquareDiff(vector<int>& nums1, vector<int>& nums2, int k1, int k2) {
+        int n = nums1.size();
+        unordered_map<int, long long> freq;
+        int maxDiff = 0;
+
+        for (int i = 0; i < n; ++i) {
+            int d = abs(nums1[i] - nums2[i]);
+            freq[d]++;
+            maxDiff = max(maxDiff, d);
+        }
+
+        long long k = k1 + k2;
+        
+        // Reduce the highest differences first 
+        for (int i = maxDiff; i > 0 && k > 0; --i) {
+            
+            if (freq[i] == 0) continue;
+
+
+            long long take = min(k, freq[i]);
+            
+            freq[i] -= take;
+
+            freq[i - 1] += take;
+
+
+// Let’s say you have freq[5] = 3.
+// That means there are 3 elements where the current difference between nums1[i] and nums2[i] is 5.
+
+// Suppose you're allowed to make 2 operations (take = 2).
+// You’ll use those 2 operations to reduce 2 of those 5s down to 4. So:
+// You remove 2 from freq[5] → freq[5] -= 2
+// You add 2 to freq[4] → freq[4] += 2
+
+// Hence, 
+
+// freq[i - 1] += take;
+// records that take number of elements now have a new difference of i - 1.
+
+            
+            k -= take;
+        }
+
+
+
+        // Now compute the sum of squares
+        long long result = 0;
+        for (auto& [d, count] : freq) {
+            result += count * 1LL * d * d;
+        }
+
+        return result;
+    }
+};
+
 // Compute the final sum of squares
