@@ -1,0 +1,53 @@
+class Solution {
+public:
+    int firstCompleteIndex(vector<int>& arr, vector<vector<int>>& mat) {
+         
+         int m=mat[0].size();
+         int n=mat.size();
+
+         unordered_map<int,pair<int,int>> mp;
+
+         for(int i=0;i<n;i++){
+            for(int j=0;j<m;j++){
+
+                mp[mat[i][j]] = {i,j};
+            }
+         }
+
+
+         
+         vector<int> rows(n,0),cols(m,0);
+         for(int i=0;i<arr.size();i++){
+
+            auto [x,y]= mp[arr[i]];
+
+            rows[x]++;
+            cols[y]++;
+            
+            // now, we have to check if any of the arr, row/col value has been filled
+            // so we need. to traverse eveyrtime?
+            // no we can keep track of max
+
+
+//             rows[r] == m: means all elements in row r are filled
+//             cols[c] == n: means all elements in column c are filled
+            if(rows[x]==m || cols[y]==n) return i;
+
+
+         }
+
+         return 0;
+    }
+};
+
+
+// unique elemnts
+// HashTable : to map elelennt to idx
+
+// also one more matrix, bool, tht will mark if an idx - row/col has been mapped completely
+
+// but how to check if. row/col has been mapped compltwly, verytime do i need to check if the bool mat if all have been set
+
+
+// how can I find a particular element index in mat in O(1) time?
+// how do I track how many elements painted each row and column?
