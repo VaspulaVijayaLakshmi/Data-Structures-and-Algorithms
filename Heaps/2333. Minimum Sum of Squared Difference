@@ -1,0 +1,110 @@
+// TLE
+
+class Solution {
+public:
+    long long minSumSquareDiff(vector<int>& nums1, vector<int>& nums2, int k1, int k2) {
+      
+      
+     int n = nums1.size();
+    priority_queue<int> pq;
+
+    for(int i=0; i<n; i++)
+        pq.push(abs(nums1[i] - nums2[i]));
+
+
+    int k = k1+k2;
+    while(k > 0){
+       
+        if(pq.top() == 0) break; //don't let numbers be negative
+        
+        int num = pq.top(); 
+        pq.pop();
+
+        // why are we subtracting only one
+        // becuase once we subtract 1 , and push it to queue
+        //  we will find the next greatest elment
+
+        pq.push(num-1);
+        k--;
+    }
+
+    long long res = 0;
+    while(!pq.empty()){
+        long long num = pq.top(); pq.pop();
+        res += (long long) num * num;
+    }
+    return res;
+         
+
+
+           
+    }
+};
+
+
+
+// APPRAOCH : 
+// sort the array
+
+// now we need to find the min diff. 
+
+// Now we will have 3 options:
+
+// 1. Both elements are positive - decrease  if available
+// 2. Both are neg - INCREASE value if available
+// 3. One pos , One neg-  decrease  if availbale
+
+
+
+
+// ALso I guess it would be better to start this proces from last, 
+// because bigger nums should be decreased
+// so as to get min value
+
+// XXXXXXXX - 
+// The prblm is , if we sort we are going to chnage the ordering, 
+// which is not acceptable
+
+
+
+// Now if you have a sorted difference array 2 3 4 5 and K as 5 then what would you reduce minimum like 2 or maximum which is 5?
+
+// If you reduce from start you get 0*0 + 0*0 + 4*4 + 5*5 = 41, 
+// now if you reduce from last then you get 2*2 + 3*3 + 4*4 = 29, 
+// so it is proven that we will remove elements from the maximum.
+
+
+
+// so we will NOT SORT the array, but we need to find the MAX, element
+// so as to reduce the diff, everytime we need to find the max element and reduce by
+// K times, if K is still available we need to find the next bigger element next
+
+
+
+// HEAP, how do we store?
+
+// THIS IS IMP POINT : so, as long as k1 and n1 is available, we can decrease/increase nums1 as many times
+//                     starting with max element
+
+//                     same for k2 and n2, 
+
+
+//                     So does k1/k2 matter? NO
+
+
+
+
+// Goal is to minimize sum of abs(nums1[i]-nums2[j])^2 now will k1 and k2 
+// make a difference if we are minimizing each sum then we can either 
+// do operation on nums1 using k1 or on nums2 using k2 so we are minimizing 
+// each abs(nums[1]-nums[2]) so k1 and k2 does not matter.
+
+
+
+// Compute absolute differences diff[i] = abs(nums1[i] - nums2[i])
+
+// Use a max-heap or frequency map to greedily reduce the largest difference
+
+// Apply k1 + k2 total operations to reduce these diffs
+
+// Compute the final sum of squares
