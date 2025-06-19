@@ -1,0 +1,68 @@
+class Solution {
+public:
+    int numRescueBoats(vector<int>& people, int limit) {
+        
+        sort(people.begin(),people.end());
+        int n = people.size();
+         
+          int i = 0, j = people.size() - 1;
+        int boats = 0;
+
+        while (i <= j) {
+            
+            if (people[i] + people[j] <= limit) {
+                i++;  
+                j--;
+            }
+
+            // Assign a boat to bigger boat and decrement 
+            else j--; 
+
+            
+            boats++;
+        }
+
+        return boats;
+    }
+};
+
+
+// Atmost 2 people
+// Atmost limit
+
+
+
+
+// arr= [3,2,2,1] 
+// limit = 3
+
+// sort
+// -> [1,2,2,3]
+
+// (1,2) (2) (3)
+
+
+// will we take consecutive, elements??
+// Yes we can
+// but as weights grow , the sum of 2 consecutive elements , will be larger and 
+// we would require more boats
+
+// so we will pair - lightweight and heavy weight.
+
+
+
+
+// Use two pointers:
+
+// left starting from the beginning (lightest person),
+// right starting from the end (heaviest person).
+
+// While left <= right:
+
+// If the sum of people[left] + people[right] is less than or equal to the limit, we can pair them in one boat. Increment left and decrement right.
+
+// If they can't be paired (sum exceeds limit), assign the heavier person (people[right]) a separate boat. Only decrement right.
+
+// In both cases, increment the boat count.
+
+
