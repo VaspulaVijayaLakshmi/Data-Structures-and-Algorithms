@@ -1,0 +1,41 @@
+class Solution {
+public:
+    int sumSq(int n){
+        int sum=0;
+
+        while(n){
+
+           int digit =  (n%10);
+           sum+=digit*digit;
+           n=n/10;
+
+        }
+
+        return sum;
+    }
+
+    bool isHappy(int n) {
+
+        if(n==1) return true;
+
+        int slwptr=n,fstptr=sumSq(n);
+
+        while(slwptr!=fstptr){
+
+            slwptr = sumSq(slwptr);
+            fstptr = sumSq(sumSq(fstptr));
+
+            if(fstptr==1) return true;
+
+        }
+
+        return false;
+    
+    }
+};
+
+
+
+// n=19
+// slwptr =  1^2 + 9^2 
+// fstptr =  slwptr - digits , u know souble
