@@ -1,0 +1,28 @@
+//  2966. Divide Array Into Arrays With Max Difference, i.e Greedy + Counting sort.
+
+class Solution {
+public:
+    int partitionArray(vector<int>& nums, int k) {
+
+        int n=nums.size();
+        sort(nums.begin(),nums.end());
+        int c=1;
+
+        
+        int min=nums[0];
+
+        for(int i=1;i<n;i++){
+
+            if(nums[i]-min>k){
+                c++;
+                min=nums[i];   
+            }
+
+        }
+
+        
+
+        return c;
+        
+    }
+};
