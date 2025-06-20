@@ -1,0 +1,53 @@
+class Solution {
+    public int findDuplicate(int[] nums) {
+        int i = 0;
+ /* initially  i = 0;
+ Input     : [3,2,4,2,1]
+ 
+ here nums[0] = 3 is not at its right so if will get executed and it will swap 3 with 4. 
+1st pass   :   [4,2,3,2,1]  // i=0
+
+ here nums[0] = 4 is not at its right so if will get executed and it will swap 4 with 2. 
+2nd pass  :   [2,2,3,4,1] // i=0
+
+ here nums[0] = 2 is at its right so else will get executed and it will i++. 
+3rd pass :     [2,2,3,4,1] //i=1
+
+ here nums[1] = 2 is at its right so else will get executed and it will i++. 
+4th pass :     [2,2,3,4,1] //i=2
+
+ here nums[2] = 3 is at its right so else will get executed and it will i++. 
+5th pass :     [2,2,3,4,1] // i=3
+
+ here nums[3] = 4 is at its right so else will get executed and it will i++. 
+6th pass :     [1,2,3,4,2]//i=4
+
+here , at this pass i = 4 now it will check at 2 is at its right position or not but other 2 is there already so it will return true, so else will get execute, hence our i will get ++ and it will break the loop.  */
+
+while(i < nums.length)
+        {  
+            if(nums[i] != nums[nums[i]-1])
+            {
+                swap(nums,i,nums[i]-1);
+            } 
+            else
+            {   
+                i++;
+            }
+        }
+        //It will check if correct element is at correct index or not if not then return element at wrong index //which value is obivously going to be index+1. **because of the contraint that the elements are in //range [1,n]**.
+        for(int j=0;j<nums.length;j++)
+        {
+            if(nums[j] != j+1)
+                return nums[j];
+        }
+        return nums.length;
+    }
+    void swap(int[] nums,int f,int s)
+    {
+        int tmp = nums[f];
+        nums[f] = nums[s];
+        nums[s] = tmp;
+    }
+}
+
