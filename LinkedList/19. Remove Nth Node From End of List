@@ -1,0 +1,28 @@
+
+class Solution {
+public:
+    ListNode* removeNthFromEnd(ListNode* head, int n) {
+      
+
+    //   A extra node in the beginning if n=sz of linkedlist
+    // that would be the first element - head
+      ListNode* strt = new ListNode(-1);
+      strt->next=head;
+
+      ListNode *fst=strt,*slw=strt;
+
+      for(int i=1;i<=n;i++){
+        fst=fst->next;
+      }
+
+
+        while(fst->next!=NULL){
+            slw=slw->next;
+            fst=fst->next;
+        }    
+
+      slw->next = slw->next->next;
+      return strt->next;
+        
+    }
+};
