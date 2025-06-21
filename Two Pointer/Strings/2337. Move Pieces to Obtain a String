@@ -1,0 +1,80 @@
+class Solution {
+public:
+    bool canChange(string start, string target) {
+
+        int n= start.length();
+        int i=0,j=0;
+
+        while(i<n || j<n){
+
+            while(i < n && start[i] == '_')
+                i++;
+
+            while(j < n && target[j] == '_')
+                j++;
+
+            if(i==n && j==n) return true;    
+
+            // If only one is at the end, mismatch
+            if (i == n || j == n) return false;
+
+            // if the chars are not equal, exit then and there
+            if(start[i] != target[j])
+                 return false;
+
+     
+
+            // if both chars are L
+            // one more contraint
+
+            // if the L idx in target > L idx in start
+            // I cant move 'L' to right, so I cannot move.
+
+            // this is in scenarios where
+            // start   =  __L__R.... 
+            // target  =  ___L__R
+
+            // now I canot move L to right in start right
+            if(start[i]=='L') {
+
+                if(j > i)
+                   return false;
+
+            }
+
+            else if(start[i]=='R'){
+
+// here its reverse
+                if(i>j)
+                  return false;
+
+            }
+
+
+            i++;
+            j++;  
+
+        }
+
+        return true;
+    }
+};
+
+
+// Key Observations :
+
+// 'L' can move to the left only if there is a blank space directly to its left
+// 'R' can move to the right only if there is a blank space directly to its right.
+
+
+
+// so I can move from right to left
+// if there is any L, then I should not see an R to its left.
+// because That L and R cant be moved.
+
+
+// Now the questions is can we convert start to target
+// ANY NUMBER OF OPERATIONS
+
+
+// That means the SEQUENCE and TYPES of characters (L and R) must match.
