@@ -1,0 +1,38 @@
+Implement a class MovingAverage:
+
+Constructor: MovingAverage(int size)
+Method: double next(int val) — adds the next value and returns the current moving average of the last size values.
+
+
+
+
+Use a queue to track the last size elements.
+Use a running sum to calculate the average efficiently.
+When the queue size exceeds size, pop the oldest element and subtract it from the sum.
+
+
+
+class MovingAverage {
+private:
+    queue<int> window;
+    int maxSize;
+    double sum;
+
+public:
+    MovingAverage(int size) {
+        maxSize = size;
+        sum = 0;
+    }
+
+    double next(int val) {
+        if (window.size() == maxSize) {
+            sum -= window.front();
+            window.pop();
+        }
+
+        window.push(val);
+        sum += val;
+
+        return sum / window.size();
+    }
+};
