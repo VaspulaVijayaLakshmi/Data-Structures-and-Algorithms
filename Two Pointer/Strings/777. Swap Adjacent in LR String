@@ -1,0 +1,65 @@
+// 2337. Move Pieces to Obtain a String
+
+class Solution {
+public:
+    bool canTransform(string start, string target) {
+        
+        int n= start.length();
+        int i=0,j=0;
+
+        while(i<n || j<n){
+
+            while(i < n && start[i] == 'X')
+                i++;
+
+            while(j < n && target[j] == 'X')
+                j++;
+
+            if(i==n && j==n) return true;    
+
+            // If only one is at the end, mismatch
+            if (i == n || j == n) return false;
+
+            // if the chars are not equal, exit then and there
+            if(start[i] != target[j])
+                 return false;
+
+     
+
+            // if both chars are L
+            // one more contraint
+
+            // if the L idx in target > L idx in start
+            // I cant move 'L' to right, so I cannot move.
+
+            // this is in scenarios where
+            // start   =  __L__R.... 
+            // target  =  ___L__R
+
+            // now I canot move L to right in start right
+            if(start[i]=='L') {
+
+                if(j > i)
+                   return false;
+
+            }
+
+            else if(start[i]=='R'){
+
+// here its reverse
+                if(i>j)
+                  return false;
+
+            }
+
+
+            i++;
+            j++;  
+
+        }
+
+        return true;
+
+
+    }
+};
