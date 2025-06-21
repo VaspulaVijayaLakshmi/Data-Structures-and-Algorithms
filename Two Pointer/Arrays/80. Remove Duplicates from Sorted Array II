@@ -1,0 +1,40 @@
+class Solution {
+public:
+    int removeDuplicates(vector<int>& nums) {
+        
+        int n=nums.size();
+        if(n<=2) return n;
+        int pos=0;
+
+        for(int j=0;j<n;j++){
+            
+            // why cant i compare with nums[j] with nums[j-2]
+            // consider these scenarios - [1,1,1,1,1,2]
+
+            // so we will be at 4 index and we check if nums[4]!=nums[2]
+            // this is not what we want , check if the number we are going to replace
+            // is not same as the 2 elemnts before the "CORRECT" idx.
+
+            // slow pointer indicates the position to overwrite.
+        
+            if(j<2 || nums[j] != nums[pos-2]){
+                nums[pos] = nums[j];
+                 pos++;
+            }
+ 
+        }
+
+        return pos;
+    }
+};
+
+// Two-pointer approach
+
+// We use two pointers:
+
+// i is the slow pointer indicating the position to overwrite.
+// j is the fast pointer iterating over the array.
+
+
+
+
