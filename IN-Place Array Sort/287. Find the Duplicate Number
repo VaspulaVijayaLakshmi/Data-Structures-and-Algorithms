@@ -1,0 +1,33 @@
+class Solution {
+public:
+    int findDuplicate(vector<int>& nums) {
+        int n = nums.size();
+        int i = 0;
+
+        while (i < n) {
+            if (nums[i] != nums[nums[i] - 1]) {
+                swap(nums, i, nums[i] - 1);
+            } else {
+                i++;
+            }
+        }
+
+        for (int i = 0; i < n; i++) {
+            if (nums[i] != i + 1) {
+                return nums[i]; //  Return duplicate value, not index
+            }
+        }
+
+        return -1; // Fallback (won't hit due to problem constraint)
+    }
+
+private:
+    void swap(vector<int>& nums, int f, int s) {
+        int tmp = nums[f];
+        nums[f] = nums[s];
+        nums[s] = tmp;
+    }
+};
+
+
+// There is 1 duplicate integer - so we cant XOR
