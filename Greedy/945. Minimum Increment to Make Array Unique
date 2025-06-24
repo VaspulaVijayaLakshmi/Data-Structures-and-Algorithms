@@ -1,0 +1,61 @@
+class Solution {
+public:
+    int minIncrementForUnique(vector<int>& nums) {
+
+        sort(nums.begin(),nums.end());
+        int n=nums.size(),c=0;
+        int op=0;
+
+        int prev=nums[0];
+        for(int i=1;i<n;i++){
+
+            if(nums[i]>nums[i-1]){
+                prev=nums[i];
+            }  
+
+            else{
+
+                prev=prev+1;
+                // cout<<prev<<" "<<nums[i]<<"\n";
+               op+=(prev -nums[i]);
+               nums[i]=prev;
+            }
+
+        }
+
+        return op++;
+    
+    }
+};
+
+
+// [we need to keep count of repetive]
+
+// [3,2,1,2,1,7]
+
+// [3 - 1]
+// [2 - 2]
+// [1 - 2]
+// [7 - 1]
+
+// we need to change 1 - 1 and 1 - 2
+
+// so we pick 1 -  change it to (1+1-2) and see if 2 is present  yes, then check (2+1-3) , 3 present , 4- yes, so 3 moves
+
+// we can pick 2 - change it to 3, present, change to 4, change it to 5 not present  - 3 kmoves
+
+// so total 6 moves
+
+
+
+ 
+// SO this is brute force..
+
+// sorting the array would help us, as we would know each number would be
+//  increasing and checking would be eaiser?
+
+// and we wouldnt need hashmap also
+
+// sorting works here but doesnot work in 
+
+// Minimum Operations to Make the Array Increasing - prblm
