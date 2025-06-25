@@ -1,0 +1,111 @@
+// // TLE
+// class Solution {
+// public:
+
+//     int recOperations(vector<int> &nums, int strt, int end, int x, int sum, int op) {
+        
+//         // if sum has reached to x, then return operations
+//         if (sum == x) return op;
+
+//         // if sum exceeds or no elements left
+//         if (sum > x || strt > end) return -1;
+
+//         int pickLeft = INT_MAX, pickRight = INT_MAX;
+
+//         // pick from left
+//         if (sum + nums[strt] <= x) {
+//             int leftOps = recOperations(nums, strt + 1, end, x, sum + nums[strt], op + 1);
+//             if (leftOps != -1) pickLeft = leftOps;
+//         }
+
+//         // pick from right
+//         if (sum + nums[end] <= x) {
+//             int rightOps = recOperations(nums, strt, end - 1, x, sum + nums[end], op + 1);
+//             if (rightOps != -1) pickRight = rightOps;
+//         }
+
+//         int ans = min(pickLeft, pickRight);
+//         return (ans == INT_MAX) ? -1 : ans;
+//     }
+
+//     int minOperations(vector<int>& nums, int x) {
+//         return recOperations(nums, 0, nums.size() - 1, x, 0, 0);
+//     }
+// };
+
+
+// TLE
+// class Solution {
+// public:
+//     int minOperations(vector<int>& nums, int x) {
+//         return dfs(nums, 0, nums.size() - 1, x, 0);
+//     }
+
+// private:
+//     int dfs(vector<int>& nums, int left, int right, int x, int ops) {
+//         if (x == 0) return ops;
+//         if (x < 0 || left > right) return -1;
+
+//         int pickLeft = dfs(nums, left + 1, right, x - nums[left], ops + 1);
+//         int pickRight = dfs(nums, left, right - 1, x - nums[right], ops + 1);
+
+//         if (pickLeft == -1 && pickRight == -1) return -1;
+//         if (pickLeft == -1) return pickRight;
+//         if (pickRight == -1) return pickLeft;
+
+//         return min(pickLeft, pickRight);
+//     }
+// };
+
+
+
+//  simply reframing the question, we can come up with an O(n)
+//  complexity solution. 
+ 
+//  The difficulty in this question arises from deciding whether to 
+//  choose the left or the right element to remove at any given point. 
+//  However, while we're removing elements from the array, we're definitely going to be letting some elements remain as well. 
+//  In particular, the middle elements.
+
+// Therefore, to find the minimum number of elements to remove, we can find the maximum number of elements to not remove!
+
+// we focus on finding the longest subarray in the middle. One main thing to note is that our subarray should sum to sum - x (where sum is the sum of all elements in our array).
+
+
+//  https://leetcode.com/problems/minimum-operations-to-reduce-x-to-zero/solutions/2136570/change-your-perspective-java-explanation/
+
+
+class Solution {
+public:
+    int minOperations(vector<int>& nums, int x) {
+        
+        int sum=0;
+        for(int i=0;i<nums.size();i++)
+         sum+=nums[i];
+
+
+        int r=0,l=0;
+        int currSum=0;
+        int maxLen=-1;
+
+        while(r<nums.size()){
+
+            currSum+=nums[r];
+
+            while(l<=r && currSum>sum-x)
+                currSum=currSum-nums[l++];
+
+            if(currSum==sum-x) maxLen= max(maxLen,r-l+1); 
+            r++;   
+
+        } 
+
+
+        // maxELements would be no.of elements we want to keep
+        // we need to return the no of elemnts to be removed 
+
+        return maxLen == -1 ? -1 : nums.size()-maxLen;
+
+    }
+
+};
