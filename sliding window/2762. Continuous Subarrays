@@ -1,0 +1,44 @@
+class Solution {
+public:
+    long long continuousSubarrays(vector<int>& nums) {
+        int n = nums.size();
+        int l = 0;
+        long long count = 0;
+        multiset<int> ms;
+
+        for (int r = 0; r < n; ++r) {
+            ms.insert(nums[r]);
+
+            // Shrink window until max - min <= 2
+            while ( l<r && (*ms.rbegin() - *ms.begin()) > 2) {
+                ms.erase(ms.find(nums[l])); // erase one occurrence of nums[l]
+                l++;
+            }
+
+            // All subarrays ending at r and starting from [l...r]
+            count += (r - l + 1);
+        }
+
+        return count;
+    }
+};
+
+
+
+// Input: nums = [5,4,2,4]
+// Output: 8
+
+// -> [5]  r-l+1 = (0-0+1=1)  - [5]
+
+// -> [5,4] 1-0+1=2 = [5,4] , [4]
+ 
+
+// -> [5,4,2] -> min - 2 , max - 5 = max-min = (5-2) =3
+// -> [4,2] -> l++
+
+// -> [4,2,4] - min-2, max-4 =  (r-l+1) -> (3-1+1) - 3
+                
+//                 [2],[4]
+//                 [4,2],[2,4] 
+//                 [4,2,4]
+
