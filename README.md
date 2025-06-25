@@ -1,3 +1,6 @@
+#Motive : https://github.com/VaspulaVijayaLakshmi/Leetcode_FAANG/blob/main/Point%20To%20Yourself.md
+
+
 #LC 350 Problems
 https://docs.google.com/spreadsheets/d/1EEYzyD_483B-7CmWxsJB_zycdv4Y5dxnzcoEQtaIfuk/edit?gid=329533698#gid=329533698
 
