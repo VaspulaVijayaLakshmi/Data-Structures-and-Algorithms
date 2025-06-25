@@ -1,0 +1,72 @@
+// https://leetcode.com/problems/minimum-operations-to-reduce-x-to-zero/description/
+
+class Solution {
+public:
+    int takeCharacters(string s, int k) {
+        int n = s.size();
+        vector<int> total(3, 0);
+
+        for (char ch : s)
+            total[ch - 'a']++;
+
+        // Check if it's possible to take at least k of each
+        for (int i = 0; i < 3; ++i)
+            if (total[i] < k)
+                return -1;
+
+
+        // Sliding window to find max length substring to keep (middle part)
+        int maxLen = 0;
+        vector<int> count(3, 0);
+        int l = 0;
+
+
+        for (int r = 0; r < n; ++r) {
+            count[s[r] - 'a']++;
+
+            // Shrink window if it exceeds allowed chars to keep
+            while (count[0] > total[0] - k || 
+                   count[1] > total[1] - k || 
+                   count[2] > total[2] - k) {
+                count[s[l] - 'a']--;
+                l++;
+            }
+
+
+            maxLen = max(maxLen, r - l + 1);
+        }
+
+        return n - maxLen;
+    }
+};
+
+
+
+// min operations
+// recursion i can use to pick elements
+
+
+
+// thinking of it in reverse
+// Focus on finding the largest substring to remove so that after removing it, every character ('a', 'b', 'c') 
+// will appear at least 𝑘 times in the remaining string.
+
+
+// each element should be repeated K elemenets
+
+// so we count the number of occurences of all elements
+// s = "aabaaaacaabc", k = 2
+
+// [a-8]
+// [b-2]
+// [c-2]
+
+// so the thing is if any of he occr of char is <k , 
+// then we cant find return -1
+
+
+
+
+// tatal chars = need to keep + need to remove
+
+// total chars - need to remove = need to keep 
