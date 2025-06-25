@@ -1,0 +1,39 @@
+class Solution {
+public:
+    long long maximumSubarraySum(vector<int>& nums, int k) {
+        int n = nums.size();
+        unordered_map<int, int> freq;
+        long long subSum = 0, maxSum = 0;
+        int l = 0;
+
+        for (int r = 0; r < n; ++r) {
+            freq[nums[r]]++;
+            subSum += nums[r];
+
+            // Shrink window if duplicate element appears
+            while (freq[nums[r]] > 1) {
+                freq[nums[l]]--;
+                subSum -= nums[l];
+                l++;
+            }
+
+            // Check if current window size is exactly k
+            if (r - l + 1 == k) {
+                maxSum = max(maxSum, subSum);
+
+                // Move left forward to make room for next window
+                freq[nums[l]]--;
+                subSum -= nums[l];
+                l++;
+            }
+        }
+
+        return maxSum;
+    }
+};
+
+
+
+// subarray of sum K - fixed window
+// unique elements
+// max sum subarray
