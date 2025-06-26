@@ -1,94 +1,47 @@
-C++ STL Data Structures Cheat Sheet
-🔁 std::list
-Type: Doubly Linked List
+## C++ STL Containers Reference
 
-Key Features:
+### std::list
+- Doubly linked list (internal data structure)
+- No random access (no [] operator)
+- Fast insertion/deletion at beginning, middle, end
 
-Fast insertion/deletion from both ends and middle
+### std::deque
+- Double-ended queue
+- Fast insertion/deletion at both ends
+- Supports random access (operator[])
 
-❌ No random access (no [])
+### std::queue
+- FIFO (First In First Out)
+- Push at back, pop from front
+- No random access
+- Internally uses std::deque
 
-Use When: Frequent insert/delete in the middle of the container
+### std::set
+- Stores unique elements
+- Sorted order (internally Red-Black Tree)
+- O(log n) for insert/search/delete
 
-🟦 std::deque
-Type: Double-Ended Queue
+### std::multiset
+- Like std::set, but allows duplicate elements
+- Sorted order
+- O(log n) for insert/search/delete
 
-Key Features:
+### std::unordered_set
+- Stores unique elements
+- No order maintained
+- Uses hash table internally
+- Average O(1) for insert/search/delete
+- Worst-case O(n) in case of hash collisions
 
-Fast insertion/deletion from both front and back
+### std::map
+- Stores key-value pairs
+- Keys are unique and sorted
+- Internally implemented as Red-Black Tree
+- O(log n) for insert/search/delete
 
-✅ Supports random access ([])
-
-Use When: Need dynamic array behavior + efficient front operations
-
-📤 std::queue
-Type: FIFO Queue
-
-Internal DS: Uses std::deque
-
-Key Features:
-
-Push at back, pop from front
-
-❌ No direct access to elements
-
-Use When: First-in-first-out processing (e.g., BFS, job queues)
-
-📘 std::set
-Type: Ordered Set (Balanced BST – Red-Black Tree)
-
-Key Features:
-
-Stores unique elements in sorted order
-
-O(log n) for insert/search/delete
-
-Use When: Need sorted unique elements with efficient lookups
-
-📗 std::multiset
-Type: Ordered Set with Duplicates
-
-Internal DS: Red-Black Tree
-
-Key Features:
-
-Stores duplicate elements in sorted order
-
-O(log n) for insert/search
-
-Use When: Need sorted elements and allow duplicates
-
-📙 std::unordered_set
-Type: Unordered Set (Hash Table)
-
-Key Features:
-
-Stores unique elements (no duplicates)
-
-Average case O(1) insert/search/delete
-
-❌ Unordered
-
-Use When: Fast lookup without needing order
-
-📕 std::map
-Type: Ordered Key-Value Store (Red-Black Tree)
-
-Key Features:
-
-Stores key-value pairs with sorted keys
-
-O(log n) for insert/search/delete
-
-Use When: Need mapping with sorted keys
-
-📒 std::unordered_map
-Type: Unordered Key-Value Store (Hash Table)
-
-Key Features:
-
-Stores key-value pairs with no order
-
-Average O(1) insert/search/delete
-
-Use When: Fast lookup, key order not required
+### std::unordered_map
+- Stores key-value pairs
+- Keys are unique, no order maintained
+- Internally uses hash table
+- Average O(1) for insert/search/delete
+- Worst-case O(n) if many hash collisions
