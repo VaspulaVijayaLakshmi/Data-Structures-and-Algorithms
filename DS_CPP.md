@@ -142,7 +142,7 @@ This improves performance if you know the approximate size.
 - Each bucket holds a **linked list** (or `forward_list`) of key-value pairs that hash to the same index.
 
 ```text
-// Visual representation:
+
 
 bucket[0] → empty
 bucket[1] → (5, "A")
