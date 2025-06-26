@@ -166,4 +166,57 @@ bucket[3] → empty
 
 
 
+###DEQUEUE
+
+## Why does std::deque support random access, even though it's a double-ended queue?
+
+In theoretical data structures, a double-ended queue (deque) only supports fast insertion and deletion at both ends — it does not require random access.
+
+However, `std::deque` in C++ is designed as a practical, flexible container:
+
+- `std::deque` = efficient double-ended operations + fast random access
+- It behaves like a hybrid between `std::vector` and `std::list`
+
+---
+
+## std::deque in C++
+
+`std::deque` is more than just a traditional double-ended queue. It is a general-purpose sequence container like `vector`, but optimized differently.
+
+In addition to front/back operations, it supports:
+
+- `operator[]`
+- `.at()`
+- Iterators with random access capability
+
+---
+
+## How is random access possible?
+
+Internally, `std::deque` is not implemented as:
+
+- A linked list
+- A single contiguous array (like `vector`)
+
+Instead, it uses a **map of fixed-size memory blocks**, often called a **segmented array**.
+
+---
+
+### Internal Structure (Conceptual)
+
+
+Map (array of pointers):
++----+----+----+----+
+| B1 | B2 | B3 | B4 |
++----+----+----+----+
+
+Each Bx is a fixed-size block (e.g., 64 elements)
+To access deque[i], the implementation:
+
+Computes:
+
+Which block: i / block_size
+
+Offset within that block: i % block_size
+
 
