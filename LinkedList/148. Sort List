@@ -1,0 +1,67 @@
+Given the head of a linked list, return the list after sorting it in ascending order.
+
+Input: head = [4,2,1,3]
+Output: [1,2,3,4]
+
+Input: head = [-1,5,3,4,0]
+Output: [-1,0,3,4,5]
+
+Input: head = []
+Output: []
+
+
+class Solution {
+public:
+    ListNode* merge(ListNode* first,ListNode* second){
+        
+        ListNode* res=new ListNode(-1); 
+        ListNode* temp=res;
+        
+        while(first!=NULL && second!=NULL){
+            
+            if(first->val < second->val){
+                temp->next=first;
+                first=first->next;
+            }
+            
+            else{
+                temp->next=second;
+                second=second->next;
+            }
+            
+            temp=temp->next;
+        }
+        
+        if(first!=NULL)  temp->next=first;
+        if(second!=NULL) temp->next=second;
+        
+        return res->next;
+        
+    }
+    
+    
+    
+    ListNode* sortList(ListNode* head) {
+        if(head==NULL || head->next==NULL) return head;
+        
+        ListNode* slw=head,*fst=head,*prev=NULL;
+        
+        // step 1. cut the list to two halves
+        while(fst!=NULL && fst->next!=NULL){
+            prev=slw;
+            slw=slw->next;
+            fst=fst->next->next;
+        }
+        
+        prev->next=NULL;
+        
+        // step 2. sort each half
+        ListNode* l1=sortList(head);
+        ListNode* l2=sortList(slw);
+        
+         // step 3. merge l1 and l2
+         return merge(l1,l2);
+        
+        
+    }
+};
