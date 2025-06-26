@@ -73,6 +73,8 @@ Balanced trees (like Red-Black Trees) **keep height low**, ensuring operations s
 ---___
 
 
+
+
 ##  std::unordered_map (C++ STL)
 
 
@@ -163,21 +165,12 @@ bucket[3] → empty
 
 > Worst case happens if all elements hash to the same bucket (bad hash function or malicious input).
 
+________________
+__________________
 
 
+## DEQUEUE
 
-###DEQUEUE
-
-## Why does std::deque support random access, even though it's a double-ended queue?
-
-In theoretical data structures, a double-ended queue (deque) only supports fast insertion and deletion at both ends — it does not require random access.
-
-However, `std::deque` in C++ is designed as a practical, flexible container:
-
-- `std::deque` = efficient double-ended operations + fast random access
-- It behaves like a hybrid between `std::vector` and `std::list`
-
----
 
 ## std::deque in C++
 
@@ -190,6 +183,21 @@ In addition to front/back operations, it supports:
 - Iterators with random access capability
 
 ---
+
+
+## Why does std::deque support random access, even though it's a double-ended queue?
+
+In theoretical data structures, a double-ended queue (deque) only supports fast insertion and deletion at both ends — it does not require random access.
+
+However, `std::deque` in C++ is designed as a practical, flexible container:
+
+- `std::deque` = efficient double-ended operations + fast random access
+- It behaves like a hybrid between `std::vector` and `std::list`
+
+---___
+
+
+
 
 ## How is random access possible?
 
@@ -242,10 +250,11 @@ map[block_index][offset_in_block]
 
 
 ___________________
+___________________
 
 
 
-###QUEUE :
+## QUEUE :
 
 ### Summary
 
