@@ -239,3 +239,18 @@ map[block_index][offset_in_block]
 ```
 
 
+
+
+___________________
+
+
+
+###QUEUE :
+
+### Summary
+
+- `std::queue` is a **wrapper**, not a new data structure
+- Implements FIFO using `std::deque` by default
+- No iterators, no random access (`operator[]` is not available)
+- Use it when you need a simple queue interface with fast front/back operations
+
