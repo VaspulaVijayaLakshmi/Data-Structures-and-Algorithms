@@ -205,18 +205,37 @@ Instead, it uses a **map of fixed-size memory blocks**, often called a **segment
 ### Internal Structure (Conceptual)
 
 
+```
 Map (array of pointers):
 +----+----+----+----+
 | B1 | B2 | B3 | B4 |
 +----+----+----+----+
 
-Each Bx is a fixed-size block (e.g., 64 elements)
-To access deque[i], the implementation:
+Each block Bx is a fixed-size array (e.g., 64 elements)
+```
 
-Computes:
+---
 
-Which block: i / block_size
+### How `deque[i]` Works
 
-Offset within that block: i % block_size
+To access an element by index:
+
+1. Compute which block the index falls into:
+
+```
+block_index = i / block_size
+```
+
+2. Compute offset within that block:
+
+```
+offset_in_block = i % block_size
+```
+
+3. Access the element at:
+
+```
+map[block_index][offset_in_block]
+```
 
 
