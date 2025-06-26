@@ -70,79 +70,98 @@ Each node in the Red-Black Tree contains:
 
 Balanced trees (like Red-Black Trees) **keep height low**, ensuring operations stay efficient (logarithmic).
 
----
+---___
+
 
 ##  std::unordered_map (C++ STL)
 
+
 ```cpp
 unordered_map<int, string> m;
+```
 
+Even though the map is empty at this point, it has already allocated some **initial number of buckets** internally.
 
+---
 
+###  Load Factor
 
-___________________________________
-
-
-
-###Unordered_map
-
-
-unordered_map<int, string> m;
-
-At this point, even though it's empty, the unordered map has already allocated some initial number of buckets.
-
-
+```
 Load Factor = size / bucket_count
+```
 
+- **`size`** → Number of key-value pairs currently stored in the `unordered_map`.
+- **`bucket_count`** → Number of allocated "slots" or "bins" for hashing.
 
-What is size?
-size = Number of key-value pairs currently stored in the unordered_map.
+---
 
+### Key Concepts
 
-What is bucket_count?
-bucket_count = Number of available buckets (i.e., "slots" or "bins" in the internal hash table array).
+- On every `insert()`, **a new slot is not created**.
+  - Creating buckets is expensive.
+  - Instead, the unordered_map starts with a **default bucket count** (usually 8).
+- As you insert more items:
+  - The `load_factor` increases.
+  - Once it crosses a threshold (e.g., 1.0), the map **rehashes**:
+    - Increases the number of buckets.
+    - Redistributes all existing elements into the new bucket array.
 
+---
 
-So each time we insert an element the new slot is not added , becaise its an expensive oepration, it would be given some random defaukt size.
+###  Example
 
-Once the size hits or once the load factor hits tht means there are possibilities of collisions, the map rehashes:
-
-It increases bucket_count
-Redistributes all existing entries into new buckets
-
-
+```cpp
 unordered_map<int, int> m;
+
 cout << "Initial size: " << m.size() << endl;
 cout << "Initial bucket count: " << m.bucket_count() << endl;
 
+// Sample Output:
+// Initial size: 0
+// Initial bucket count: 8
+```
 
+---
 
-Initial size: 0
-Initial bucket count: 8
+###  Pre-Allocating Buckets
 
+You can **reserve** space in advance to avoid frequent rehashing:
 
-
-You can pre-allocate buckets using reserve():
-
+```cpp
 unordered_map<int, int> m;
-m.reserve(1000);  // reserve enough buckets for 1000 elements
+m.reserve(1000);  // Pre-allocate enough buckets for ~1000 elements
+```
 
+This improves performance if you know the approximate size.
 
-the underlying bucket array is conceptually similar to a dynamic array
+---
 
+###  Internal Structure
 
+- The underlying **bucket array** is conceptually like a **dynamic array**.
+- Each bucket holds a **linked list** (or `forward_list`) of key-value pairs that hash to the same index.
 
+```text
+// Visual representation:
 
+bucket[0] → empty
+bucket[1] → (5, "A")
+bucket[2] → (18, "B") → (34, "C")  ← collision: separate chaining
+bucket[3] → empty
+...
+```
 
+---
 
+###  Performance
 
+| Operation | Average Time | Worst Case |
+|-----------|--------------|-------------|
+| Insert    | O(1)         | O(n)        |
+| Search    | O(1)         | O(n)        |
+| Delete    | O(1)         | O(n)        |
 
-
-
-
-
-
-
+> Worst case happens if all elements hash to the same bucket (bad hash function or malicious input).
 
 
 
