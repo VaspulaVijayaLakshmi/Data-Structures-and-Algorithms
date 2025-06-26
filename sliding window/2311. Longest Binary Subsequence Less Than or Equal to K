@@ -1,0 +1,74 @@
+class Solution {
+public:
+    int longestSubsequence(string s, int k) {
+        int n = s.size();
+        int cnt = 0;
+        long long val = 0;
+        int power = 0;
+
+        for (int i = n - 1; i >= 0; --i) {
+
+            // the subsequnce can have leading zeroes
+            
+            if (s[i] == '0') 
+                cnt++;
+            
+            else{ 
+
+                // Also this is a subsequnce
+
+            if (power < 32 && (val + (1LL << power)) <= k) {
+                    val += (1LL << power);
+                    cnt++;    
+            }
+
+            }
+
+
+            power++;
+
+        }
+
+
+        return cnt;
+    }
+};
+
+
+
+// We are given a binary string s and a number k. Our goal is to find the longest subsequence (not substring) of s that, when interpreted as a binary number, is less than or equal to k.
+
+// Key Observations:
+// Zeros are cheap: A '0' contributes nothing to the value but increases the subsequence length. So, we should always include zeros.
+// Ones increase value: A '1' at position i (from the right) contributes 2^i. So we must be selective about including '1's.
+// We can greedily add ones from the least significant bit to the most significant bit as long as the total value stays <= k.
+
+
+
+// Approach
+
+
+// cnt = 0: Count of characters we can include.
+// sum = 0: Accumulated binary value of selected bits.
+// bits = floor(log2(k)) + 1: Max bit-length of any binary number ≤ k.
+
+
+// Traverse the string s from the end (right to left, least significant to most significant bit):
+
+// If the character is '0': always include it → cnt++
+
+// If the character is '1':
+
+// Only include it if:
+
+// It’s within the valid bit-length (i < bits).
+// Including it doesn’t make sum > k.
+// Return cnt: the count of characters included in the longest valid subsequence.
+
+
+
+
+
+
+
+// https://leetcode.com/problems/longest-binary-subsequence-less-than-or-equal-to-k/solutions/6886036/greedy-but-smart-longest-binary-subsequence-k-explained-fully-c-java-py-js/?envType=daily-question&envId=2025-06-26
