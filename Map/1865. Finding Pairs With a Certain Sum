@@ -1,0 +1,48 @@
+class FindSumPairs {
+private:
+    vector<int> n1, n2;
+    unordered_map<int, int> m;
+
+public:
+    FindSumPairs(vector<int>& nums1, vector<int>& nums2) {
+        n1 = nums1;
+        n2 = nums2;
+        for (int x : n2) {
+            m[x]++;
+        }
+    }
+
+    void add(int i, int v) {
+        m[n2[i]]--;
+        n2[i] += v;
+        m[n2[i]]++;
+    }
+
+    int count(int t) {
+        int c = 0;
+        for (int x : n1) {
+            c += m[t - x];
+        }
+        return c;
+    }
+};
+
+
+// 1. Initialization
+// Store nums1 and nums2 in the class.
+// Create a frequency map (HashMap) for nums2 to track how many times each number appears.
+
+
+// 2. Add Operation (add(index, val))
+// Step 1: Decrease the count of the old value at nums2[index] in the frequency map.
+// Step 2: Update nums2[index] += val.
+// Step 3: Increase the count of the new value in the frequency map.
+
+
+// 3. Count Operation (count(target))
+// Initialize a counter total = 0.
+// For each number in nums1:
+// Calculate its complement (target - num).
+// Check how many times this complement appears in nums2 (using the frequency map).
+// Add this count to total.
+// Return total.
