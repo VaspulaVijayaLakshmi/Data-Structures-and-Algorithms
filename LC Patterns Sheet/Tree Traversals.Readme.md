@@ -17,3 +17,8 @@ Finding	235. Lowest Common Ancestor of a Binary Search Tree, 236. Lowest Common 
 
 Pattern 18: Tree - Serialization and Deserialization	
 297. Serialize and Deserialize Binary Tree, 572. Subtree of Another Tree, 652. Find Duplicate Subtrees
+
+_________________________
+
+
+114. Flatten Binary Tree to Linked List
