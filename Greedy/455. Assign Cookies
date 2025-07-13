@@ -1,0 +1,31 @@
+#include <vector>
+#include <algorithm>
+
+class Solution {
+public:
+    int findContentChildren(std::vector<int>& g, std::vector<int>& s) {
+        std::sort(g.begin(), g.end());  // greed factors
+        std::sort(s.begin(), s.end());  // cookie sizes
+
+        int i = 0, j = 0, happy = 0;
+
+        while (i < g.size() && j < s.size()) {
+            if (s[j] >= g[i]) {
+                happy++;
+                i++;
+                j++;
+            } else {
+                j++;  // Try next bigger cookie
+            }
+        }
+
+        return happy;
+    }
+};
+
+
+// We want to make as many children content as possible.
+// To do this:
+
+// Give the smallest cookie that satisfies a child — don’t waste large cookies on less greedy children.
+// Hence, sort both arrays and use the two-pointer greedy approach to match them optimally.
