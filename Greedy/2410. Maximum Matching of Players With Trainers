@@ -1,0 +1,21 @@
+class Solution {
+public:
+    int matchPlayersAndTrainers(vector<int>& g, vector<int>& s) {
+        std::sort(g.begin(), g.end());  // greed factors
+        std::sort(s.begin(), s.end());  // cookie sizes
+
+        int i = 0, j = 0, happy = 0;
+
+        while (i < g.size() && j < s.size()) {
+            if (s[j] >= g[i]) {
+                happy++;
+                i++;
+                j++;
+            } else {
+                j++;  // Try next bigger cookie
+            }
+        }
+
+        return happy; 
+    }
+};
