@@ -1,0 +1,81 @@
+class Solution {
+public:
+    int canCompleteCircuit(vector<int>& gas, vector<int>& cost) {
+
+        //sum of cost > sum of gas
+        // we cant travel
+
+        // return -1
+
+        int total_fuel_we_have=0;
+        int total_fuel_we_need=0;
+        
+        int n=gas.size();
+        
+        for(int i=0;i<n;i++){
+         total_fuel_we_have  +=gas[i];
+          total_fuel_we_need +=cost[i]; 
+        }
+        
+        if(total_fuel_we_have < total_fuel_we_need) 
+            return -1;
+
+
+
+        
+        int strt=0;
+        int petrol_left=0;
+
+
+        // Also why are going till 'n' only, because from the above check we have confirmed that it is possible to travel witht he gas we have
+        // as sum of gas at gas stations is more than what is required to make the circular travel
+
+        // so if at any point we are not able to travel, just check if starting from next index we can reach the point or not.
+        for(int i=0;i<n;i++){
+
+            petrol_left += (gas[i]-cost[i]);
+
+            if(petrol_left<0){
+                strt = i+1;
+                petrol_left = 0;
+            }
+
+        }
+        
+        return strt;
+        
+    }
+};
+
+
+// so at any point gas we should have gas be greater than,
+// else we cant move forward.
+
+// gas
+// [2,3,4]
+
+// cost 
+// [3,4,3]
+
+
+
+// start at index - 0
+
+// gas we have 2 , but we need 3 units to go to next
+// so we cant
+
+
+// start at index 1
+// gas we have 3 units but we need 4 units so cant
+
+
+// start at index 2
+// gas we have 4 units we need 3 units
+
+// so remaining - 1 unit
+
+// go to idx 0 - gas we have 3 units( gas +remaining)
+
+// go to indx 1 - gas we have now - 3+0
+// gas we have 3 units but we need 4 units.
+
