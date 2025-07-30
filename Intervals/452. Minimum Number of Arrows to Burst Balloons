@@ -1,0 +1,51 @@
+class Solution {
+public:
+    int findMinArrowShots(vector<vector<int>>& points) {
+        sort(points.begin(),points.end(),[](vector<int> &a,vector<int> &b){
+            return a[1]<b[1];
+        });
+
+        
+        int arrow=1;
+        int curr=points[0][1];
+        for(int i=1;i<points.size();i++){
+            
+            if(curr<points[i][0]){
+                curr=points[i][1];
+                arrow++;
+                }
+        }
+        return arrow;
+        
+    }
+};
+
+
+
+// points = [[10,16],[2,8],[1,6],[7,12]]
+
+// sorted - [[1,6],[2,8],[7,12],[10,16]]
+
+//          shoot at 6th
+//          so we would be bursting [1,6] [2,8]
+         
+//          that too the curr ballon should start before prev ending
+
+//          Thats why balloon [7,12] is not bursted.
+
+//          now we have [7,12] [10,16]
+
+//          so we will try to shoot at 12, so both baloons will burst
+
+
+
+
+
+// points =  [[1,2],[2,3],[3,4],[4,5]]
+
+// sorted =  [1,2],[2,3],[3,4],[4,5]
+
+
+//           2<=2 - yes
+//           4<=4
+
