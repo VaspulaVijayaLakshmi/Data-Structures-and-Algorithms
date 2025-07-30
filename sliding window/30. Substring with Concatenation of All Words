@@ -1,0 +1,83 @@
+class Solution {
+public:
+    vector<int> findSubstring(string s, vector<string>& words) {
+
+        vector<int> ans;
+
+        // store freq of words in map
+        unordered_map<string, int> mp;
+        for (auto word : words) {
+            mp[word]++;
+        }
+
+        int wordLength = words[0].length();
+
+        for (int i = 0; i < wordLength; i++) {
+            unordered_map<string, int> visited;
+            
+            int count = 0; // for track of ans
+
+            for (int j = i; j + wordLength <= s.length(); j+=wordLength) {
+                string substr = s.substr(j, wordLength);
+                // check if substr valid or not
+
+                if (mp.find(substr) == mp.end()) {
+                    // invalid string
+                    // remove all ans
+                    visited.clear();
+                    count = 0;
+                    continue;
+                }
+                else {
+                    // valid string
+                    visited[substr]++;
+                    count++;
+
+                    while (visited[substr] > mp[substr]) {
+
+                        string temp = s.substr(j - (count-1) * wordLength, wordLength);
+                        visited[temp]--;
+                        count--;
+                    }
+
+
+                    // is ans found
+                    if (count == words.size()) {
+                        ans.push_back(j - (count-1)*wordLength);
+                    }
+                }
+            }
+        }
+
+        return ans;
+    }
+};
+
+// eg : 
+
+// ermutation1 = foobarfoo //NOT VALID since foo is twice and bar is once
+// permutation2 = barbabyfoobar //NOT VALID since we have 'baby', which is not even in the words array.
+// permutation3 = barfoobar //VALID, since in words bar is twice and foo is once
+
+
+// https://leetcode.com/problems/substring-with-concatenation-of-all-words/solutions/6613074/sliding-window-hashmap-solution-no-tle-i-promise-beats-over-96/?envType=study-plan-v2&envId=top-interview-150
+
+
+// How do we keep track if the counts are correct?
+// Ans: We maintain TWO hashmaps. One hashmap originalCount keeps the original counts of each word from the words array. The second hashmap currentCount keeps the count of the words in our current window. So each time we get a new word, we first check if the word is in the originalCount. If it is, we add and keep count of the current word currWord in our hashmap currentCount. ALSO we keep a variable count, which is the number of valid words in our window. Everytime we encounter a valid word, we increment the count variable by 1. So, a window is a valid permutation only if count is equal to length of words.
+
+// Q4) What if we encounter a word several times in a window?
+// Ans: Lets say, we encounter currWord in the window more times than it was in the original words array. Thus, in our window map currentCount the count of currWord is more than its respective count in the map originalCount. Well we just shorten the window from the left and every word we encounter, we respectively decrement its count by 1 from currentCount map. We shorten the window and do this whole operation until the count of currWord is same in both the maps.
+
+// Q5) What if we encounter a word that is not in the originalCount map?
+// Ans: This means current window is invalid and we discared this whole window and start building a new window again from the next word. We reset count to 0. We reset the whole currentCount map
+
+
+
+// Well, this was the happy-go-lucky barbie-in-fairyland kinda flow. We considered that the first word we get in the string WILL be a valid word. BUT what if it isnt. For example what if it is xfoobarbar.
+// Since we are iterating a word at a time, the first word is xfo, the second word is oba and so on. To tackle this, here comes the last piece of our puzzle: OFFSET
+// We know that each word in words array is same length, lets consider it wordSize
+// Lets consider this example xfoobarbar here we know the valid word starts at 1st index, the next valid at 4th index, and so on.
+// For xxfoobarbar here the valid word starts at 2nd index, the next valid at 5th index, and so on.
+// For foobarbar here the valid word starts at 0th index, the next valid at 3rd index, and so on.
+// So basically we need to iterate over the string s first starting from 0th index, then 1st, then 2nd...then (wordSize-1)th. Thus, all the 5 operations discussed above need to be done wordSize-1 times so that we do not miss any possible permutation.
