@@ -1,0 +1,45 @@
+class Solution {
+    public:
+    
+    int myAtoi(string s) {
+       
+		int res = 0, i = 0, sign = 1;
+		
+		// get rid of whitespace
+		while (i < s.length() && s[i] == ' ') {
+			i++;
+		}
+		
+		// check for sign
+		if (i < s.length() && (s[i] == '+' || s[i] == '-')) {
+			// change if negative, iterate
+			if (s[i++] == '-') {
+				sign = -1;
+			}
+		}
+        
+        
+		
+		// now iterate across digits if any
+		// should only be in range 0-9
+        
+		while (i < s.length() && s[i] >= '0' && s[i]<= '9') {
+            
+            int value=(s[i]-'0');
+            
+               if(sign==-1 && (res > (INT_MAX - value)/10))
+                    return INT_MIN;
+            
+              if ((res > (INT_MAX - value)/10) )
+                    return INT_MAX;
+            
+
+            
+			res = res * 10 + value;
+            i++;
+		}
+        
+        
+		return res*sign;
+    }
+};
