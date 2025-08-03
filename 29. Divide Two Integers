@@ -1,0 +1,42 @@
+class Solution {
+    public int divide(int dividend, int divisor) {
+        // Handle overflow case
+        if (dividend == Integer.MIN_VALUE && divisor == -1) 
+            return Integer.MAX_VALUE;
+
+        // Handle trivial cases
+        if (divisor == 1) 
+            return dividend;
+        if (divisor == -1) 
+            return -dividend;
+
+        // Convert both dividend and divisor to positive
+        long absDividend = Math.abs((long) dividend);
+        long absDivisor = Math.abs((long) divisor);
+
+        int quotient = 0;
+
+        // Perform division by doubling the divisor
+        while (absDividend >= absDivisor) {
+            long tempDivisor = absDivisor;
+            int numDivisors = 1;
+
+            // Double the divisor until it's larger than the remaining dividend
+            while (absDividend >= tempDivisor + tempDivisor) {
+                tempDivisor += tempDivisor;
+                numDivisors += numDivisors;
+            }
+
+            absDividend -= tempDivisor;  
+            quotient += numDivisors;     
+        }
+
+        // Return quotient with the correct sign
+        return (dividend > 0 && divisor > 0) || (dividend < 0 && divisor < 0)
+            ? quotient : -quotient;
+    }
+}
+
+//https://leetcode.com/problems/divide-two-integers/solutions/6348652/implementing-integer-division-without-using-division-operator/
+
+// To solve this problem, we repeatedly subtract the divisor from the dividend. Instead of subtracting one divisor at a time, we double the divisor to subtract larger chunks, speeding up the process. The result is then adjusted for the sign based on the signs of the dividend and divisor.
