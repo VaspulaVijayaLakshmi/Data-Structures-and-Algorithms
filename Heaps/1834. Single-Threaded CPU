@@ -1,1 +1,39 @@
+class Solution {
+public:
+    vector<int> getOrder(vector<vector<int>>& tasks) {
+        int n=tasks.size();
+        for(int i=0; i<n; i++){
+            // append the index to each task
+            tasks[i].push_back(i);
+        }
+        // sort the array so that we can take the tasks of small enqueueTime first
+        sort(tasks.begin(), tasks.end());
+
+        // min priority queue of tasks, sorted first by processing time then by index 
+        priority_queue<pair<int,int>, vector<pair<int,int>>, greater<pair<int,int>>> pq;
+        long long i=0, currTime=0, processingTime=0;
+        vector<int> ans;
+
+        // stop the loop when we exhausted the input array and the tasks in the priority queue.
+        while(i<n || !pq.empty()){
+           // nothing in the priority queue? try updating the current time
+           if(pq.empty() && currTime<tasks[i][0]){
+               currTime=tasks[i][0];
+           }
+           // push all the tasks in the array whose enqueueTime <= currentTime into the priority queue
+           while(i<n && tasks[i][0]<=currTime){
+                pq.push({tasks[i][1],tasks[i][2]});
+                i++;
+           }
+            // increase the current time by the processingTime
+            currTime+=pq.top().first;
+            int index=pq.top().second;
+            pq.pop();
+            ans.push_back(index); 
+        }
+
+        return ans;
+    }
+};
+
 
