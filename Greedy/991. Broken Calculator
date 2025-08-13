@@ -50,3 +50,53 @@ public:
 // Can go negative (front-1 when front == 0) — which will spiral infinitely.
 // Will keep visiting the same numbers again and again without a visited set.
 // Uses long long correctly for big numbers, but still explores way too much.
+
+
+
+
+
+
+
+
+
+
+
+// Instead of going from startValue → target,
+// go from target → startValue backwards, because:
+
+// The reverse of *2 is /2 (when even),
+// The reverse of -1 is +1.
+
+// When target is bigger:
+
+// If target is even → divide by 2,
+// If target is odd → add 1 (to make it even first).
+
+// When target is smaller or equal to startValue:
+// We can only subtract from startValue, so we just add the difference.
+
+
+class Solution {
+public:
+    int brokenCalc(int startValue, int target) {
+        int ops = 0;
+
+        while (target > startValue) {
+            if (target % 2 == 0) {
+                target /= 2;
+            } else {
+                target += 1;
+            }
+            ops++;
+        }
+
+        // Now target <= startValue, only subtraction needed
+        return ops + (startValue - target);
+    }
+};
+
+
+
+
+
+
