@@ -1,0 +1,33 @@
+//Solve the opposite problem: start at the given score and move to 1.
+
+class Solution {
+public:
+    int minMoves(int target, int maxDoubles) {
+
+        if(maxDoubles==0)
+            return target-1;
+        
+        int moves=0;
+        
+        while(target>1){
+            
+            if(maxDoubles==0)
+                break;
+            
+            if(target%2==0){
+                target=target/2;
+                maxDoubles--;
+            }
+            
+            else
+                target--;
+                  
+          
+           moves++;
+        }
+        
+        
+           moves+=(target-1);
+            return moves;
+    }
+};
