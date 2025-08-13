@@ -1,0 +1,46 @@
+class Solution {
+public:
+    int bagOfTokensScore(vector<int>& tokens, int power) {
+        sort(tokens.begin(), tokens.end());
+        
+        int left = 0, right = tokens.size() - 1;
+        int score = 0, maxScore = 0;
+
+        while (left <= right) {
+            if (tokens[left] <= power) {
+                // Play smallest token face up
+                power -= tokens[left++];
+                score++;
+                maxScore = max(maxScore, score);
+            } 
+            else if (score > 0) {
+                // Play largest token face down
+                power += tokens[right--];
+                score--;
+            } 
+            else {
+                break;
+            }
+        }
+        return maxScore;
+    }
+};
+
+// sort the array
+// From starting we can play face-up, because like that we can lose less power, and score more points.
+
+// from ending we can play  face down - becuase we can gain max power possible and lose only 1 score point, so that we can take more gain more points.
+
+
+
+
+
+// [100,200,300,400] power = 200
+
+// -> i need to play 100 - face up - AND LOSE POWER(200-100=100) - but gain points
+// (since i dont have any score)
+
+// -> now I have score - 1 and powerleft - 100
+
+//  -> I need 200 now to play face up, but my power is less than 200, so i will play face down and gain power but lose point
+
