@@ -1,0 +1,46 @@
+class Solution {
+public:
+    int minCost(string colors, vector<int>& neededTime) {
+        int n = colors.size();
+        int time = 0;
+        int maxTime = neededTime[0]; // max cost in current same-color group
+
+        for (int i = 1; i < n; i++) {
+
+            
+            if (colors[i] == colors[i - 1]) {
+
+                //if we hit the similar streak, 
+                //we need to find the mac time baloon and 
+                //sum of all other ballons 
+
+                //.i.e - we will remove sum of all ballons except the min ballon
+               
+                // remove the smaller time balloon
+                time += min(maxTime, neededTime[i]);
+
+                // keep the bigger one for future comparisons
+                maxTime = max(maxTime, neededTime[i]);
+            } 
+            
+            //starting new color
+            else {
+                maxTime = neededTime[i];
+            }
+
+
+        }
+        return time;
+    }
+};
+
+// colors[idx]==colors[idx-1]{
+//     take min score idx
+// }
+
+// also keep track of prev color then.
+
+
+// if max colors are repeated multiple times
+
+// - min time needed means keep the max time ballon amd remove others, because if we remove more time taking ballon, then time taken would be more.
