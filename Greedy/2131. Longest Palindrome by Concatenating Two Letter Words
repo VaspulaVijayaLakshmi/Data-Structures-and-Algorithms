@@ -1,0 +1,67 @@
+class Solution {
+public:
+    int longestPalindrome(vector<string>& words) {
+        
+        int lones = 0, cnt = 0;
+        unordered_map <string, int> mp;
+        
+        
+        for(string str : words){
+
+            mp[str]++;
+
+            //if its "aa"/"xx" type of strings
+            if(str[0] == str[1]){
+                lones++;
+
+                if(mp[str] == 2){
+
+                   // if count =2 , use it off
+                    cnt += 4;
+                    mp[str] = 0;
+                    //and subtract the pairs
+                    lones -= 2;
+                }
+
+            }
+
+
+            else{
+
+                string temp = str;
+                reverse(temp.begin(), temp.end());
+
+                //if we have "ab" and "ba" type of pairs, use it off
+                if(mp[str] > 0 && mp[temp] > 0){
+                   
+                    mp[str]--;
+                    mp[temp]--;
+                    cnt += 4;
+
+                }
+            }
+        }
+
+         //  lones>0 return 0/1 then we use it
+        if(cnt > 0)
+            return cnt + (lones > 0) * 2;
+
+        
+        //we didnt find any "ab" kindof pairs, we have all 
+        //"xx","yy" these type of pairs.
+        //if lone sis greater than 0, we couldnt subtract it, i.e, 
+        //we didnt find pair, so we use it once
+        return lones > 0 ? 2 : 0;
+    }
+};
+// a word and its reverse
+//along with word whose 2 elements are equal
+
+// also  corner case would be
+
+// lets say we have characters like "ll" "xx" "xx"...
+//we can place this in middle, which ever occured more no.of times
+
+// A palindrome must be mirrored over the center. Suppose we have a palindrome. If we prepend the word "ab" on the left.
+
+// We must append "ba" on the right. The number of times we can do this is the minimum of (occurrences of "ab") and (occurrences of "ba").
