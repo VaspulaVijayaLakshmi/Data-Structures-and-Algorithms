@@ -1,0 +1,39 @@
+class Solution {
+public:
+    int minOperations(vector<int>& tasks) {
+        unordered_map<int,int> mp;
+        for(int i=0;i<tasks.size();i++){
+            mp[tasks[i]]++;
+        }
+        
+        int output=0;
+        
+        for (auto freq : mp){
+
+            if(freq.second==1)
+                return -1;
+
+            if(freq.second%3==0){
+                output += freq.second/3;
+            }
+            
+            else{
+                output += freq.second/3 + 1;
+            }
+        }
+        return output;
+    }
+};
+
+
+
+// we can complete takssts of same difficulty,
+// 2/3 tasks at same time -  lets focus on taing 3 taksks.
+
+// [2,2,3,3,2,4,4,4,4,4]
+
+
+// task difficulty  - count
+// 2 - 3 
+// 3 - 2
+// 4 - 5
