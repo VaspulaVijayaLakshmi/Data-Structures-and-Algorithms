@@ -1,0 +1,32 @@
+class Solution {
+public:
+    int maxIceCream(vector<int>& costs, int coins) {
+        int count = 0;
+        sort(costs.begin(),costs.end());
+        for(int i=0;i<costs.size();i++){
+            if(costs[i]>coins)break;
+            coins -= costs[i];
+            count++;
+        }
+        return count;
+    }
+};
+
+//the boy can buy cheaper coins to maximize ice creams
+
+//creating sort
+
+// [1,3,2,4,1] coins=7
+
+
+// [
+//     1-2
+//     2-1
+//     3-1
+//     4-1
+
+// ]
+
+// buy 1 rs - icecream  - buy 2 - coins - 5
+// buy 1 2rs icecream - boins - 3
+// buys 1 3 rs icecream - coins=0
