@@ -1,0 +1,29 @@
+class Solution {
+public:
+    int maximumBags(vector<int>& capacity, vector<int>& rocks, int additionalRocks) {
+        int n = capacity.size(), res = 0;
+        
+        for (int i = 0; i < n; ++i) 
+          capacity[i] -= rocks[i];
+       
+        sort(capacity.begin(), capacity.end());
+                
+        for (int i = 0; i < n && additionalRocks >= capacity[i]; ++i, ++res)         additionalRocks -= capacity[i];
+       
+       
+        return res;
+    }
+};
+
+//we can fill the almost filled bags, to increase the no.of filled bags
+
+// sort by difference - which has min (capacity-rocks) value
+
+
+// Compute space needed: For each bag, calculate how many rocks are still needed to fill it: capacity[i] - rocks[i].
+
+// Sort: Sort the array of remaining space in ascending order.
+
+// Greedily fill bags: Starting from the smallest required space, subtract from additionalRocks until you can't fill a bag anymore.
+
+// Count: Each time you successfully fill a bag, increment the result counter.
