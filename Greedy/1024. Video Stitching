@@ -1,0 +1,61 @@
+class Solution {
+public:
+    int videoStitching(vector<vector<int>>& clips, int time) {
+        sort(clips.begin(), clips.end());  // Step 1: Sort the clips
+        int res = 0;
+        
+        for(int i = 0, st = 0, end = 0; st < time; st = end, ++res) {
+            while(i < clips.size() && clips[i][0] <= st) {
+                end = max(end, clips[i][1]); 
+                i++;
+            }
+            if(st == end) return -1;  // If no progress is made, return -1
+        }
+        
+        return res;
+    }
+};
+
+
+//this is sort of merge intervals
+
+// sort this by start time
+
+// clips = [[0,2],[4,6],[8,10],[1,9],[1,5],[5,9]], time = 10
+
+// sort
+
+
+
+// [[0,2],[1,5],[1,9],[4,6],[5,9],[8,10]]
+
+
+// strt=0, end=2
+// [0,2]
+
+// 0 interval we need to consider at any cost.
+
+// so take the farthest interval of zero that covers farthest
+
+// prevend>newstrt
+// check if previous end is greater than or less than newend
+
+// [0,2]
+
+// so i will consider [0,2]
+
+
+// now I have farthest - [2]
+
+// now I have to see by taking 1 can reach any further [1,5][1,9]
+
+// 9 is farthest 
+
+// [4,6] - nope
+
+// [5,9] - nope already covered 9
+
+// [8,10] - consider
+
+
+// https://leetcode.com/problems/video-stitching/solutions/6393035/greedy-sorting-c-code/
