@@ -1,0 +1,84 @@
+//brute force
+// class Solution {
+// public:
+//     int minDeletions(std::string s) {
+//         std::unordered_map<char, int> cnt;
+//         int deletions = 0;
+//         std::unordered_set<int> used_frequencies;
+        
+//         for (char c : s) {
+//             cnt[c]++;
+//         }
+        
+//         for (auto& kv : cnt) {
+//             int freq = kv.second;
+//             while (freq > 0 && used_frequencies.find(freq) != used_frequencies.end()) {
+//                 freq--;
+//                 deletions++;
+//             }
+//             used_frequencies.insert(freq);
+//         }
+        
+//         return deletions;
+//     }
+// };
+
+// "aaabbbcc"
+
+// a-3
+// b-3
+// c-2
+
+// i can delete from a - 1  , but a becomes 2 ,
+//  but c=2 ,  
+// so a==2, so i need to delete once more.
+
+
+// min no of chars, what should we delete for min no.of chars
+
+
+//sort the tring so similar chars come together
+
+
+
+
+// https://leetcode.com/problems/minimum-deletions-to-make-character-frequencies-unique/solutions/4033205/98-18-greedy-heap-sorting/
+
+
+
+
+class Solution {
+public:
+    int minDeletions(string s) {
+        //Array to store the count of each character.
+        vector<int> freq (26, 0);
+        
+        //Calculatimg frequency of all characters.
+        for (char c : s){
+            freq[c - 'a']++;
+        }
+        
+        //sorting the frequencies. So the greatest frequencies are in right side.
+        sort(freq.begin(), freq.end());
+        
+        int del = 0; //to store the deletions.
+        
+        //Checking if 2 frequencies are same, if same then decrease the frequency so that it becomes less than the next greater one.So Start from the 2nd greatest frequency that is at freq[24].
+        for (int i = 24; i >= 0; i--) {
+            
+            if(freq[i] == 0) break; // if frequency is 0 that means no more character is left.
+            
+            if(freq[i] >= freq[i+1]){
+                int prev = freq[i]; //To store the frequency before deletion.
+                freq[i] = max(0, freq[i+1] -1); //New frequency should be 1 less than the previous frequency in the array.
+                del += prev - freq[i]; //Calculating deleted characters 
+            }
+        }
+        return del;
+    }
+};
+
+
+// https://www.youtube.com/watch?v=uCbOYh01wYU&list=PLpIkg8OmuX-J8_n8Vy9P9I3KvyDcPMzRU&index=17
+
+
