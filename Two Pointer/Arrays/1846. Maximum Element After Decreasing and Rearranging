@@ -1,0 +1,40 @@
+class Solution {
+public:
+    int maximumElementAfterDecrementingAndRearranging(vector<int>& arr) {
+        sort(arr.begin(),arr.end());
+        arr[0] = 1; // first condition
+
+        for (int i = 1; i < arr.size(); ++i) {
+            if (abs(arr[i] - arr[i - 1]) <= 1) continue; // purposely wrote for understanding
+            else arr[i] = arr[i - 1] + 1; // second condition   
+        }
+
+        return arr.back(); // returns a reference to the last element
+    }
+};
+
+
+// sort the array
+
+// [2,2,1,2,1,4,5,5,6,8]
+
+
+// [1,1,2,2,2,4,5,5,6,8]
+
+// [2,4] - we can change 4 to 3 
+// so new curr - 3
+
+// if there are multiple occurenes - then change only 1st one
+
+// now its [1,1,2,2,2,3,5,5,6,8]
+
+// now prev = 3 curr = 5
+// so we change to curr-5
+
+
+// [1,1,2,2,2,3,4,5,6,8]
+
+// prev - 6 curr -8
+// so change curr to prev+1 -7
+
+
