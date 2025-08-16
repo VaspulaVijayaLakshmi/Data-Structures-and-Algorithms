@@ -1,0 +1,53 @@
+class Solution {
+public:
+    int maxCoins(vector<int>& piles) {
+
+        sort(piles.begin(),piles.end());
+        
+      int myCoin = 0;
+        int left = 0;
+        int right = piles.size()-1;
+
+        while(left<right)
+        {
+            right--;
+            myCoin += piles[right];
+            right--;
+            left++;
+        }
+        return myCoin;
+
+    }
+};
+
+
+
+
+
+// [1,2,2,4,7,8]
+
+// [1,2,2] - 2
+// [4,7,8] - 7
+
+
+// [1,2,3,4,5,6,7,8,9]
+
+
+// sort the array pick the forst e;elennt from starting and last 2 leets from end, so tht we can give min to bob.
+
+// [1,8,9] = 8
+// [2,6,7] = 6
+// [3,4,5] = 4
+
+
+// Sort the piles array in ascending order.
+
+// Use two pointers:
+// left starts at the smallest pile (Bob’s turn to pick smallest).
+// right starts at the largest pile (Alice’s turn to pick largest).
+
+// In each round:
+// Skip Alice’s largest pile (right--).
+// Add the next largest pile to our coins (coins += piles[--right]).
+// Skip Bob’s smallest pile (left++).
+// Repeat until all piles are taken.
