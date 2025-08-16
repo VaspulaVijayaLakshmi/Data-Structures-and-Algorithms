@@ -1,0 +1,94 @@
+class Solution {
+    public long minimumReplacement(int[] nums) {
+        
+        int n = nums.length;
+        
+        if(n==1) {
+            return 0;
+        }
+
+        long ans = 0;
+        int last = nums[n-1];
+        
+        for(int i=n-2; i>=0; i--) {
+           
+            // If the current element needs replacement
+            if(nums[i]>last){
+
+                // Find how many times the element needs to be divided
+                int divTimes = nums[i]/last;
+                
+                if(nums[i]%last!=0) {
+                    // If nums[i] is not divisible by last, 
+                    //increment divTimes
+                    divTimes++;
+                }
+
+                // Update last for the next comparison
+                last = nums[i]/divTimes;
+               
+                // Add (divTimes - 1) to ans
+                // This is the number of operations we will be 
+                //needing for nums[i]
+
+                ans+=(divTimes-1);
+            }
+            
+            
+            else {
+                last = nums[i];
+            }
+        }
+
+        return ans;
+    }
+}
+
+// if nums[i]>nums[i+1]
+
+// we need to choose 2 numbers such tht 
+// its greater than or equal to nums[i-1] and less than and equal to nums[i+1].
+
+//but its not always poossible then how do we do it.
+
+// a number can be represented as mutiple sums.
+
+// so make sure its both numbers  >=nums[i-1], pick other number with 
+// <=nums[i+1]
+
+// now how to get the 2 no's who sum upto k 
+// so every elemnt we can pick from ramge nums[i-1] to nums[i+1]
+
+// and since this is sorted range, we can do 2 pointer.
+
+
+// but this hardly will work because - this ismkind of recursive
+
+// eg : 
+
+// [3,9,3]
+
+// then 9 will be divided as 3,6
+
+// and 6 will need to be further divided into 3,3
+
+
+
+
+
+// 11 - 3 3 3 2
+
+
+// ....   11. 3
+
+// the max number it could be is 3
+
+
+// 11 -
+//       3 - 8
+//           3 - 5
+//               3  - 2
+
+//              so 3 operations
+
+             
