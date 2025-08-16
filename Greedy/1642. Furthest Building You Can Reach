@@ -1,0 +1,91 @@
+// //MEMO
+
+// class Solution {
+//     vector<vector<int>>dp;
+//     int solve(vector<int> &heights, int bricks, int ladders, int i){
+//         //last building
+//         if(i == heights.size()-1) return 0;
+        
+//         //Cannot go further from here
+//         if(bricks == 0 && ladders == 0 && heights[i+1] > heights[i]) return 0;
+        
+//         if(dp[bricks][ladders] != 0) return dp[bricks][ladders];
+        
+//         //Next building is smaller or equal to current.
+//         if(heights[i+1] <= heights[i]) return 1 + solve(heights, bricks, ladders, i+1);
+        
+//         int byBricks = 0, byLadder = 0;
+//         //Try using bricks
+//         if(heights[i+1] - heights[i] <= bricks){
+//             byBricks = 1 + solve(heights, bricks - (heights[i+1] - heights[i]), ladders, i+1);
+//         }
+        
+//         //Try using ladders
+//         if(ladders > 0){
+//             byLadder = 1 + solve(heights, bricks, ladders-1, i+1);
+//         }
+        
+//         //return max of byLadders, byBricks we can reach
+//         return dp[bricks][ladders] = max(byBricks, byLadder);
+//     }
+// public:
+//     int furthestBuilding(vector<int>& heights, int bricks, int ladders) {
+//         dp.resize(bricks+1, vector<int> (ladders+1, 0));
+//         return solve(heights, bricks, ladders,0);
+//     }
+// };
+
+// at every step we have option
+// either take brich or ladder
+
+// so this could be recursion/memo
+
+
+
+
+class Solution {
+public:
+    int furthestBuilding(vector<int>& heights, int bricks, int ladders) {
+        // Using priority queue approach
+        priority_queue<int> pq;
+
+        for (int i = 0; i < heights.size() - 1; ++i) {
+            
+            int diff = heights[i + 1] - heights[i];
+            
+            //if diff is >0 then i need to use bricks or ladder
+            if (diff > 0)
+                pq.push(-diff); 
+                // Push negative of height difference for max heap
+
+
+            //let the priority queue size become more than ladders
+            if (pq.size() > ladders) { 
+               
+                // If number of elements in pq exceed available ladders
+                //then we need to use ladders
+               
+
+               //i=since pq, contains neg elelennts we are adding(i.e, 
+               //subtracting) from bricks
+
+                bricks += pq.top(); // Add the largest difference to bricks
+                pq.pop(); // Remove the largest difference from pq
+            
+            }
+
+
+            if (bricks < 0)
+                return i; 
+                // Return furthest index reached if bricks become negative
+        }
+
+
+        return heights.size() - 1; 
+        // Return last index if all buildings can be reached
+    }
+};
+
+
+
+// https://leetcode.com/problems/furthest-building-you-can-reach/solutions/4739575/interview-conversation-c-java/
