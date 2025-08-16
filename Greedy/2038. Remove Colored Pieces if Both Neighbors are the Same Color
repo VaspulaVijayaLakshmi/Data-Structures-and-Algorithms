@@ -1,0 +1,23 @@
+// If a group of n consecutive pieces has the same color, the player can take n - 2 of those pieces if n is greater than or equal to 3
+
+class Solution {
+    public boolean winnerOfGame(String colors) {
+        int aliceMoves = 0; 
+        int bobMoves = 0;
+        int n = colors.length(); 
+
+        for (int i = 1; i < n - 1; i++) {
+            char currentChar = colors.charAt(i);
+            
+            if (currentChar == 'A' && colors.charAt(i - 1) == 'A' && colors.charAt(i + 1) == 'A') {
+                aliceMoves++; 
+            } 
+
+            else if (currentChar == 'B' && colors.charAt(i - 1) == 'B' && colors.charAt(i + 1) == 'B') {
+                bobMoves++; 
+            }
+        }
+
+        return aliceMoves > bobMoves;
+    }
+}
