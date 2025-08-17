@@ -1,0 +1,32 @@
+class Solution {
+public:
+    long long maximumHappinessSum(vector<int>& happiness, int k) {
+
+        priority_queue<int> pq;
+        for(int i=0;i<happiness.size();i++)
+            pq.push(happiness[i]);
+
+        long long turn=0,sum=0;
+
+        while(!pq.empty() && k>0){
+
+            if(pq.top()-turn<=0)
+                return sum;
+
+            sum += (pq.top() - turn);
+            pq.pop();
+            turn++;
+            k--;
+
+        }   
+
+        return sum; 
+        
+        
+    }
+};
+
+//heap , max heap
+//but each time the happiness decreases, tht we need to keep in mind
+
+
