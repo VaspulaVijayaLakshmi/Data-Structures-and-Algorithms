@@ -1,0 +1,66 @@
+class Solution {
+public:
+    string reorganizeString(string s) {
+        unordered_map<char, int> freq_map;
+        
+        for (char c : s) {
+            freq_map[c]++;
+        }
+
+        priority_queue<pair<int, char>> max_heap;
+        for (auto &[ch, freq] : freq_map) {
+            max_heap.push({freq, ch});
+        }
+
+        string res;
+        while (max_heap.size() >= 2) {
+
+            //take the 2 max, occuring element
+            // aaaabbbc
+
+            // a - 4 , b - 3 , c-1
+
+            auto [freq1, char1] = max_heap.top(); max_heap.pop();
+            auto [freq2, char2] = max_heap.top(); max_heap.pop();
+
+            // char 1 - 'a' ,  char 2 - 'b'
+            res += char1;
+            res += char2;
+
+            // res = "ab"
+            // again push back a and b,
+
+            if (--freq1 > 0) max_heap.push({freq1, char1});
+            if (--freq2 > 0) max_heap.push({freq2, char2});
+        }
+
+
+        if (!max_heap.empty()) {
+            auto [freq, ch] = max_heap.top();
+            //if there is only one type of char and its 
+            // more than 1 char , we can place it alternately
+            if (freq > 1) return "";
+            res += ch;
+        }
+
+        return res;
+    }
+};
+
+
+// a _ a 
+// a _ a _ a
+
+// Here n=1 always , so slt grp size =1
+// n=1
+
+
+// aaaabbbcc
+
+// a_a_a_a
+// abababac_c -  X
+
+
+
+
+// https://leetcode.com/problems/reorganize-string/
