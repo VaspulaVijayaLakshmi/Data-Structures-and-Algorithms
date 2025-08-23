@@ -64,3 +64,63 @@ public:
 
 
 // https://leetcode.com/problems/reorganize-string/
+
+____________________________________________
+
+
+
+
+// HASHMAP
+
+
+class Solution {
+public:
+    string reorganizeString(std::string s) {
+    
+    unordered_map<char, int> freq_map;
+    
+    for (char c : s) {
+        freq_map[c]++;
+    }
+
+    vector<char> sorted_chars;
+    for (auto& pair : freq_map) {
+        sorted_chars.push_back(pair.first);
+    }
+
+// sort
+    sort(sorted_chars.begin(), sorted_chars.end(), [&](char a, char b) {
+        return freq_map[a] > freq_map[b];
+    });
+
+
+// if an element has occurred for more than n/2, then we cant organise
+//array is sorted in descending order, we need to check only 1st element
+    if (freq_map[sorted_chars[0]] > (s.length() + 1) / 2) {
+        return "";
+    }
+
+
+    std::string res(s.length(), ' ');
+    int i = 0;
+
+    for (char c : sorted_chars) {
+        //for each char in sorted array
+
+        for (int j = 0; j < freq_map[c]; ++j) {
+
+            //we filled the even indices now we need 
+            // to start from the odd indices
+            if (i >= s.length()) {
+                i = 1;
+            }
+
+            res[i] = c;
+            i += 2;
+
+        }
+    }
+
+    return res;
+}
+};
