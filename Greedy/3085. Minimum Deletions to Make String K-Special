@@ -1,0 +1,153 @@
+this will also help little
+2294. Partition Array Such That Maximum Difference Is K
+
+
+class Solution {
+public:
+    int minimumDeletions(string word, int k) {
+        vector<int> freq(26, 0);
+
+        for(char &ch : word) {
+            freq[ch-'a']++;
+        }
+
+        sort(begin(freq), end(freq));
+
+        int result           = INT_MAX;
+        int deleted_till_now = 0;
+
+        for(int i = 0; i < 26; i++) {
+
+            int minFreq = freq[i];
+            int temp    = deleted_till_now; //temp taken to find deletion for j = 25 to j > i
+
+            for(int j = 25; j > i; j--) {
+                if(freq[j] - freq[i] <= k) 
+                    break;
+                
+                temp += freq[j] - minFreq - k;
+            }
+
+            result = min(result, temp);
+            deleted_till_now += minFreq;
+
+        }
+
+        return result;
+    }
+};
+
+
+// https://leetcode.com/problems/partition-array-such-that-maximum-difference-is-k/description/?envType=daily-question&envId=2025-06-19
+
+// Think this question similar to problem 2294 where we need to make group of number such that their absolute difference between smallest to greatest is <= k
+
+
+// Now here we have characters instead of number so convert them into number somehow, also in this its about frequncies
+
+// [a-4]
+// [b-2]
+// [c-1]
+
+// k=0
+
+// so to make all freq<=k
+
+// i can do this [a-1,b-1,c-1] - deletions = 4
+// or i can do this [a-2,b-2,c-0] so if we delete some elennt its not in list to compare - 3 deletions
+
+
+
+
+
+// sort by frequncies
+
+// c-1 , b-2 , a-4
+
+// so try to keep max freq elements same so as to reduce delteions
+
+// [1,2,4] - now make all elemnts of array with diff <= k
+
+// [4,2,1]
+
+// so delete - 2 occ of 4
+
+// [2,2,1] -  2-1 = 1 - 3deletions
+
+
+// eg 2 :
+
+// "dabdcbdcdcd", k = 2
+
+// d-5
+// a-1
+// b-2
+// c-3
+
+// sort
+// [5,3,2,1]
+
+// here we need to compare 5 and 1 also not just adjacent eleents
+
+// so this boils down to diff b/w, max and min of subaraay <=k
+
+
+// [5,3]  
+// [5,3,2] - so her we need to delete 1 occ of 5
+// since 5-2 =3>=2
+
+// [4,3,2,1] - so. here we need to delete 1 occ of 4
+// since (4-1) =3>=2
+
+
+
+
+// https://leetcode.com/problems/minimum-deletions-to-make-string-k-special/solutions/6867246/3-approach-in-detail-explanation-how-range-calculation-is-done-must-know-100-beats/
+
+
+
+// freq = [8,6,1], k=2
+
+// Max=8, Min=1 → diff=7 > 2
+
+// Reduce max by diff-k = 5 → 8→3
+
+// New = [6,3,1]
+
+// Now max=6, min=1 → diff=5 > 2 
+
+// We’d still be invalid even after trimming max once.
+
+// In fact, optimal here is:
+
+// Delete all of 1 (min side)
+
+// Then trim 8→6, so [6,6], diff=0.
+
+// So just trimming the max until diff ≤ k doesn’t always give the optimal solution, because sometimes it’s cheaper to delete the min entirely rather than keep trimming max.
+
+
+
+
+
+// Why the original approach is safer
+
+// It tries every possible min frequency x as the anchor.
+// That way, it explores both strategies:
+// “delete low guys”
+// “trim high guys”
+
+// And picks the global minimum.
+
+// So your instinct is right: it is essentially “max–min ≤ k” subarray, but with the extra rule that frequencies larger than min+k can be partially trimmed rather than deleted fully.
+
+
+
+// https://www.youtube.com/watch?v=u-DEw481l04&list=PLpIkg8OmuX-J8_n8Vy9P9I3KvyDcPMzRU&index=31
+
+
+
+
+
+
+
