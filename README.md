@@ -311,6 +311,53 @@ find(x) = "Hey, what's the last free day I can use that’s ≤ x?"
 merge(x, x-1) = "Okay, I used day x, so next time don’t return x, return x-1"
 
 
+________________
+
+
+
+
+DIfference Array:
+
+A difference array is a clever way to efficiently apply range updates on an array — especially when you want to add a value to all elements between two indices (inclusive).
+3355. Zero Array Transformation I
+
+
+Basic Idea
+
+Instead of updating every element in a range (which is slow), you:
+
+Mark the start of the update with +val
+Mark the end + 1 of the update with -val
+Then later, you take the prefix sum of the difference array to get the final updated array.
+
+
+arr = [0, 0, 0, 0, 0]
+diff = [0, 0, 0, 0, 0, 0]   // size n+1
+
+
+
+Add +2 to range [1,3]:
+
+diff[1] += 2   → diff[1] = 2
+diff[4] -= 2   → diff[4] = -2
+
+
+
+diff[2] += 3   → diff[2] = 3
+diff[5] -= 3   → diff[5] = -3
+
+
+diff = [0, 2, 3, 0, -2, -3]
+
+
+prefix = 0
+for i from 0 to n-1:
+    prefix += diff[i]
+    arr[i] = prefix
+
+
+____________________
+
 
 
 
