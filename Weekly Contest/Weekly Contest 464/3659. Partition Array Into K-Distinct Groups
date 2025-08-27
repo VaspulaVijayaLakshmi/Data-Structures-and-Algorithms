@@ -1,0 +1,65 @@
+class Solution {
+public:
+    bool partitionArray(vector<int>& nums, int k) {
+        int n = nums.size();
+        if(n%k) return false;
+
+        unordered_map<int, int> mp;
+        int groups = n/k;
+        for(auto &it: nums){
+            mp[it]++;
+            if(mp[it] > groups) return false;
+        }
+        return true;
+    }
+};
+
+// group of k distinct elements
+// eah grp to one element
+
+
+// [3,5,2,2] k=2
+
+// [3-1]
+// [5-1]
+// [2-2]
+
+// 4 elements and  k=2
+// here we can group
+
+
+// [1,5,2,3], k = 3
+
+// [1-1]
+// [5-1]
+// [2-1]
+// [3-1]
+
+// 4 elements ,  k=3
+// no, since 4 elemnts only
+
+
+// [3,5,2,2,2] k=2
+
+// [3-1]
+// [5-1]
+// [2-3]
+
+// now, we have highest freqency element and each should go to diff group
+
+//  [2] [2] [2] now left over elents are 2 elelmnts(3,5) and k=2
+//  i can tdivide the left over element into 3 groups
+
+
+
+// [3,3,5,5,5,2,2,2] k=3
+
+// [3-2]
+// [5-3]
+// [2-3]
+
+// [2] [2] [2]
+
+// 5 elemnts left and k=3 , false
+
+
