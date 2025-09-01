@@ -1,0 +1,56 @@
+class Solution {
+public:
+    double maxAverageRatio(vector<vector<int>>& classes, int extraStudents) {
+        using p = pair<double, int>;
+        priority_queue<p> pq;
+
+        // Push initial marginal gain for each class
+        for (int i = 0; i < classes.size(); ++i) {
+            double curr = (double)classes[i][0] / classes[i][1];
+            double newPr = (double)(classes[i][0] + 1) / (classes[i][1] + 1);
+            pq.push({newPr - curr, i});
+        }
+
+        // Distribute extra students
+        while (extraStudents--) {
+            auto it = pq.top();
+            pq.pop();
+            int i = it.second;
+            classes[i][0] += 1;
+            classes[i][1] += 1;
+            double curr = (double)classes[i][0] / classes[i][1];
+            double newPr = (double)(classes[i][0] + 1) / (classes[i][1] + 1);
+            pq.push({newPr - curr, i});
+        }
+
+        // Compute final average pass ratio
+        double ans = 0.0;
+        for (auto& it : classes) {
+            ans += (double)it[0] / it[1];
+        }
+
+        return ans / classes.size();
+    }
+};
+
+
+//  pass ratio = sum(pass)/total
+//  mx poosible avg ratio
+
+
+
+// classes = [[1,2],[3,5],[2,2]]
+// extraStudents = 2
+
+// total - 1 , 2  - 3/4  
+// total - 3 , 5 
+// total - 2 , 2
+
+// min diff b/e deno and num should be considered
+
+// https://leetcode.com/problems/maximum-average-pass-ratio/solutions/7143344/easy-to-understand-heap-solution-c-python-java/?envType=daily-question&envId=2025-09-01
+
+
+
+// Use a priority queue (max-heap) to always pick the class with the maximum increase in pass ratio if one extra student is added.
+// For each class, calculate the current ratio and the new ratio after adding one student, then push the gain into the heap.
