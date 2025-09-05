@@ -360,5 +360,140 @@ ____________________
 
 
 
+Most Commonly Asked Questions:
+
+Amazon — SDE1 (commonly reported)
+
+https://leetcode.com/problems/two-sum/description/
+https://leetcode.com/problems/add-two-numbers/description/
+https://leetcode.com/problems/longest-substring-without-repeating-characters/description/
+https://leetcode.com/problems/median-of-two-sorted-arrays/description/
+https://leetcode.com/problems/product-of-array-except-self/description/
+https://leetcode.com/problems/merge-intervals/description/
+https://leetcode.com/problems/valid-parentheses/description/
+https://leetcode.com/problems/top-k-frequent-elements/description/
+https://leetcode.com/problems/kth-largest-element-in-an-array/description/
+https://leetcode.com/problems/number-of-islands/description/
+
+https://leetcode.com/problems/serialize-and-deserialize-binary-tree/description/
+
+https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-tree/description/
+
+https://leetcode.com/problems/binary-tree-level-order-traversal/description/
+
+https://leetcode.com/problems/lru-cache/description/
+
+https://leetcode.com/problems/trapping-rain-water/description/
+
+https://leetcode.com/problems/course-schedule/description/
+
+https://leetcode.com/problems/word-ladder/description/
+
+https://leetcode.com/problems/word-search/description/
+
+https://leetcode.com/problems/clone-graph/description/
+
+(These are the typical OA / phone / onsite coding staples reported by many candidates.)
+LeetCode
++1
+
+Amazon — SDE2 (commonly reported / medium–hard interview level)
+
+https://leetcode.com/problems/trapping-rain-water/description/
+
+https://leetcode.com/problems/longest-valid-parentheses/description/
+
+https://leetcode.com/problems/merge-k-sorted-lists/description/
+
+https://leetcode.com/problems/substring-with-concatenation-of-all-words/description/
+
+https://leetcode.com/problems/maximum-product-subarray/description/
+
+https://leetcode.com/problems/word-ladder-ii/description/
+
+https://leetcode.com/problems/serialize-and-deserialize-bst/description/
+
+https://leetcode.com/problems/reconstruct-itinerary/description/
+
+https://leetcode.com/problems/top-k-frequent-words/description/
+
+https://leetcode.com/problems/minimum-window-substring/description/
+
+https://leetcode.com/problems/number-of-islands/description/
+
+https://leetcode.com/problems/median-of-two-sorted-arrays/description/
+
+https://leetcode.com/problems/design-twitter/description/
+
+(Interviews at this level often mix medium/hard DSA with more system-design or ownership questions; multiple candidates report medium LeetCode problems such as the ones above.)
+Medium
+LeetCode
+
+Amazon — SDE3 (senior; more system design + some coding)
+
+https://leetcode.com/problems/kth-largest-element-in-an-array/description/
+
+https://leetcode.com/problems/longest-substring-without-repeating-characters/description/
+
+https://leetcode.com/problems/trapping-rain-water/description/
+
+https://leetcode.com/problems/nearest-smaller-element/description/
+(similar variants)
+https://leetcode.com/problems/number-of-islands/description/
+
+https://leetcode.com/problems/serialize-and-deserialize-binary-tree/description/
+
+https://leetcode.com/problems/word-ladder/description/
+
+https://leetcode.com/problems/merge-intervals/description/
+
+https://leetcode.com/problems/lfu-cache/description/
+
+https://leetcode.com/problems/design-circular-deque/description/
+
+(SDE-III loops reported by candidates commonly include simpler-to-medium coding questions but with heavier emphasis on system design, architecture, and “ownership” behavioral cases.)
+Reddit
+InterviewNoodle
+
+Flipkart — SDE1 (commonly reported)
+
+https://leetcode.com/problems/ones-and-zeroes/description/
+(reported in Flipkart OA threads)
+https://leetcode.com/problems/word-search/description/
+
+https://leetcode.com/problems/merge-intervals/description/
+
+https://leetcode.com/problems/subarray-sum-equals-k/description/
+
+https://leetcode.com/problems/word-break/description/
+
+https://leetcode.com/problems/two-sum/description/
+
+https://leetcode.com/problems/longest-substring-without-repeating-characters/description/
+
+https://leetcode.com/problems/unique-paths/description/
+
+(Flipkart OA / interview write-ups often mention dynamic programming and backtracking medium problems; Ones-and-Zeroes (LC 474) appears frequently in reports.)
+LeetCode
++1
+
+Flipkart — SDE2 (commonly reported / harder)
+
+https://leetcode.com/problems/longest-valid-parentheses/description/
+
+https://leetcode.com/problems/maximum-performance-of-a-team/description/
+
+https://leetcode.com/problems/kth-largest-element-in-an-array/description/
+
+https://leetcode.com/problems/word-ladder/description/
+
+https://leetcode.com/problems/design-twitter/description/
+
+https://leetcode.com/problems/merge-k-sorted-lists/description/
+
+https://leetcode.com/problems/interval-list-intersections/description/
+
+
+
 
 
