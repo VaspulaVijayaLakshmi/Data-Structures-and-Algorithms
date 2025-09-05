@@ -360,19 +360,27 @@ ____________________
 
 
 
-Most Commonly Asked Questions:
 
 Amazon — SDE1 (commonly reported)
 
 https://leetcode.com/problems/two-sum/description/
+
 https://leetcode.com/problems/add-two-numbers/description/
+
 https://leetcode.com/problems/longest-substring-without-repeating-characters/description/
+
 https://leetcode.com/problems/median-of-two-sorted-arrays/description/
+
 https://leetcode.com/problems/product-of-array-except-self/description/
+
 https://leetcode.com/problems/merge-intervals/description/
+
 https://leetcode.com/problems/valid-parentheses/description/
+
 https://leetcode.com/problems/top-k-frequent-elements/description/
+
 https://leetcode.com/problems/kth-largest-element-in-an-array/description/
+
 https://leetcode.com/problems/number-of-islands/description/
 
 https://leetcode.com/problems/serialize-and-deserialize-binary-tree/description/
@@ -393,9 +401,9 @@ https://leetcode.com/problems/word-search/description/
 
 https://leetcode.com/problems/clone-graph/description/
 
+______________________
+
 (These are the typical OA / phone / onsite coding staples reported by many candidates.)
-LeetCode
-+1
 
 Amazon — SDE2 (commonly reported / medium–hard interview level)
 
@@ -425,9 +433,12 @@ https://leetcode.com/problems/median-of-two-sorted-arrays/description/
 
 https://leetcode.com/problems/design-twitter/description/
 
+___________________________
+
+
 (Interviews at this level often mix medium/hard DSA with more system-design or ownership questions; multiple candidates report medium LeetCode problems such as the ones above.)
 Medium
-LeetCode
+
 
 Amazon — SDE3 (senior; more system design + some coding)
 
@@ -451,9 +462,17 @@ https://leetcode.com/problems/lfu-cache/description/
 
 https://leetcode.com/problems/design-circular-deque/description/
 
+_________________
+
+
 (SDE-III loops reported by candidates commonly include simpler-to-medium coding questions but with heavier emphasis on system design, architecture, and “ownership” behavioral cases.)
 Reddit
 InterviewNoodle
+
+______________________________
+
+(Flipkart OA / interview write-ups often mention dynamic programming and backtracking medium problems.
+ Ones-and-Zeroes (LC 474) appears frequently in reports.)
 
 Flipkart — SDE1 (commonly reported)
 
@@ -473,9 +492,6 @@ https://leetcode.com/problems/longest-substring-without-repeating-characters/des
 
 https://leetcode.com/problems/unique-paths/description/
 
-(Flipkart OA / interview write-ups often mention dynamic programming and backtracking medium problems; Ones-and-Zeroes (LC 474) appears frequently in reports.)
-LeetCode
-+1
 
 Flipkart — SDE2 (commonly reported / harder)
 
