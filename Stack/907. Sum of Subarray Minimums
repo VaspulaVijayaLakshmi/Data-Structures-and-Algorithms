@@ -1,0 +1,154 @@
+class Solution {
+public:
+    vector<int> left,right;
+
+    void nextSmallerElementtoLeft(vector<int>& arr){
+
+        stack<int> stk;
+        int n=arr.size()-1;
+
+        for(int i=0;i<=n;i++){
+
+            while(!stk.empty()&&arr[stk.top()]>arr[i]){
+               stk.pop();
+            }
+            
+            left[i] = stk.empty() ? i + 1 : i - stk.top();
+            stk.push(i);
+            
+        }
+
+    }
+
+    void nextSmallerElementtoRight(vector<int>& arr){
+       
+        stack<int> stk;
+        int n=arr.size();
+
+        for(int i=n-1;i>=0;i--){
+
+            while(!stk.empty()&&arr[stk.top()]>=arr[i]){
+               stk.pop();
+            }
+            
+            right[i] = stk.empty() ? n - i : stk.top() - i;
+            stk.push(i);
+            
+        }
+
+    }
+
+
+    int sumSubarrayMins(vector<int>& arr) {
+
+        int n=arr.size();
+        left.resize(n,0),right.resize(n,0);
+
+        nextSmallerElementtoLeft(arr);
+        nextSmallerElementtoRight(arr);
+
+        long long sum = 0, mod = 1e9+7;
+        for (int i = 0; i < n; i++) {
+            sum = (sum + (long long)arr[i] * left[i] * right[i])
+             % mod;
+        }
+
+        return (int)sum;
+        
+    }
+};
+
+// [3,1,2,4]
+
+// we need to find - min elemnet and see how many subarray it contributes to where min is tht element .
+
+
+
+// [0,3,4,5,2,3,4,1,4]
+
+// so 0 contributes - 
+// 0 cntributes to all subarrays starting with 0
+
+
+// 3 - 3 will contibute to [3] and 
+// left side : no contibution as 0 will be min if i move left
+// right side: it will contribute to - [3,4,5]
+
+// becuase then we are mving to 2, then 2 will be min
+
+// now for 4 - it will be min for itself
+// left side: ntg 
+// right side: [4,5]
+
+// now for 2 - {2}
+// left: [3,4,5,2]
+// right: {3,4}
+
+// so we need to find the next greater smaller element to left
+// and next smaler element to right
+
+
+
+//we will use stack
+//next smaller to left
+
+//what is the range - 
+
+// [3,1,2,4]
+
+// [3],          [1],        [2] ,     [4]
+// [3,1]        [1,2]        [2,4]     
+// [3,1,2]      [1,2,4]
+// [3,1,2,4]
+
+
+// 1 covers till the range on left side 0-1
+// 1 covers till the range on right side 3
+
+// so left side means - the subarrays ending at 1
+// [......1]
+
+// and rignt side deplicts - subarrays starting from 1
+// [1.......]
+
+// and total subarray length in the range  [left - right] 
+
+// Then contribution = arr[i] * left[i] * right[i].
+
+// Step 2. Total subarrays where 1 is the min
+
+
+// count = leftSpan × rightSpan
+
+// Because:
+
+// Left span = ways to choose starting point of subarray.
+
+// Right span = ways to choose ending point of subarray.
+
+
+// [3,4,1,2,4]
+
+// [3,4,1]
+
+// so 2 subarrays- [3,4,1]
+//                 [4,1]
+//                 [1]
+
+
+// right side - [1,2,4]
+//              [1,2]
+//              [1]
+
+
+// IMPortant to handle duplicates:
+
+// Example: arr = [3, 1, 1, 2]
+
+// If both sides used >, then both 1s would try to count the same subarrays → overcount.
+
+// If both used >=, then neither 1 would count some subarrays → undercount.
+
+// With > on left & >= on right → perfect split.
+
+// we should not count subarrays twice. either left side u count of for prev element so this tie no need to expand and count.
