@@ -1,0 +1,26 @@
+class Solution {
+public:
+    vector<int> dailyTemperatures(vector<int>& temp) {
+
+        stack<int> stk;
+        int n = temp.size()-1;
+        vector<int> res(n+1,0);
+
+        for(int i=n;i>=0;i--){
+
+            while(!stk.empty() && temp[stk.top()]<=temp[i]) {stk.pop();}
+
+            res[i]=stk.empty() ?  0 : stk.top()-i; 
+            stk.push(i);
+        }
+
+        return res;
+
+        
+    }
+};
+
+// Input: temperatures = [73,74,75,71,69,72,76,73]
+// Output: [1,1,4,2,1,1,0,0]
+
+//next greater element to right
