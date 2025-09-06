@@ -1,0 +1,47 @@
+class MyQueue {
+public:
+    stack<int> stk1,stk2;
+
+    MyQueue() {}
+    
+    void push(int x) {
+
+        //we will delegate the task of managing the stacks, 
+        //during push because after the push, we can do it in background.
+        
+       while(!stk1.empty()){
+          int ele = stk1.top();
+          stk1.pop();
+          stk2.push(ele);
+       }
+
+       stk1.push(x);
+
+       while(!stk2.empty()){
+           int ele = stk2.top();
+           stk2.pop();
+           stk1.push(ele);
+       }
+        
+    }
+    
+    int pop() {
+           int ele = stk1.top();
+           stk1.pop();
+           return ele;
+    }
+    
+    int peek() {
+           return stk1.top();
+    }
+    
+    bool empty() {
+        return stk1.empty() && stk2.empty();    
+    }
+};
+
+
+// Stack is Last in forst out - LIFO
+// Queue is first in first Out - FIFO
+
+// put into 2nd queue - then 
