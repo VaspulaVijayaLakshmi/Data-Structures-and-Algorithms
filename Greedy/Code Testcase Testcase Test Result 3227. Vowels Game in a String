@@ -1,0 +1,91 @@
+class Solution {
+public:
+
+    unordered_set<char> vowels {'a','e','i','o','u'};
+
+    bool doesAliceWin(string s) {
+        
+        int n = s.length();
+        bool alice = true;   // Alice starts
+        bool bob = false;    // Bob waits
+        int c = 0;
+
+        for (int i = 0; i < n; i++) {
+
+            if (vowels.find(s[i]) != vowels.end()) {
+                c++;
+
+                // odd vowel count → Alice’s action
+                if (c % 2) {
+                    if (alice) {
+                        // Alice moves successfully → switch turn
+                        alice = false;
+                        bob = true;
+                    } else {
+                        // Bob's turn, but Alice was forced → Bob fails
+                        return true; // Alice wins
+                    }
+                }
+                // even vowel count → Bob’s action
+                else {
+                    if (bob) {
+                        // Bob moves successfully → switch turn
+                        bob = false;
+                        alice = true;
+                    } else {
+                        // Alice's turn, but Bob was forced → Alice fails
+                        return false; // Bob wins
+                    }
+                }
+
+                c = 0; // reset after handling
+            }
+        }
+
+        // End of string → if it’s Alice’s turn but no move, she loses
+        // If it’s Bob’s turn but no move, he loses
+        if (alice) return false; // Alice still waiting → loses
+        else return true;        // Bob still waiting → loses → Alice wins
+    }
+};
+
+
+
+
+// odd no of vowels
+// even no of vowels
+
+
+// Calculate the even no.of vowels and odd num of vowels.
+
+// Alice - odd
+// Bob - even 
+
+
+
+// odd - 4
+// even - 5
+
+// odd even odd even odd even odd even even
+
+
+
+
+// odd - 2
+// even -2
+
+// odd even odd even
+
+// Bob wins
+
+
+// _______________
+
+
+// leetcoder
+
+// aeiou
+
+// le - odd
+// etco - even 
+// der - alice
