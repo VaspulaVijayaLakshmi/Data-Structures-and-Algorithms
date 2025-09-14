@@ -1,123 +1,91 @@
-# Subarray Minimum Contribution
+***IMP STACK 
 
-This document explains how to calculate the contribution of each element in an array to all subarrays where it is the **minimum element**.  
+907. Sum of Subarray Minimums
 
----
+arr = [0,3,4,5,2,3,4,1,4]
 
-## Problem Statement
 
-Given an array, for each element we want to find:
+- `0` contributes to all subarrays starting with `0`.
 
-- How many subarrays exist where this element is the minimum.  
-- The contribution of that element to the total sum of subarray minimums.
-
----
-
-## Example Walkthrough
-
-### Example 1:  
-arr = [3, 1, 2, 4]
-
-css
-Copy code
-
-All possible subarrays:
-[3], [1], [2], [4]
-[3,1], [1,2], [2,4]
-[3,1,2], [1,2,4]
-[3,1,2,4]
-
-markdown
-Copy code
-
-Now, check contribution:
-
-- `1` is the minimum in **all subarrays containing it** except when another smaller element appears.  
-- We calculate its contribution using **left span** and **right span**.
-
----
-
-## Concept
-
-For each element `arr[i]`:
-
-- **Left span** = Number of choices for starting index of subarray where `arr[i]` is min.  
-- **Right span** = Number of choices for ending index of subarray where `arr[i]` is min.  
-
-So,  
-
-count[i] = leftSpan[i] × rightSpan[i]
-contribution[i] = arr[i] × count[i]
-
-yaml
-Copy code
-
----
-
-## Using Monotonic Stack
-
-We use stacks to efficiently find:
-
-- **Next smaller element on the left (NSL)**
-- **Next smaller element on the right (NSR)**
-
-This gives us the span of influence for each element.
-
----
-
-### Example 2:  
-arr = [0, 3, 4, 5, 2, 3, 4, 1, 4]
-
-markdown
-Copy code
-
-- `0`: Contributes to all subarrays starting with `0`.  
 - `3`:  
-  - Left side: No contribution (blocked by `0`).  
-  - Right side: `[3]`, `[3,4]`, `[3,4,5]`.  
+  - Left side: no contribution (since `0` is smaller).  
+  - Right side: contributes to `[3]`, `[3,4]`, `[3,4,5]`.  
+
 - `4`:  
-  - Left side: None.  
+  - Left side: none.  
   - Right side: `[4]`, `[4,5]`.  
+
 - `2`:  
   - Left side: `[3,4,5,2]`.  
   - Right side: `[2]`, `[2,3]`, `[2,3,4]`.  
 
 ---
 
-## Handling Duplicates
+## How to Find Contribution
 
-When array has duplicates:  
+We need:
+
+- **Next smaller element to the left**  
+- **Next smaller element to the right**
+
+We can calculate this using a **monotonic stack**.
+
+
+
+
+## Duplicates Handling
 
 Example:  
-arr = [3, 1, 1, 2]
+arr = [3,1,1,2]
 
-markdown
-Copy code
 
-- If both NSL and NSR use `>` → double count subarrays.  
-- If both use `>=` → undercount subarrays.  
-- **Correct rule:**  
-  - Use `>` for **NSL**.  
-  - Use `>=` for **NSR**.  
 
-This ensures each subarray is counted **exactly once**.
+If both sides used `>` → both `1`s would count the same subarrays (**overcount**).  
+If both used `>=` → some subarrays would not be counted (**undercount**).  
 
----
+Correct way:  
+- Use `>` for **left**  
+- Use `>=` for **right**
 
-## Final Formula
+This avoids double counting.
 
-For each element `arr[i]`:
 
-contribution[i] = arr[i] × leftSpan[i] × rightSpan[i]
 
-yaml
-Copy code
 
-Where:
 
-- `leftSpan[i] = i - NSL[i]`
-- `rightSpan[i] = NSR[i] - i`
+
+
+
+# Subarray Minimum Contribution
+
+We need to find the **minimum element** in subarrays and see how many subarrays it contributes to where it is the minimum.
 
 ---
 
-👉 This forms the basis of the **Sum of Subarray Minimums** problem. 
+## Example 1
+arr = [3,1,2,4]
+
+
+
+We want to check each element’s contribution:
+
+[3], [1], [2], [4]
+[3,1], [1,2], [2,4]
+[3,1,2], [1,2,4]
+[3,1,2,4]
+
+
+
+
+- `1` covers till the range on the left side: indices `0–1`.  
+- `1` covers till the range on the right side: index `3`.  
+
+**Left side** → subarrays ending at `1` → `[...1]`  
+**Right side** → subarrays starting from `1` → `[1...]`  
+
+Total subarray count in the range = `left × right`  
+
+
+
+**Contribution**:  
+arr[i] × left[i] × right[i]
