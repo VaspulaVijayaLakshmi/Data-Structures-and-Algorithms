@@ -1,6 +1,3 @@
-907. Sum of Subarray Minimums
-
-
 # Subarray Minimum Contribution
 
 This document explains how to calculate the contribution of each element in an array to all subarrays where it is the **minimum element**.  
@@ -124,11 +121,3 @@ Where:
 ---
 
 👉 This forms the basis of the **Sum of Subarray Minimums** problem. 
-
-
-
-
-
-
-
-
