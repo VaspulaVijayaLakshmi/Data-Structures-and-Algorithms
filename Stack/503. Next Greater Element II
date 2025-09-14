@@ -1,0 +1,41 @@
+CIRCULAR ARRAY
+
+HERE we can do NGE to right and if its -1 , then do NGE to left .
+but in circular array we can double the array.
+
+
+class Solution {
+ public:
+
+    
+    vector<int> nextGreaterElements(vector<int>& nums) {
+
+      int n=nums.size();
+      vector<int> res(n,-1);
+      stack<int> stk;
+
+      for(int i=2*n-1 ;i>=0;i--){
+
+        while(!stk.empty() && nums[i%n] >= stk.top()){
+            stk.pop();
+        }
+
+         res[i%n] =  stk.empty() ? -1 : stk.top();
+       
+        stk.push(nums[i%n]);
+        
+
+        }
+
+
+      return res;
+        
+        
+    }
+};
+
+
+// we can double the size of array, then solve it
+// 1,2,3,4,3, 1,2,3,4,3
+
+
