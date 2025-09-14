@@ -1,6 +1,8 @@
-***IMP STACK 
+*** IMP STACK 
 
-907. Sum of Subarray Minimums
+# Subarray Tricks
+
+## 907. Sum of Subarray Minimums
 
 arr = [0,3,4,5,2,3,4,1,4]
 
@@ -89,3 +91,49 @@ Total subarray count in the range = `left × right`
 
 **Contribution**:  
 arr[i] × left[i] × right[i]
+
+
+
+
+
+__________________________________
+
+
+## 2104. Sum of Subarray Ranges
+https://leetcode.com/problems/sum-of-subarray-ranges/description/
+
+# Similar to above.
+
+// For each element, find:
+// Previous Smaller or Equal Element (PSEE) and Next Smaller Element (NSE) → counts contribution as minimum.
+// Previous Larger or Equal Element (PLEE) and Next Larger Element (NLE) → counts contribution as maximum.
+// Multiply contributions accordingly and sum them.
+
+
+
+So each element we need to check - how many subarray
+
+MIN: 
+->  subarrays ending at this elemnt where this is the min element
+->  subarrays starting at this element where this is the min element
+
+-> this basically boils down to -> next smaller element to left and right.
+
+
+
+MAX :
+->  subarrays ending at this elemnt where this is the max element
+->  subarrays starting at this element where this is the max element
+
+-> next larger lement right and left.
+
+___________
+
+
+//now how mnay contributions : 
+
+
+so when we do this, we cover the 
+
+
+// The final answer = sum of maximum contributions – sum of minimum contributions.  ?????????????///
