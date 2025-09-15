@@ -1,0 +1,129 @@
+//KRUSKAL
+
+struct Edge{
+    int src;
+    int dest;
+    int wt;
+};
+
+
+bool cmp(Edge e1, Edge e2){ //sort in asc order wrt wt
+    return e1.wt<e2.wt;
+}
+
+
+class Solution {
+public:
+
+     //parent[a]=a
+     //this is path compression i
+
+
+
+// Base case:
+// If parent[a] == a, then a is the root → return it.
+
+// Recursive case:
+// If a is not the root, we recursively find the root:
+
+//but we also assign the root->parent  to intermideate nodes while
+//backtracking, so as to reduce the length of this tree
+//for future queries.
+
+// we flatten the tree → every node points directly to the root → future queries are almost O(1).
+    int find(int a,vector<int>&parent){
+        if(parent[a]==a)return a;
+        else return parent[a]=find(parent[a],parent);
+    }
+
+
+    void Union(int a, int b,vector<int>&parent,vector<int>&rank){
+        int pa=find(a,parent); //parent of a's group
+        int pb=find(b,parent); //parent of b's group
+        
+        if(pa==pb){
+            return;
+        }
+
+
+        if(rank[pa]>rank[pb]){ 
+            parent[pb]=pa; //make b's parent->parent of a as we merge b into a
+            rank[pa]++; //increment
+        }
+
+        else{
+            parent[pa]=pb;
+            rank[pb]++;
+        }
+    }
+
+
+    int minCostConnectPoints(vector<vector<int>>& points) {
+        int n=points.size();
+        vector<Edge>edges;
+
+        for(int i=0;i<n;i++){
+            for(int j=i+1;j<n;j++){
+                int cost=abs(points[i][0]-points[j][0])+abs(points[i][1]-points[j][1]);
+                edges.push_back({i,j,cost});
+            }
+        }
+
+
+        int e=edges.size();
+        sort(edges.begin(),edges.end(),cmp); //sort in asc order
+
+
+        vector<int>parent(n);
+        vector<int>rank(n,1);
+        for(int i=0;i<n;i++)parent[i]=i;
+
+        int ans=0;
+        for(int i=0;i<e;i++){//traverse each edge
+            if(find(edges[i].src,parent)!=find(edges[i].dest,parent)){//dont form cycle
+                Union(edges[i].src,edges[i].dest,parent,rank);
+                ans+=edges[i].wt;
+            }
+        }
+        return ans;
+    }
+};
+
+// MST - no graphs/circular paths.
+
+// we can use heaps -> find out all the min distances and keep adding the min distances one by one, but we need to make sure tht there is no circle formed also we dont want 
+// extra edges.
+
+//so we use union find algorithm to check if they belong to same parent.
+
+
+// Kruskal's Algorithm:
+// This approach utilizes a Union-Find data structure to find the MST efficiently.
+
+// Prim's Algorithm:
+// This method employs a Priority Queue to select edges with minimum weights iteratively.
+
+
+
+// KRUSKAL :
+
+
+// Build all edges
+// Compute the Manhattan distance between every pair of points → this becomes the cost of connecting them.
+// Each edge is represented as {src, dest, wt}.
+
+// Sort edges by weight
+// Cheapest connections are considered first → greedy approach.
+
+// Use Union-Find (DSU)
+// Keep track of connected components.
+
+// Before adding an edge, check if it connects two different groups.
+// If yes → add it (safe, no cycle).
+// If no → skip it (it would create a cycle).
+
+// Keep adding edges until all points are connected
+// At the end, you’ve got the MST with minimum total cost.
+
+
+
