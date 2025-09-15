@@ -1,0 +1,7 @@
+Heap 
+
+min heap.
+
+if size>K - pop top element.
+
+hashmap+heap
