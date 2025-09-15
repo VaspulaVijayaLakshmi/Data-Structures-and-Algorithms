@@ -1,0 +1,10 @@
+Given an unsorted array and two numbers x and k, find k closest values to x.
+Input : arr[] = {10, 2, 14, 4, 7, 6}, x = 5, k = 3 .
+
+
+use max heap
+
+
+push K elements with diff.
+
+now if diff>K , pop the top element from heap.
