@@ -1,0 +1,84 @@
+class Solution {
+public:
+    vector<int> replaceNonCoprimes(vector<int>& nums) {
+        vector<long long> resultStack; 
+
+        for (long long num : nums) {
+            long long current = num;
+
+            // keep merging while top and current are not coprime
+            while (!resultStack.empty()) {
+                long long g = computeGCD(resultStack.back(), current);
+                if (g == 1) break;
+
+                current = computeLCM(resultStack.back(), current);
+                resultStack.pop_back();
+            }
+
+            resultStack.push_back(current);
+        }
+
+        // convert to int (safe by problem constraints)
+        return vector<int>(resultStack.begin(), resultStack.end());
+    }
+
+private:
+   
+    long long computeGCD(long long a, long long b) {
+        while (b != 0) {
+            long long temp = b;
+            b = a % b;
+            a = temp;
+        }
+        return a;
+    }
+
+
+    long long computeLCM(long long a, long long b) {
+        // lcm*gcd = a*b
+
+        //lcm = a/gcd(a,b) * b;
+        return a / computeGCD(a, b) * b; //to avoid overflow of doing a*b
+
+    }
+};
+
+
+
+
+
+// we can greedily scan from left -> right and check.
+
+// if they are coprime - check GCD(a,b) - if GCD is > 1
+//                                        LCM (a,b) - and store this 
+
+
+// and with the new element - again repeat the process recursively.
+
+
+// -> Also we can use STACK - DS
+
+// check coprime and if yes put result in stack or put both element in stack.
+// remove the top of stack and check with the next element and do the same.
+
+
+
+
+// The formula LCM(a, b) * GCD(a, b) = a * b
+
+// Let's take the numbers a = 12 and b = 8. 
+
+// Find the GCD (Greatest Common Divisor): 
+// The largest number that divides both 12 and 8 is 4. 
+
+
+// Find the LCM (Least Common Multiple): The smallest positive number that is a multiple of both 12 and 8 is 24. 
+
+
+// Verify the formula:
+// LCM * GCD = 24 * 4 = 96
+// a * b = 12 * 8 = 96
+
+
+
+
