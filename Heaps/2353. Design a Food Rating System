@@ -1,0 +1,179 @@
+class FoodRatings {
+public:
+    unordered_map<string, set<pair<int,string>>> cuisineRating;
+    unordered_map<string,int> foodRating;
+    unordered_map<string,string> foodCuisines;
+
+    FoodRatings(vector<string>& foods, vector<string>& cuisines, vector<int>& ratings) {
+        for(int i=0; i<foods.size(); i++){
+            foodRating.insert({foods[i], ratings[i]});
+            foodCuisines.insert({foods[i], cuisines[i]});
+
+            // Using -rating ensures that the set sorts foods in descending order of rating (since C++ set is ascending by default).
+
+            //so tht we can get highest rating first
+            cuisineRating[cuisines[i]].insert({-ratings[i], foods[i]});
+        }
+    }
+    
+    void changeRating(string food, int newRating) {
+        string cus = foodCuisines[food];
+        int oldRating = foodRating[food];
+        cuisineRating[cus].erase({-oldRating,food});
+        cuisineRating[cus].insert({-newRating,food});
+        foodRating[food] = newRating;
+    }
+    
+    string highestRated(string cuisine) {
+        return cuisineRating[cuisine].begin()->second;
+    }
+};
+
+
+
+// change the rating of the food item...
+
+// O(1) lookups - hashmap
+
+// highest rated - i can return the highest rating.but with heap how will i chnage the rating of food.
+
+
+
+// Think of this like designing a Food Rating System in real life:
+
+// Restaurants (foods) belong to some category (cuisine).
+
+// Each restaurant has a score (rating).
+
+// You should be able to:
+
+// Update a restaurant’s score if it changes.
+// Query the best restaurant in a given cuisine.
+ 
+ 
+//  Design Steps
+
+// Identify entities
+
+// Food → name, cuisine, rating.
+// Cuisine → collection of foods.
+
+
+// What operations must be fast?
+
+// Lookup a food’s cuisine and rating.
+// Get the top food for a cuisine.
+// Choose data structures
+
+// Map<food, cuisine> → to know which cuisine a food belongs to.
+// Map<food, rating> → to know current rating.
+// Map<cuisine, heap> → to quickly get highest rated food in that cuisine.
+// Handle updates
+
+
+
+// Changing rating means: update the maps, and push the updated food into the heap.
+// Old versions in the heap become “stale” → remove them lazily when querying.
+
+
+// Core Idea
+// You’re basically building a search engine for foods:
+
+// Index foods by cuisine.
+// Use a max-heap to always know the “top hit.”
+// Use lazy deletion to avoid heavy updates.
+// This way, instead of thinking about syntax first, you treat it like a mini system design:
+// Entities → Operations → Data Structures → Update strategy → Query strategy.
+
+// _____________________________
+
+
+// Food:
+// ["kimchi", "miso", "sushi", "moussaka", "ramen", "bulgogi"]
+
+// Change Ratings:
+// ["korean", "japanese", "japanese", "greek", "japanese", "korean"]
+
+// Ratings:
+// [9, 12, 8, 15, 14, 7]
+
+// ______________________________________
+
+// korean - [kimchi-9] , [bulgogi,7]
+// japanese - [miso-12],[sushi-8],[ramen-14]
+// greek - [moussaka-15]
+
+// ____________________
+
+// Highest Ratings:
+
+// int idx=0, maintain global to move ....
+
+// map
+// food->ratings
+// cuisine -> food
+
+// highest rating - heap 
+// sorted by rating - [rating,food]
+
+// if rating1 == rating2 -> sort by food lexicrgraphically 
+
+
+// Each cuisine will have a heap.
+// ________________
+
+
+// Change Rating:
+
+// change rating of a particular food item:
+
+// food->rating map will be updated.
+
+
+// how cuisine will be updated?
+
+// now I need which cuisine tht food belongs to also
+
+// so i need ,
+// food->cuisine also
+
+// now i will find which cuisine tht food belongs to.
+// Now how to update the mapping in the heap.
+
+
+// LAZY DELTIONS IN HEAP.
+
+// OR USE A ordered_SET
+
+// O(logn) - insertion, deletion and find
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
