@@ -89,3 +89,13 @@ https://leetcode.com/problems/furthest-building-you-can-reach/description/
 
 https://leetcode.com/problems/minimum-number-of-refueling-stops/description/
 
+
+
+__________
+
+
+
+Design :
+
+2353. Design a Food Rating System
+
