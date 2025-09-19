@@ -1,0 +1,42 @@
+class Solution {
+public:
+    string convertToTitle(int n) {
+        string res;
+        while (n > 0) {
+            n--;                               // shift to 0-based
+            res.push_back('A' + (n % 26));     // pick last char
+            n /= 26;
+        }
+        reverse(res.begin(), res.end());       // reverse since we built backwards
+        return res;
+    }
+};
+        
+
+
+// A->1
+// ....
+
+// Z->26
+
+// AA -> 27
+// AB -> 28
+
+// AC -> 29
+
+
+// 27/26 - 1
+// 27%26 - 1
+
+// AA
+
+
+// ZY - 
+// first - 701/26 = 26
+// second - 701%26 = 27
+
+
+// Excel is 1-indexed, so we can’t just CN%26.
+// Example: CN=26 → should be Z.
+
+// You need to decrement CN first before taking %26
