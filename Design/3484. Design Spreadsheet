@@ -53,3 +53,50 @@ public:
 // You assume the formula looks like =2+3.
 
 // But if the input is like =A1+B2, your code tries to stoi("A1") → crash.
+
+
+
+
+
+
+//HASHMAP
+
+
+class Spreadsheet {
+public:
+
+    unordered_map<string,int> ss;
+
+    Spreadsheet(int rows) {}
+    
+    void setCell(string cell, int val) {
+       ss[cell] = val;
+    }
+    
+    void resetCell(string cell) {
+        ss[cell]=0;
+    }
+
+        int eval(string token) {
+
+            // if first digit is or if its a negative number.
+        if (isdigit(token[0]) || (token[0]=='-' && 
+        token.size()>1)) {
+            return stoi(token); // number
+        }
+
+        return ss[token]; // cell reference
+    }
+
+
+    
+   int getValue(string formula) {
+        formula=formula.substr(1);
+        
+        int idx = formula.find("+");
+        string left = formula.substr(0, idx);
+        string right = formula.substr(idx+1);
+
+        return eval(left) + eval(right);
+    }
+};
