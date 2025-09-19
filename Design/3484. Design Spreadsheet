@@ -1,0 +1,55 @@
+class Spreadsheet {
+public:
+
+    vector<vector<int>> v;
+    Spreadsheet(int rows) {
+         v.assign(26, vector<int>(rows+1, 0));
+    }
+    
+    void setCell(string cell, int val) {
+        char ch1=cell[0];
+        string s =cell.substr(1,cell.length()-1);
+        v[ch1-'A'][stoi(s)]=val;
+    }
+    
+    void resetCell(string cell) {
+        char ch1=cell[0];
+        string s =cell.substr(1,cell.length()-1);
+        v[ch1-'A'][stoi(s)]=0;
+    }
+
+    int eval(string token) {
+        if (isdigit(token[0]) || (token[0]=='-' && token.size()>1)) {
+            return stoi(token); // number
+        }
+        char col = token[0];
+        int row = stoi(token.substr(1));
+        return v[col-'A'][row]; // cell reference
+    }
+    
+   int getValue(string formula) {
+        if (formula[0] == '=') formula = formula.substr(1);
+        
+        size_t idx = formula.find("+");
+        string left = formula.substr(0, idx);
+        string right = formula.substr(idx+1);
+
+        return eval(left) + eval(right);
+    }
+};
+
+
+
+// matrix
+
+
+// 3 -> means 3*26 = rows*cols
+// =5+7 -> 12
+
+// [A1,10] -> A means 1col ->  1 row 
+// set to 10
+
+
+// You assume the formula looks like =2+3.
+
+// But if the input is like =A1+B2, your code tries to stoi("A1") → crash.
