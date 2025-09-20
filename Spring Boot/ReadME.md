@@ -722,8 +722,10 @@ public class GlobalExceptionHandler {
 }
 ```
 
-@ControllerAdvice makes exception handling centralized.
-@ExceptionHandler allows customizing the HTTP response and status code for each exception.
+
+
+- `@ControllerAdvice` makes exception handling **centralized**.  
+- `@ExceptionHandler` allows customizing the **HTTP response and status code** for each exception.
 
 
 
