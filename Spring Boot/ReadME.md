@@ -694,26 +694,26 @@ _____
 Pros and Cons of Spring over Spring Boot
 
 
-“Spring gives you full control but requires lots of configuration, while Spring Boot is opinionated and reduces boilerplate by offering auto-configuration, 
-starters, and embedded servers. In short, Spring Boot makes Spring development faster and easier.”
+## Overview
+Spring gives you full control but requires lots of configuration, while Spring Boot is opinionated and reduces boilerplate by offering auto-configuration, starters, and embedded servers. In short, Spring Boot makes Spring development faster and easier.
 
+---
 
-Spring Boot Pros
+## Spring Boot Pros
+- Rapid development — less setup, fewer lines of code.  
+- Built-in auto-configuration and starter dependencies.  
+- Standalone apps with embedded servers.  
+- Great for microservices and cloud-native development.  
+- Spring Boot favors convention over configuration.  
+- Spring Boot is opinionated but still customizable.
 
-Rapid development — less setup, fewer lines of code.
-Built-in auto-configuration and starter dependencies.
-Standalone apps with embedded servers.
-Great for microservices and cloud-native development.
+---
 
-Spring boot favours convention over configurqation.
-SPring boot is opiniated but  still customizable.
+## Spring (Core) Pros
+- Very flexible — you can configure everything exactly how you want.  
+- Good for large, complex, enterprise-grade applications.  
+- Mature ecosystem with lots of extensions.
 
-
-Spring (Core) Pros
-
-Very flexible — you can configure everything exactly how you want.
-Good for large, complex, enterprise-grade applications.
-Mature ecosystem with lots of extensions.
 
 
 
