@@ -116,7 +116,84 @@ Spring Boot makes it easy to create stand-alone, production-grade Spring-based a
 Add dependencies in pom.xml and configure application.yml to set the app configs.
 
 
-______________
+
+# MVC (Model–View–Controller)
+
+- **Model** → Data (entities, business objects, database layer)  
+- **View** → UI (HTML, JSON, etc.)  
+- **Controller** → Logic that connects Model and View  
+
+
+
+# DAO (Data Access Object)
+
+- **Repository interface** handles CRUD operations.  
+- DAO separates **persistence logic** from **business logic**.  
+- With Spring Data JPA, usually **no extra DAO class** is needed.
+
+
+
+
+
+# Common Spring Boot Annotations
+
+- `@SpringBootApplication` → Main entry point, enables auto-configuration  
+- `@Entity` → JPA entity  
+- `@Id`, `@GeneratedValue` → Primary key  
+- `@Column` → Configure column details  
+- `@Repository` → Persistence layer (JpaRepository already adds this)  - Purpose: Marks a DAO/repository class — interacts with the database.
+                  Adds exception translation: Converts JPA or JDBC exceptions into Spring’s DataAccessException hierarchy.
+- `@Service` → Service layer  
+- `@RestController` → REST APIs  
+- `@Data` → Generates getters, setters, toString(), equals(), hashCode()   
+- `@RequestMapping, @GetMapping, @PostMapping` → endpoint mappings
+- `@Autowired` ->Spring’s way of doing Dependency Injection (DI). Injects required bean wherever you need it.
+---
+
+- `@Builder` → Enables builder pattern 
+## Example: Using @Builder and @Data
+
+```java
+@Builder
+@Data
+public class Product {
+    private Long id;
+    private String name;
+    private Double price;
+}
+
+Usage:
+Product p = Product.builder()
+                   .id(1L)
+                   .name("Laptop")
+                   .price(899.0)
+                   .build();
+
+```
+
+
+
+@Transactional
+Defines transaction boundaries for DB operations
+
+Ensures all-or-nothing behavior.
+
+All repository methods are already wrapped with @Transactional by Spring Data:
+
+Write methods (save, delete) → transactional with commit
+Read methods (findBy...) → transactional with read-only
+
+
+```java
+@Transactional
+public void transferMoney(Long fromAccount, Long toAccount, double amount) {
+    accountRepository.debit(fromAccount, amount); // Step 1
+    accountRepository.credit(toAccount, amount);  // Step 2
+    // If Step 2 fails, Step 1 is rolled back automatically
+}
+```
+
+
 
 Example Entity with Annotations:
 
@@ -141,168 +218,6 @@ public class Price {
 
 
 
-@RestController
-
-Purpose: Marks a class as a REST API controller.
-Usage: Handle HTTP requests like GET, POST, PUT, DELETE.
-
-
-
-@RestController
-@RequestMapping("/users")
-public class UserController {
-
-    @GetMapping("/{id}")
-    public User getUser(@PathVariable Long id) {
-        return userService.getUserById(id);
-    }
-}
-
-____________
-
-@Service
-
-Purpose: Marks a service layer class — contains business logic.
-Spring registers it as a Spring Bean automatically.
-
-
-@Service
-public class UserService {
-
-    @Autowired
-    private UserRepository userRepository;
-
-    public User getUserById(Long id) {
-        return userRepository.findById(id).orElse(null);
-    }
-}
-
-_________________
-
-@Repository
-
-Purpose: Marks a DAO/repository class — interacts with the database.
-Adds exception translation: Converts JPA or JDBC exceptions into Spring’s DataAccessException hierarchy.
-
-@Repository
-public interface UserRepository extends JpaRepository<User, Long> {
-}
-
-
-
-__________________
-
-
-
-________________________
-
-Common Annotations
-
-@SpringBootApplication → main entry point, enables auto-configuration
-@Entity → JPA entity
-@Id, @GeneratedValue → primary key
-@Column → configure column details
-@Repository → persistence layer (JpaRepository already adds this)
-@Service → service layer
-@RestController → REST APIs
-@Data → generates getters, setters, toString(), equals(), hashCode()
-@Builder → enables builder pattern
-
-
-```
-@Builder
-@Data
-public class Product {
-    private Long id;
-    private String name;
-    private Double price;
-}
-
-
-
-Usage:
-Product p = Product.builder()
-                   .id(1L)
-                   .name("Laptop")
-                   .price(899.0)
-                   .build();
-
-```
-
-
-
-Request Mappings
-@RequestMapping, @GetMapping, @PostMapping → endpoint mappings
-
-
-
-@Transactional
-Defines transaction boundaries for DB operations
-
-Ensures all-or-nothing behavior.
-
-All repository methods are already wrapped with @Transactional by Spring Data:
-
-Write methods (save, delete) → transactional with commit
-Read methods (findBy...) → transactional with read-only
-
-
-```
-@Transactional
-public void transferMoney(Long fromAccount, Long toAccount, double amount) {
-    accountRepository.debit(fromAccount, amount); // Step 1
-    accountRepository.credit(toAccount, amount);  // Step 2
-    // If Step 2 fails, Step 1 is rolled back automatically
-}
-```
-
-
-@Autowired
-Spring’s way of doing Dependency Injection (DI)
-Injects required bean wherever you need it.
-
-```
-@Service
-public class OrderService {
-
-    private final ProductRepository productRepository;
-    private final PaymentService paymentService;
-    private final NotificationService notificationService;
-
-    @Autowired  
-    public OrderService(ProductRepository productRepository,
-                        PaymentService paymentService,
-                        NotificationService notificationService) {
-        this.productRepository = productRepository;
-        this.paymentService = paymentService;
-        this.notificationService = notificationService;
-    }
-}
-```
-
-_______________
-
-
-
-
-
-
-
-
-
-MVC (Model–View–Controller):
-
-
-Model → data (entities, business objects, database layer)
-View → UI (HTML, JSON, etc.)
-Controller → logic that connects model and view
-
-________________
-
-DAO
-Repository interface handles CRUD
-DAO = Data Access Object, separates persistence logic from business logic
-Usually, no extra DAO class is needed with Spring Data JPA
 
 
 _________________________
