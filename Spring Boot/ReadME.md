@@ -380,13 +380,6 @@ JPA is a Java specification for **object-relational mapping (ORM)**. It defines 
 - Spring Data JPA generates the implementation at runtime.
 
 
-
-```
-
-
-
-
-
 ```java
 public interface ProductRepository extends JpaRepository<Product, Long> {
     // Spring Data JPA generates basic CRUD automatically
@@ -436,11 +429,12 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 
 
 
-Notes:
+# Notes on SQL vs JPQL
 
-SQL works on tables & columns.
-JPQL works on entities & their fields.
-JPQL is object-oriented and database-agnostic, while SQL is tied to the database schema.
+- **SQL** works on tables & columns.  
+- **JPQL** works on entities & their fields.  
+- JPQL is **object-oriented** and database-agnostic, while SQL is tied to the database schema.
+
 
 
 
