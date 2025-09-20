@@ -595,7 +595,7 @@ JPA is a Java specification for **object-relational mapping (ORM)**. It defines 
 - SQL is generated automatically; manual SQL is only needed with `@Query`.  
 - Spring Data JPA generates the implementation at runtime.
 
-```java
+
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
 
@@ -618,7 +618,7 @@ If you don’t use JPA, you can use `JdbcTemplate` for **direct SQL queries**.
 
 ## Example Repository
 
-```java
+
 @Repository
 public class UserRepository {
 
@@ -663,7 +663,7 @@ _____________
 
 
 _________________
-_________________
+
 
 
 Difference between `@Component`, `@Service`, `@Repository`
