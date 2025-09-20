@@ -1,0 +1,84 @@
+https://vaheaslanyan7.medium.com/the-java-interview-prep-handbook-50-questions-solved-code-examples-62fed44e3e6a
+
+
+
+Java Interview Checklist
+1. Core Java
+
+ JVM, JRE, JDK (we covered)
+
+ Compile .java → .class → bytecode
+
+ finalize() method
+
+ Access modifiers, package
+
+ try-catch-finally, multiple blocks
+
+ transient keyword, passing sensitive info
+
+ super keyword, calling parent methods
+
+ Checked vs Unchecked Exceptions
+
+ Generics → type safety
+
+ Multilevel / Multiple inheritance → interfaces & default methods
+
+ default and static methods in interfaces
+
+ volatile keyword
+
+ synchronized → method vs block, locks, ReentrantLock
+
+ Garbage Collection → soft references, memory leaks
+
+ Threads → lifecycle, creating threads, run() vs start(), thread safety
+
+ fail-fast vs fail-safe iterators
+
+2. Collections Framework
+
+ List → ArrayList, LinkedList, Vector, Stack
+
+ Set → HashSet, LinkedHashSet, TreeSet
+
+ Queue → PriorityQueue, ArrayDeque
+
+ Map → HashMap, LinkedHashMap, TreeMap, Hashtable, ConcurrentHashMap
+
+ Red-Black Tree → TreeMap, TreeSet
+
+ Dynamic Arrays → ArrayList internal working
+
+3. Multithreading / Concurrency
+
+ Thread class, Runnable
+
+ Thread lifecycle
+
+ Synchronization → methods, blocks, Locks
+
+ ReentrantLock / tryLock / fairness / Conditions
+
+ volatile vs synchronized
+
+ Deadlocks → detection & prevention strategies
+
+ ThreadPool & ExecutorService → practical usage
+
+ Concurrent Collections (briefly touched)
+
+4. Other commonly asked topics
+
+ String, StringBuffer, StringBuilder → differences
+
+ Immutable objects
+
+ hashCode() and equals() → importance in HashMap/HashSet
+
+ Java 8+ features → Lambda, Streams, Optional (if interview is modern)
+
+ Design patterns (Singleton, Factory, Observer) basics
+
+ OOP Concepts → Polymorphism, Inheritance, Abstraction, Encapsulation
