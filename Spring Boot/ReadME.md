@@ -173,15 +173,17 @@ Product p = Product.builder()
 
 
 
-@Transactional
-Defines transaction boundaries for DB operations
+@Transactional 
 
-Ensures all-or-nothing behavior.
+- **Purpose:** Defines transaction boundaries for database operations.  
+- Ensures **all-or-nothing behavior** (commit or rollback).  
 
-All repository methods are already wrapped with @Transactional by Spring Data:
 
-Write methods (save, delete) → transactional with commit
-Read methods (findBy...) → transactional with read-only
+
+- All repository methods are already wrapped with `@Transactional` by Spring Data:  
+  - **Write methods** (`save`, `delete`) → transactional with **commit**  
+  - **Read methods** (`findBy...`) → transactional with **read-only**
+
 
 
 ```java
