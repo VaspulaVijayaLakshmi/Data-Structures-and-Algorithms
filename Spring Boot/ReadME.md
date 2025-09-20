@@ -194,71 +194,6 @@ __________________
 
 
 
-
-
-public interface ProductRepository extends JpaRepository<Product, Long> {
-    // Spring Data JPA generates basic CRUD automatically
-}
-
-
-Basic CRUD with ProductRepository
-
-productRepository.save(product);
-productRepository.findById(1L);
-productRepository.findAll();
-productRepository.deleteById(2L);
-productRepository.count();
-
-____________________
-
-Custom Query Methods:
-
-Spring Data can generate queries from method names.
-
-
-public interface ProductRepository extends JpaRepository<Product, Long> {
-    List<Product> findByName(String name);
-    List<Product> findByPriceLessThan(double price);
-    List<Product> findByCategoryAndPriceLessThan(String category, double price);
-}
-
-
-
-Translates to SQL:
-
-
-SELECT * FROM product WHERE name = ?;
-SELECT * FROM product WHERE price < ?;
-SELECT * FROM product WHERE category = ? AND price < ?;
-Custom Queries (JPQL)
-If the method name is too complex, use @Query.
-
-@Param is used in @Query to bind method parameters to query parameters.
-
-public interface ProductRepository extends JpaRepository<Product, Long> {
-
-    @Query("SELECT p FROM Product p WHERE p.name LIKE %:keyword%")
-    List<Product> searchByName(@Param("keyword") String keyword);
-
-    @Query(value = "SELECT * FROM product WHERE price > :price", nativeQuery = true)
-    List<Product> findExpensive(@Param("price") double price);
-}
-
-
-
-SQL works on tables & columns.
-JPQL works on entities & their fields.
-
-JPQL is object-oriented and database-agnostic, while SQL is tied to the database schema.
-
-
-
-___________________
-
-
-
-
-
 ________________________
 
 Common Annotations
@@ -447,16 +382,68 @@ JPA is a Java specification for **object-relational mapping (ORM)**. It defines 
 
 
 ```
-@Repository
-public interface UserRepository extends JpaRepository<User, Long> {
 
-    // Optional: custom queries
-    List<User> findByUsername(String username);
 
-    @Query("SELECT u FROM User u WHERE u.email = :email")
-    User findByEmail(@Param("email") String email);
+
+
+
+```java
+public interface ProductRepository extends JpaRepository<Product, Long> {
+    // Spring Data JPA generates basic CRUD automatically
 }
 ```
+
+
+
+
+Custom Query Methods
+
+Spring Data can generate queries from method names.
+```java
+public interface ProductRepository extends JpaRepository<Product, Long> {
+    List<Product> findByName(String name);
+    List<Product> findByPriceLessThan(double price);
+    List<Product> findByCategoryAndPriceLessThan(String category, double price);
+}
+```
+
+Translates to SQL:
+
+```java
+SELECT * FROM product WHERE name = ?;
+SELECT * FROM product WHERE price < ?;
+SELECT * FROM product WHERE category = ? AND price < ?;
+```
+
+
+
+Custom Queries (JPQL)
+
+If the method name is too complex, use @Query.
+@Param is used to bind method parameters to query parameters.
+
+```java
+public interface ProductRepository extends JpaRepository<Product, Long> {
+
+    @Query("SELECT p FROM Product p WHERE p.name LIKE %:keyword%")
+    List<Product> searchByName(@Param("keyword") String keyword);
+
+    @Query(value = "SELECT * FROM product WHERE price > :price", nativeQuery = true)
+    List<Product> findExpensive(@Param("price") double price);
+}
+```
+
+
+
+
+Notes:
+
+SQL works on tables & columns.
+JPQL works on entities & their fields.
+JPQL is object-oriented and database-agnostic, while SQL is tied to the database schema.
+
+
+
 __________________
 
 
@@ -698,18 +685,31 @@ ________________
 Logging Levels:
 
 
+```java
+# Set global log level
+logging.level.root=INFO
+
+
+
+# Enable DEBUG logs globally
+logging.level.root=DEBUG
+
+```
+
+
+```java
 TRACE	Very detailed, usually for deep debugging
 DEBUG	Debug info for developers
 INFO	General runtime info, like “server started”
 WARN	Something unexpected but not fatal
 ERROR	Something broke, must fix
-
+```
 
 
 
 Logging Example (SLF4J)
 
-
+```java
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -723,58 +723,10 @@ public class ProductService {
         logger.debug("Product details: {}", product);
     }
 }
-
-
-____________________
-
-Lombok shortcut with @Slf4j:
-
-
-import lombok.extern.slf4j.Slf4j;
-
-@Slf4j
-@Service
-public class ProductService {
-
-    public void addProduct(Product product) {
-        log.info("Adding product: {}", product.getName());
-        log.debug("Product details: {}", product);
-    }
-}
-
+```
 
 LoggerFactory.getLogger(ProductService.class) creates a logger instance for the class
-
 private static final → shared, constant, class-level
-
-
-
-# Set global log level
-logging.level.root=INFO
-
-
-
-# Enable DEBUG logs globally
-logging.level.root=DEBUG
-
-
-_____________
-
-
-
-
-______________________________
-
-
-
-
-
-
-
-
-
-
-
 
 __________________
 
