@@ -125,6 +125,31 @@
 
 ____________________________
 
+## 1. @RestController
+
+**Purpose:**  
+Marks a class as a **REST API controller**. Automatically converts return values to JSON or XML.  
+
+**Usage:**  
+Handles HTTP requests like **GET, POST, PUT, DELETE**.
+
+**Example:**
+```java
+@RestController
+@RequestMapping("/users")
+public class UserController {
+
+    @GetMapping("/{id}")
+    public User getUser(@PathVariable Long id) {
+        return userService.getUserById(id);
+    }
+}
+
+
+
+
+
+
 @Configuration
 @PropertySource("classpath:application.properties") // load the properties file
 public class AppConfig {
