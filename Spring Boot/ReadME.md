@@ -111,8 +111,33 @@
 
 ____________________________
 
-Comtroller 
 
+Spring Boot makes it easy to create stand-alone, production-grade Spring-based applications that you can "just run".
+Add dependencies in pom.xml and configure application.yml to set the app configs.
+
+
+______________
+
+Example Entity with Annotations:
+
+```
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
+@Data
+@Entity
+@Table(name = "price", schema = "service_prices")
+public class Price {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequence_price_generator")
+    private Long id;
+
+    @Column(name = "book_id", nullable = false)
+    private long bookId;
+
+}
+```
 
 
 
@@ -168,15 +193,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
 __________________
 
 
-Spring Boot makes it easy to create stand-alone, production-grade Spring-based applications that you can "just run".
-Add dependencies in pom.xml and configure application.yml to set the app configs.
 
-
-______________
-
-
-
-Create Entities:
 
 
 public interface ProductRepository extends JpaRepository<Product, Long> {
@@ -218,9 +235,6 @@ If the method name is too complex, use @Query.
 
 @Param is used in @Query to bind method parameters to query parameters.
 
-
-
-
 public interface ProductRepository extends JpaRepository<Product, Long> {
 
     @Query("SELECT p FROM Product p WHERE p.name LIKE %:keyword%")
@@ -241,14 +255,7 @@ JPQL is object-oriented and database-agnostic, while SQL is tied to the database
 
 ___________________
 
-## Transactions
 
-All repository methods are already wrapped with @Transactional by Spring Data:
-
-Write methods (save, delete) → transactional with commit
-Read methods (findBy...) → transactional with read-only
-
-Most of the time, you don’t need to manually add @Transactional.
 
 
 
@@ -267,7 +274,7 @@ Common Annotations
 @Builder → enables builder pattern
 
 
-
+```
 @Builder
 @Data
 public class Product {
@@ -285,15 +292,41 @@ Product p = Product.builder()
                    .price(899.0)
                    .build();
 
+```
 
-____________________
+
+
+Request Mappings
+@RequestMapping, @GetMapping, @PostMapping → endpoint mappings
+
+
+
+@Transactional
+Defines transaction boundaries for DB operations
+
+Ensures all-or-nothing behavior.
+
+All repository methods are already wrapped with @Transactional by Spring Data:
+
+Write methods (save, delete) → transactional with commit
+Read methods (findBy...) → transactional with read-only
+
+
+```
+@Transactional
+public void transferMoney(Long fromAccount, Long toAccount, double amount) {
+    accountRepository.debit(fromAccount, amount); // Step 1
+    accountRepository.credit(toAccount, amount);  // Step 2
+    // If Step 2 fails, Step 1 is rolled back automatically
+}
+```
+
 
 @Autowired
 Spring’s way of doing Dependency Injection (DI)
 Injects required bean wherever you need it.
 
-
-
+```
 @Service
 public class OrderService {
 
@@ -310,34 +343,15 @@ public class OrderService {
         this.notificationService = notificationService;
     }
 }
-
-
-_______________
-
-Request Mappings
-@RequestMapping, @GetMapping, @PostMapping → endpoint mappings
+```
 
 _______________
 
 
-@Transactional
-Defines transaction boundaries for DB operations
-
-Ensures all-or-nothing behavior.
-
-________________
-
-@Transactional
-public void transferMoney(Long fromAccount, Long toAccount, double amount) {
-    accountRepository.debit(fromAccount, amount); // Step 1
-    accountRepository.credit(toAccount, amount);  // Step 2
-    // If Step 2 fails, Step 1 is rolled back automatically
-}
 
 
 
 
-______________________
 
 
 
@@ -423,103 +437,7 @@ logging.level.root=DEBUG
 
 _____________
 
-Example Entity with Annotations
 
-@AllArgsConstructor
-@NoArgsConstructor
-@Builder
-@Data
-@Entity
-@Table(name = "price", schema = "service_prices")
-public class Price {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequence_price_generator")
-    @GenericGenerator(
-        name = "sequence_price_generator",
-        strategy = "org.hibernate.id.enhanced.SequenceStyleGenerator",
-        parameters = {
-            @Parameter(name = "sequence_name", value = "service_prices.price_id_seq"),
-            @Parameter(name = "initial_value", value = "1000"),
-            @Parameter(name = "increment_size", value = "1")
-        }
-    )
-    private Long id;
-
-    @Column(name = "book_id", nullable = false)
-    private long bookId;
-
-    @Column(nullable = false, precision = 10, scale = 4)
-    private BigDecimal price;
-}
-
-
-
-
-
-__________________
-
-@Configuration
-@PropertySource("classpath:application.properties") // load the properties file
-public class AppConfig {
-
-    @Value("${db.driver}")
-    private String driver;
-
-    @Value("${db.url}")
-    private String url;
-
-    @Value("${db.username}")
-    private String username;
-
-    @Value("${db.password}")
-    private String password;
-
-    @Bean
-    public DataSource dataSource() {
-        BasicDataSource ds = new BasicDataSource();
-        ds.setDriverClassName(driver);
-        ds.setUrl(url);
-        ds.setUsername(username);
-        ds.setPassword(password);
-        return ds;
-    }
-}
-_________________________
-
-
-Using @Value with a properties file
-
-Create application.properties (in src/main/resources):
-
-db.driver=com.mysql.cj.jdbc.Driver
-db.url=jdbc:mysql://localhost:3306/testdb
-db.username=root
-db.password=password
-
-
-_______________________
-
-
-
-Spring 
-
-
-
-<beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xsi:schemaLocation="
-        http://www.springframework.org/schema/beans 
-        http://www.springframework.org/schema/beans/spring-beans.xsd">
-
-    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
-        <property name="driverClassName" value="com.mysql.cj.jdbc.Driver"/>
-        <property name="url" value="jdbc:mysql://localhost:3306/testdb"/>
-        <property name="username" value="root"/>
-        <property name="password" value="password"/>
-    </bean>
-
-</beans>
 
 
 ______________________________
@@ -661,7 +579,7 @@ public class UserRepository {
 
 
 _________________
-_________________
+
 
 
 
@@ -682,12 +600,12 @@ Spring Boot Actuator provides built-in **production-ready features** to help mon
 
 Example Usage
 
-Access health endpoint: http://localhost:8080/actuator/health
-Access metrics endpoint: http://localhost:8080/actuator/metrics
+Access health endpoint: http://localhost:8080/actuator/health  
+Access metrics endpoint: http://localhost:8080/actuator/metrics  
 Access beans endpoint: http://localhost:8080/actuator/beans
 
 ______________________
-_______________________
+
 
 
 ## Difference between `@Component`, `@Service`, `@Repository`
@@ -695,7 +613,7 @@ _______________________
 All three are stereotype annotations and register beans with the Spring container.
 Use @Component for generic beans, @Service for business logic, and @Repository for persistence layer with built-in exception translation.”
 
-_______________________
+
 
  ## Bean scopes
   - `@RestController` vs `@Controller`
@@ -772,3 +690,73 @@ Lazy = load on demand (efficient, but extra queries).
 | SQL Queries   | Often results in **JOINs** at query time.                                             | triggers **separate SQL queries** when accessed.                                           |
 
 ____________
+
+
+
+
+
+
+
+__________________
+
+@Configuration
+@PropertySource("classpath:application.properties") // load the properties file
+public class AppConfig {
+
+    @Value("${db.driver}")
+    private String driver;
+
+    @Value("${db.url}")
+    private String url;
+
+    @Value("${db.username}")
+    private String username;
+
+    @Value("${db.password}")
+    private String password;
+
+    @Bean
+    public DataSource dataSource() {
+        BasicDataSource ds = new BasicDataSource();
+        ds.setDriverClassName(driver);
+        ds.setUrl(url);
+        ds.setUsername(username);
+        ds.setPassword(password);
+        return ds;
+    }
+}
+_________________________
+
+
+Using @Value with a properties file
+
+Create application.properties (in src/main/resources):
+
+db.driver=com.mysql.cj.jdbc.Driver
+db.url=jdbc:mysql://localhost:3306/testdb
+db.username=root
+db.password=password
+
+
+_______________________
+
+
+
+Spring 
+
+
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans 
+        http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
+        <property name="driverClassName" value="com.mysql.cj.jdbc.Driver"/>
+        <property name="url" value="jdbc:mysql://localhost:3306/testdb"/>
+        <property name="username" value="root"/>
+        <property name="password" value="password"/>
+    </bean>
+
+</beans>
