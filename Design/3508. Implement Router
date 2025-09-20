@@ -1,0 +1,92 @@
+class Router {
+public:
+    int memoryLimit;
+
+    //deque
+    deque<vector<int>> q;
+    
+    //duplicates
+    set<vector<int>> s;
+
+    //map
+    unordered_map<int, vector<int>> destMap;
+
+    Router(int memoryLimit) {
+        this->memoryLimit = memoryLimit;
+    }
+    
+    bool addPacket(int source, int destination, int timestamp) {
+        vector<int> packet = {source, destination, timestamp};
+        if(s.count(packet)) return false;
+
+        if(q.size() == memoryLimit){
+            vector<int> old = q.front();
+            q.pop_front();
+            s.erase(old);
+
+            auto &vec = destMap[old[1]];
+            auto it = lower_bound(vec.begin(), vec.end(), old[2]);
+            if (it != vec.end()) vec.erase(it);
+        }
+
+        q.push_back(packet);
+        s.insert(packet);
+        destMap[destination].push_back(timestamp);
+        return true;
+    } 
+    
+    vector<int> forwardPacket() {
+        if(q.empty()) return {};
+        vector<int> packet = q.front();
+        q.pop_front();
+        s.erase(packet);
+
+        auto &vec = destMap[packet[1]];
+        auto it = lower_bound(vec.begin(), vec.end(), packet[2]);
+        if (it != vec.end()) vec.erase(it);
+
+        return packet;
+    }
+    
+    int getCount(int destination, int startTime, int endTime) {
+        if (!destMap.count(destination)) return 0;
+        
+        auto &vec = destMap[destination];
+
+        auto it1 = lower_bound(vec.begin(), vec.end(), startTime);
+        auto it2 = upper_bound(vec.begin(), vec.end(), endTime);
+        
+        return it2 - it1;
+    }
+};
+
+ 
+// Queue + HashMap
+// Queue + HashMap + binary search gives efficient O(log n) queries even with many packets.
+
+// We need to design a router that handles packets in FIFO order and supports fast queries for the number of packets to a specific destination in a timestamp range.
+
+// deque can efficiently handle FIFO operations for forwarding packets.
+// To avoid scanning all packets for getCount, we maintain a per-destination mapping of timestamps.
+
+// Using a vector<int> per destination allows binary search because packet timestamps are added in increasing order.
+
+
+// Approach
+// Use a deque<vector<int>> to store packets for FIFO operations.
+// Use a set<vector<int>> to detect duplicate packets.
+// Maintain an unordered_map<int, vector<int>> mapping destination → timestamps.
+
+
+// addPacket:
+// Check for duplicates.
+// If memory limit exceeded, remove oldest packet from deque and update the map.
+// Add new packet to deque, set, and destination map.
+
+
+// forwardPacket:
+// Pop the front packet from deque, remove it from the set, and remove its timestamp from the destination map.
+
+
+// getCount:
+// Use lower_bound and upper_bound on the vector of timestamps for the destination to quickly count packets in the given timestamp range.
