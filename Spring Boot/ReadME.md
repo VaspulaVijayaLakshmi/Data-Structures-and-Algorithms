@@ -283,7 +283,9 @@ ___________________________________
 
 ## JPA (Java Persistence API)
 
-JPA is a Java specification for **object-relational mapping (ORM)**. It defines a standard way to map Java objects (entities) to relational database tables. It is **not an implementation** — you need an ORM tool like Hibernate to actually perform the database operations.
+JPA is a specification—think of it as a set of rules or an interface or blueprint that tells Java how to map objects to database tables.
+Hibernate is a framework that actually implements these rules. Hibernate knows how to take Java objects and persist them into the database. 
+
 
 ### Why JPA?
 - Simplifies database access in Java applications.  
@@ -332,25 +334,72 @@ Custom Queries (JPQL)
 If the method name is too complex, use @Query.
 @Param is used to bind method parameters to query parameters.
 
+
+// JPQL query
 ```java
-public interface ProductRepository extends JpaRepository<Product, Long> {
+String jpql = "SELECT e FROM Employee e WHERE e.department = :dept";
+List<Employee> employees = entityManager.createQuery(jpql, Employee.class)
+                                        .setParameter("dept", "HR")
+                                        .getResultList();
 
-    @Query("SELECT p FROM Product p WHERE p.name LIKE %:keyword%")
-    List<Product> searchByName(@Param("keyword") String keyword);
-
-    @Query(value = "SELECT * FROM product WHERE price > :price", nativeQuery = true)
-    List<Product> findExpensive(@Param("price") double price);
-}
 ```
 
+
+Parameter Binding:
+
+```java
+.setParameter("dept", "HR")
+You don’t put the value directly in the query. Instead, you bind it using .setParameter().
+
+"dept" → the name of the parameter in the query (:dept)
+"HR" → the value you want to bind to that parameter
+```
 
 
 
 # Notes on SQL vs JPQL
 
 - **SQL** works on tables & columns.  
-- **JPQL** works on entities & their fields.  
+- **JPQL** works on entities & their fields. - JPQL is a query language defined by JPA for querying data in Java applications 
 - JPQL is **object-oriented** and database-agnostic, while SQL is tied to the database schema.
+
+______________
+
+
+
+### Hibernate
+
+
+ Hibernate is a **Java ORM (Object-Relational Mapping) framework**.  
+- Maps **Java objects (entities)** to **database tables** automatically.  
+- Handles CRUD operations, queries, and transactions without writing raw SQL. 
+
+
+### Key Features
+
+- **Entity Mapping:** Maps Java classes to database tables using `@Entity`, `@Id`, `@Column`, etc.   
+- **Automatic SQL Generation:** Generates SQL queries based on entity operations.  
+- **Transaction Management:** Works with Spring’s `@Transactional` for automatic commit/rollback.    
+- **Querying:** Supports HQL (Hibernate Query Language) and JPQL for database-independent queries.
+
+
+
+
+Hibernate (or any JPA provider) takes the JPQL query, translates it into SQL, and runs it on the database. The translation is what allows JPQL to be database-agnostic. Hibernate knows the underlying database (MySQL, PostgreSQL, etc.) and generates the appropriate SQL.  
+
+
+**Summary:**  
+- **JPA** = the blueprint/specification (defines JPQL, EntityManager, repository contracts)  
+- **Hibernate** = the engine that executes JPQL and CRUD operations
+
+
+
+
+
+
+
+
+
 
 
 
