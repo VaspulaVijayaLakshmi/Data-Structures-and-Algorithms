@@ -117,7 +117,7 @@ Add dependencies in pom.xml and configure application.yml to set the app configs
 
 
 
-# MVC (Model–View–Controller)
+ MVC (Model–View–Controller)
 
 - **Model** → Data (entities, business objects, database layer)  
 - **View** → UI (HTML, JSON, etc.)  
@@ -125,7 +125,7 @@ Add dependencies in pom.xml and configure application.yml to set the app configs
 
 
 
-# DAO (Data Access Object)
+DAO (Data Access Object)
 
 - **Repository interface** handles CRUD operations.  
 - DAO separates **persistence logic** from **business logic**.  
