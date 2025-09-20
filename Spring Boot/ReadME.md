@@ -5,7 +5,7 @@
 
 ---
 
-## 🔹 1. Core Spring Boot Concepts (Days 1–3)
+## 🔹 1. Core Spring Boot Concepts
 
 ### Topics
 - Spring vs Spring Boot
@@ -25,7 +25,7 @@
 
 ---
 
-## 🔹 2. Spring Boot Data & Persistence (Days 4–6)
+## 🔹 2. Spring Boot Data & Persistence
 
 ### Topics
 - **Spring Data JPA**
@@ -43,7 +43,7 @@
 
 ---
 
-## 🔹 3. REST APIs & Exception Handling (Days 7–9)
+## 🔹 3. REST APIs & Exception Handling
 
 ### Topics
 - REST Principles
@@ -60,7 +60,7 @@
 
 ---
 
-## 🔹 4. Spring Boot Advanced Features (Days 10–13)
+## 🔹 4. Spring Boot Advanced Features
 
 ### Topics
 - **Security**
@@ -77,7 +77,7 @@
 
 ---
 
-## 🔹 5. Testing & Microservices Concepts (Days 14–16)
+## 🔹 5. Testing & Microservices Concepts
 
 ### Topics
 - **Unit Testing**
@@ -95,7 +95,7 @@
 
 ---
 
-## 🔹 6. Interview Patterns & Prep (Days 17–20)
+## 🔹 6. Interview Patterns & Prep
 
 ### Topics
 - Common Interview Qs:
