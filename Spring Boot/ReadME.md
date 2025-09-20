@@ -795,7 +795,6 @@ Spring provides a caching abstraction to store method results and avoid repeated
 - **First execution:** Method runs normally and the result is stored in the cache.  
 - **Subsequent calls:** If called with the same parameters, the result is returned from the cache **without executing the method**.
 
-## Example
 
 ```java
 @Cacheable(value = "books", key = "#id")
@@ -813,11 +812,8 @@ ____
 
  @CacheEvict
 
-
-## Use Case
 When data changes (update/delete) and the cached data is no longer valid.
 
-## Example
 
 ```java
 @CacheEvict(value = "books", key = "#id")
@@ -834,7 +830,6 @@ ____
 
 Update the cache **without skipping method execution**. Ensures the cache is refreshed with the latest data.
 
-## Example
 
 ```java
 @CachePut(value = "books", key = "#book.id")
@@ -843,7 +838,123 @@ public Book updateBook(Book book) {
 }
 
 ```
+_______
 
 
+
+
+## Spring Cloud
+
+
+# Spring Cloud - Core Features
+
+| Feature                      | Description |
+|-------------------------     |-------------|
+| **Service Discovery**        | Automatically detects and registers microservices using tools like Eureka or Zookeeper. |
+| **Configuration Management** | Centralized configuration for microservices using Spring Cloud Config Server. |
+| **Load Balancing**           | Distributes requests among service instances using Spring Cloud LoadBalancer|
+| **API Gateway**              | Routes and filters requests via Spring Cloud Gateway or Zuul. |
+| **Circuit Breaker**          | Prevents cascading failures using Resilience4j or Hystrix. |
+| **Messaging**                | Integration with message brokers like RabbitMQ or Kafka for event-driven microservices. |
+| **Distributed Tracing**      | Track requests across services using Spring Cloud Sleuth and Zipkin. |
+
+
+```java
+<dependency>
+    <groupId>org.springframework.cloud</groupId>
+    <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+</dependency>
+```
+
+
+```java
+<dependency>
+    <groupId>org.springframework.cloud</groupId>
+    <artifactId>spring-cloud-starter-config</artifactId>
+</dependency>
+```
+
+____
+
+
+
+
+
+
+_______
+
+## Implementation in Projects
+
+### 1. Microservices Architecture
+- Split your application into multiple independent Spring Boot services.  
+- Each service handles a specific business capability.  
+
+
+### 2. Service Discovery
+- Use Eureka, Consul, or Zookeeper to register and discover services.
+
+```java
+@EnableEurekaClient
+@SpringBootApplication
+public class ProductServiceApplication {
+    public static void main(String[] args) {
+        SpringApplication.run(ProductServiceApplication.class, args);
+    }
+}
+```
+
+
+### 3. Centralized Configuration
+- Use Spring Cloud Config Server to manage properties centrally.
+
+```java
+spring:
+  application:
+    name: product-service
+  cloud:
+    config:
+      uri: http://config-server:8888
+
+```
+
+
+### 4.Load Balancing
+
+- Distribute requests among service instances.
+
+```java
+@LoadBalanced
+@Bean
+RestTemplate restTemplate() {
+    return new RestTemplate();
+}
+```
+
+### 5. CB
+
+Prevent **cascading failures** in a microservices system.  
+- If one service fails or is slow, Circuit Breaker prevents it from bringing down the whole system.  
+- Provides a **fallback method** when the main call fails.
+
+
+```java
+@CircuitBreaker(name = "productService", fallbackMethod = "fallback")
+public Product getProduct(Long id) {
+    return restTemplate.getForObject( "http://product-service/products/" + id,  Product.class );
+}
+
+// Fallback method executed if the main service call fails
+public Product fallback(Long id, Throwable t) {
+    return new Product(id, "Unavailable");
+}
+```
+
+1. productService → name/label of the circuit breaker.
+2. product-service → actual microservice you are calling.
+
+=>  product-service fails or is slow, the circuit breaker will trigger the fallback instead of letting the failure propagate.
+
+
+_________________
 
 
