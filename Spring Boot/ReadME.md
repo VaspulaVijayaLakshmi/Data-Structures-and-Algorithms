@@ -578,32 +578,26 @@ Username: sa, Password: empty
 ___________________________________
 
 
+# JPA vs JDBC Template in Spring
 
-JPA (Java Persistence API)
+## JPA (Java Persistence API)
 
+JPA is a Java specification for **object-relational mapping (ORM)**. It defines a standard way to map Java objects (entities) to relational database tables. It is **not an implementation** — you need an ORM tool like Hibernate to actually perform the database operations.
 
-JPA is a Java specification for object-relational mapping (ORM).
-It defines a standard way to map Java objects (entities) to relational database tables.
-It is not an implementation — you need an ORM tool like Hibernate to actually perform the database operations.
+### Why JPA?
+- Simplifies database access in Java applications.  
+- Avoids writing boilerplate SQL for basic CRUD operations.  
+- Supports transactions, caching, and lazy/eager loading.  
+- Provides a **DB-agnostic** way to interact with relational databases.
 
-Why JPA?
+### Using JPA with Spring Data
+- Repository interfaces usually extend `JpaRepository` or `CrudRepository`.  
+- SQL is generated automatically; manual SQL is only needed with `@Query`.  
+- Spring Data JPA generates the implementation at runtime.
 
-Simplifies database access in Java applications
-Avoids writing boilerplate SQL for basic CRUD operations
-Supports transactions, caching, and lazy/eager loading
-Provides a DB-agnostic way to interact with relational databases
-
-
-
-If you are using JPA/Hibernate, your repository interfaces usually extend JpaRepository or CrudRepository.
-You do not write SQL manually (unless you use @Query).
-Spring Data JPA generates the implementation for you at runtime.
-
-
-
+```java
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
-    
 
     // Optional: custom queries
     List<User> findByUsername(String username);
@@ -612,19 +606,19 @@ public interface UserRepository extends JpaRepository<User, Long> {
     User findByEmail(@Param("email") String email);
 }
 
-______________
+__________________
 
 
 
+# JDBC Template (Classic JDBC) in Spring
+
+If you don’t use JPA, you can use `JdbcTemplate` for **direct SQL queries**.  
+- You need to write SQL manually.  
 
 
+## Example Repository
 
-JDBC Template (classic JDBC)
-
-If you don’t use JPA, you can use JdbcTemplate for direct SQL queries.
-You write SQL manually.
-
-
+```java
 @Repository
 public class UserRepository {
 
@@ -646,7 +640,6 @@ public class UserRepository {
         );
     }
 }
-
 
 
 
