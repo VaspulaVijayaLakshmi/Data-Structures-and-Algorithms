@@ -877,9 +877,71 @@ _______
 ____
 
 
+REST TEMPLATE:
+
+
+ RestTemplate is a Spring tool to call other REST APIs from your app.
+ Think of it like a way for your microservice to talk to another service or external API.
+
+GET data from another service
+```java
+Product product = restTemplate.getForObject("http://example.com/products/1", Product.class);
+```
 
 
 
+
+POST data to another service
+```java
+Product newProduct = new Product("Laptop", 1200);
+Product created = restTemplate.postForObject("http://example.com/products", newProduct, Product.class);
+```
+
+
+
+Load-balanced RestTemplate (for microservices)
+```java
+@LoadBalanced
+@Bean
+public RestTemplate restTemplate() {
+    return new RestTemplate();
+}
+
+// Call service by its name instead of URL
+restTemplate.getForObject("http://product-service/products/1", Product.class);
+```
+
+-> Purpose: Creates a RestTemplate object that your Spring application can use to make HTTP calls.
+-> RestTemplate itself is a class provided by Spring to call REST APIs (GET, POST, etc.).
+-> By defining it as a bean (@Bean in a @Configuration class), Spring can inject it anywhere using @Autowired.
+
+
+
+
+```java
+@Configuration
+public class AppConfig {
+
+    @Bean
+    public RestTemplate restTemplate() {
+        return new RestTemplate();
+    }
+}
+
+@Service
+public class ProductService {
+
+    @Autowired
+    private RestTemplate restTemplate;
+
+    public Product getProduct(Long id) {
+        return restTemplate.getForObject("http://product-service/products/" + id, Product.class);
+    }
+}
+```
+
+-> You only create one RestTemplate bean in your application.
+-> Spring manages it and you can reuse it anywhere with @Autowired.
 
 _______
 
