@@ -772,3 +772,78 @@ db.password=password
 </bean>
 ```
 
+____________
+
+
+## Caching
+
+
+Spring provides a caching abstraction to store method results and avoid repeated computations or expensive DB calls.
+
+# Spring Caching Cheat Sheet
+
+| Annotation      | Purpose                                         | Executes Method?   | Notes / Use Case |
+|-----------------|-----------------------------------------------  |-----------------   |-----------------|
+| `@Cacheable`    | Cache the result of a method                    | Only if not cached | Returns cached value if present; avoids method execution |
+| `@CacheEvict`   | Remove entries from cache to prevent stake data                      | Yes             | Use when data is updated/deleted; can clear specific key or all entries (`allEntries = true`) |
+| `@CachePut`     | Update cache with the method result             | Yes                | Method always executes; cache is refreshed with new result |
+
+
+
+@Cacheable
+
+- **First execution:** Method runs normally and the result is stored in the cache.  
+- **Subsequent calls:** If called with the same parameters, the result is returned from the cache **without executing the method**.
+
+## Example
+
+```java
+@Cacheable(value = "books", key = "#id")
+public Book getBookById(Long id) {
+    // This method will only execute if the result is not in cache
+    return bookRepository.findById(id).orElse(null);
+}
+value = "books" → the cache name.
+
+key = "#id" → the parameter used to store/retrieve the cached result.
+
+```
+
+____
+
+ @CacheEvict
+
+
+## Use Case
+When data changes (update/delete) and the cached data is no longer valid.
+
+## Example
+
+```java
+@CacheEvict(value = "books", key = "#id")
+public void deleteBook(Long id) {
+    bookRepository.deleteById(id);
+}
+```
+
+Optional: allEntries = true → clears all entries in the specified cache.
+____
+
+
+ @CachePut
+
+Update the cache **without skipping method execution**. Ensures the cache is refreshed with the latest data.
+
+## Example
+
+```java
+@CachePut(value = "books", key = "#book.id")
+public Book updateBook(Book book) {
+    return bookRepository.save(book); // method executes and updates cache
+}
+
+```
+
+
+
+
