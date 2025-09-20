@@ -1,3 +1,9 @@
+Resources:
+https://www.interviewbit.com/spring-boot-interview-questions/#pros-of-using-spring-boot
+
+https://github.com/VaspulaVijayaLakshmi/JavaSpringBoot_Interview_Questions
+
+
 #  Spring Boot
 
 **Spring Boot fundamentals, persistence, REST APIs, advanced features, testing, and interview prep**.  
