@@ -69,8 +69,7 @@
   - JWT Authentication (simple flow)
 - **Caching**
   - `@Cacheable`, `@CacheEvict`, `@CachePut`
-- **Actuator**
-  - Health checks, metrics, monitoring endpoints
+
 
 ### Hands-on
 - Add basic authentication and caching to your API
@@ -527,53 +526,52 @@ ______________________________
 
 
 
+# H2 In-Memory Database and Production Databases
+
 ## 1. H2 In-Memory Database
 
 **Purpose:**  
 - Useful for **development and testing**.  
 - Lightweight, in-memory, no installation required.  
-- Resets data every time the application restarts. 
+- Resets data every time the application restarts.  
 
+**Production Databases:**  
+- MySQL/PostgreSQL: Persistent, production-ready.  
+- Spring Boot automatically configures `DataSource` and JPA if you provide dependencies and `application.properties`.
 
-MySQL/PostgreSQL: Persistent, production-ready.
-Spring Boot automatically configures DataSource and JPA if you provide dependencies and application.properties.
+> “For development/testing, Spring Boot often uses H2 in-memory database. For production, it integrates with MySQL or PostgreSQL via JDBC"
 
-“For development/testing, Spring Boot often uses H2 in-memory database. For production, it integrates with MySQL or PostgreSQL via JDBC"
+---
 
-_________
+### Dependency
 
-Dependency:
-
+```xml
 <dependency>
     <groupId>com.h2database</groupId>
     <artifactId>h2</artifactId>
     <scope>runtime</scope>
 </dependency>
+```
+
+```
+application.properties
 
 
-__________
-
-application.properties 
-
-
-Example:
 spring.datasource.url=jdbc:h2:mem:testdb
 spring.datasource.driverClassName=org.h2.Driver
 spring.datasource.username=sa
 spring.datasource.password=
 spring.jpa.database-platform=org.hibernate.dialect.H2Dialect
 spring.h2.console.enabled=true
+```
 
-
-
-Access H2 Console:
-
+```
+Access H2 Console
 Open browser → http://localhost:8080/h2-console
 JDBC URL: jdbc:h2:mem:testdb
-Username: sa, Password: empty
-
-
-
+Username: sa
+Password: (leave empty)
+```
 
 ___________________________________
 
@@ -665,17 +663,43 @@ _____________
 
 
 _________________
+_________________
 
 
 
-Difference between `@Component`, `@Service`, `@Repository`
+## Actuator : Health checks, metrics, monitoring endpoints
+
+
+Useful for monitoring, alerting, and troubleshooting in production environments.
+
+
+Spring Boot Actuator provides built-in **production-ready features** to help monitor and manage your application.
+
+## Key Features
+- **Health Checks:** Monitor application health (`/actuator/health`).  
+- **Metrics:** Track application metrics like memory usage, JVM stats, HTTP requests (`/actuator/metrics`).  
+- **Monitoring Endpoints:** Access info about beans, environment, and more (`/actuator/beans`, etc.).  
+
+
+
+Example Usage
+
+Access health endpoint: http://localhost:8080/actuator/health
+Access metrics endpoint: http://localhost:8080/actuator/metrics
+Access beans endpoint: http://localhost:8080/actuator/beans
+
+______________________
+_______________________
+
+
+## Difference between `@Component`, `@Service`, `@Repository`
 
 All three are stereotype annotations and register beans with the Spring container.
 Use @Component for generic beans, @Service for business logic, and @Repository for persistence layer with built-in exception translation.”
 
-__
+_______________________
 
- Bean scopes
+ ## Bean scopes
   - `@RestController` vs `@Controller`
 
 | Feature     | @Controller                                                                              | @RestController                                                                 
