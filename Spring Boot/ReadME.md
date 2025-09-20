@@ -87,11 +87,7 @@
   - MockMVC, H2 for tests
 - **Microservices**
   - REST communication (`RestTemplate`, `WebClient`)
-  - Feign clients (optional, for extra edge)
 
-### Hands-on
-- Write unit and integration tests for your API
-- Experiment with inter-service calls using `RestTemplate`
 
 ---
 
@@ -104,17 +100,11 @@
   - Bean scopes
   - `@RestController` vs `@Controller`
   - Pros and cons of Spring Boot over Spring
-- Revision of your mini-project
-- Be ready to discuss design choices
 
-### Hands-on
-- Revise CRUD API
-- Practice interview-style Spring Boot questions
-- Solve coding tasks involving service-layer logic
 
 ---
 
-## ✅ Tips
+## Tips
 - Maintain a small **CRUD mini-project** throughout the plan (add new concepts as you learn).  
 - Use **H2 DB** for quick prototyping, switch to **MySQL/Postgres** for real DB experience.  
 ---
@@ -676,3 +666,92 @@ _____________
 | Portability           | SQL-specific; harder to switch DBs                        | DB-agnostic; easier to switch databases            |
 | Performance           | Slightly faster (no abstraction)                          | Slightly slower due to ORM layer (negligible in most apps) |
 
+
+
+
+_________________
+_________________
+
+
+Difference between `@Component`, `@Service`, `@Repository`
+
+All three are stereotype annotations and register beans with the Spring container.
+Use @Component for generic beans, @Service for business logic, and @Repository for persistence layer with built-in exception translation.”
+
+__
+
+ Bean scopes
+  - `@RestController` vs `@Controller`
+
+| Feature     | @Controller                                                                              | @RestController                                                                 
+|-------------|----------------------------------------------------------------------------------------  |---------------------------------------------------------------------------------
+| Purpose     | Marks a class as a **web controller** (MVC pattern).                                     | Marks a class as a **REST API controller**.                                     
+| Return Type | Usually returns **views** (HTML/JSP/Thymeleaf). Needs `@ResponseBody` toreturn JSON/XML. | Returns data directly as **JSON/XML** (because it combines `@Controller + @ResponseBody`). 
+| Use Case    | Traditional MVC web apps with views.                                                     | RESTful APIs (most common in Spring Boot).                                      
+
+_____
+
+Pros and Cons of Spring over Spring Boot
+
+
+“Spring gives you full control but requires lots of configuration, while Spring Boot is opinionated and reduces boilerplate by offering auto-configuration, 
+starters, and embedded servers. In short, Spring Boot makes Spring development faster and easier.”
+
+
+Spring Boot Pros
+
+Rapid development — less setup, fewer lines of code.
+Built-in auto-configuration and starter dependencies.
+Standalone apps with embedded servers.
+Great for microservices and cloud-native development.
+
+Spring boot favours convention over configurqation.
+SPring boot is opiniated but  still customizable.
+
+
+Spring (Core) Pros
+
+Very flexible — you can configure everything exactly how you want.
+Good for large, complex, enterprise-grade applications.
+Mature ecosystem with lots of extensions.
+
+
+
+
+| **Aspect**                | **Spring (Core Spring Framework)**                                                  | **Spring Boot**                                                                                      |
+| ------------------------- | ----------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- |
+| **Setup & Configuration** | Requires a lot of **manual configuration** (XML or Java config).                    | Provides **auto-configuration** and sensible defaults, reducing boilerplate.                         |
+| **Dependencies**          | You need to manage and add each dependency manually (e.g., web, JPA, validation).   | Provides **starter dependencies** (`spring-boot-starter-web`, `spring-boot-starter-data-jpa`, etc.). |
+| **Deployment**            | Typically needs to be deployed on an **external server** (Tomcat, JBoss, WebLogic). | Comes with an **embedded server** (Tomcat/Jetty/Undertow), so apps run standalone (`java -jar`).     |
+| **Learning Curve**        | Steeper — more concepts to understand upfront.                                      | Easier to start with — opinionated defaults and less setup.                                          |
+| **Flexibility**           | Very flexible but verbose — you decide everything.                                  | Opinionated, but still customizable. Prioritizes **convention over configuration**.                  |
+| **Microservices**         | Possible but requires lots of manual setup for each service.                        | Built with **microservices** in mind — easy integration with Spring Cloud, Actuator, etc.            |
+| **Code Boilerplate**      | Higher — need to write more config, XML, boilerplate classes.                       | Much lower — Boot handles wiring and default configs.                                                |
+| **Control**               | Full control over every aspect of configuration.                                    | Slightly less control (you can override, but Boot sets defaults).                                    |
+| **Use Case**              | Enterprise apps where fine-grained control is required.                             | Modern apps, microservices, quick prototypes, cloud-ready apps.                                      |
+
+
+
+
+
+_____________________________
+
+
+Lazy vs Eager loading
+
+
+Eager = upfront loading (more memory, possible over-fetching).
+Lazy = load on demand (efficient, but extra queries).
+
+
+
+| Aspect        | Eager Loading                                                                         | Lazy Loading                                                                               |
+| ------------- | ------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------ |
+| Definition    | Loads associated entities **immediately** with the parent entity.                     | Loads associated entities **only when accessed** (on-demand).                              |
+| Performance   | May load unnecessary data, which can slow down performance if associations are large. | Faster initial load since only the main entity is fetched.                                 |
+| Memory Usage  | Higher — since all related data is fetched upfront.                                   | Lower — only needed data is loaded when required.                                          |
+| Use Case      | Useful when you **always need related entities**.                                     | Useful when related entities are **not always needed** .                                   |
+| Configuration | `@OneToMany(fetch = FetchType.EAGER)` or default in some mappings.                    | `@OneToMany(fetch = FetchType.LAZY)` (default in many cases like collections).             |
+| SQL Queries   | Often results in **JOINs** at query time.                                             | triggers **separate SQL queries** when accessed.                                           |
+
+____________
