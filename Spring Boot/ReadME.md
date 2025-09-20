@@ -596,6 +596,7 @@ JPA is a Java specification for **object-relational mapping (ORM)**. It defines 
 - Spring Data JPA generates the implementation at runtime.
 
 
+
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
 
