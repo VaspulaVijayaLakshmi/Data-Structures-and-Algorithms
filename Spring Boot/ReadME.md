@@ -597,6 +597,7 @@ JPA is a Java specification for **object-relational mapping (ORM)**. It defines 
 
 
 
+```java
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
 
