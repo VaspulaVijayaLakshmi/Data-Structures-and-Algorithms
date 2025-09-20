@@ -674,19 +674,23 @@ public ResponseEntity<String> handleNotFound(ResourceNotFoundException ex) {
 
 How It Works: 
 
+
+```java
 @ExceptionHandler(ResourceNotFoundException.class) tells Spring to call this method when the exception occurs.
 ResponseEntity.status(HttpStatus.NOT_FOUND) sets the HTTP status code.
 .body(ex.getMessage()) sets the response body returned to the client.
+```
+
 
 
 Sample HTTP Response:
 
-
+```java
 HTTP/1.1 404 Not Found
 Content-Type: text/plain
 
 User with ID 123 not found
-
+```
 
 ________________
 
