@@ -117,24 +117,23 @@
 ## ✅ Tips
 - Maintain a small **CRUD mini-project** throughout the plan (add new concepts as you learn).  
 - Use **H2 DB** for quick prototyping, switch to **MySQL/Postgres** for real DB experience.  
-- Review **Spring Boot official docs** and **Baeldung articles** for deep dives.  
-- End each module by coding something real → hands-on is what sticks best.
-
 ---
 
 
 ____________________________
 
-## 1. @RestController
+Comtroller 
 
-**Purpose:**  
-Marks a class as a **REST API controller**. Automatically converts return values to JSON or XML.  
 
-**Usage:**  
-Handles HTTP requests like **GET, POST, PUT, DELETE**.
 
-**Example:**
-```java
+
+@RestController
+
+Purpose: Marks a class as a REST API controller.
+Usage: Handle HTTP requests like GET, POST, PUT, DELETE.
+
+
+
 @RestController
 @RequestMapping("/users")
 public class UserController {
@@ -145,10 +144,49 @@ public class UserController {
     }
 }
 
+____________
+
+@Service
+
+Purpose: Marks a service layer class — contains business logic.
+Spring registers it as a Spring Bean automatically.
+
+
+@Service
+public class UserService {
+
+    @Autowired
+    private UserRepository userRepository;
+
+    public User getUserById(Long id) {
+        return userRepository.findById(id).orElse(null);
+    }
+}
+
+_________________
+
+@Repository
+
+Purpose: Marks a DAO/repository class — interacts with the database.
+Adds exception translation: Converts JPA or JDBC exceptions into Spring’s DataAccessException hierarchy.
+
+@Repository
+public interface UserRepository extends JpaRepository<User, Long> {
+}
 
 
 
 
+
+
+
+
+
+
+
+
+
+__________________
 
 @Configuration
 @PropertySource("classpath:application.properties") // load the properties file
