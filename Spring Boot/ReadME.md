@@ -636,26 +636,53 @@ public class ProductService {
 }
 ```
 
-LoggerFactory.getLogger(ProductService.class) creates a logger instance for the class
-private static final → shared, constant, class-level
+- `LoggerFactory.getLogger(ProductService.class)` → Creates a **logger instance** for the specified class.  
+- `private static final` → Logger is **shared, constant, and class-level**.
 
 __________________
 
+
+##DB
+
+### Spring BOOT:
+
+Spring Starter :
+```java
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-data-jpa</artifactId>
+</dependency
+```
+
+
+application.proprties:
+```java
+db.driver=com.mysql.cj.jdbc.Driver
+db.url=jdbc:mysql://localhost:3306/testdb
+db.username=root
+db.password=password
+```
+
+
+
+
+### SPRING:
+
+Java Config (@Configuration)
+
+- Defines a **Spring-managed DataSource bean**.  
+- Uses `@Value` to read database properties from `application.properties`.  
+- The `@Bean` method returns a `DataSource` that Spring can inject into your DAOs or repositories.
+
+
+```java
 @Configuration
-@PropertySource("classpath:application.properties") // load the properties file
+@PropertySource("classpath:application.properties")
 public class AppConfig {
-
-    @Value("${db.driver}")
-    private String driver;
-
-    @Value("${db.url}")
-    private String url;
-
-    @Value("${db.username}")
-    private String username;
-
-    @Value("${db.password}")
-    private String password;
+    @Value("${db.driver}") private String driver;
+    @Value("${db.url}") private String url;
+    @Value("${db.username}") private String username;
+    @Value("${db.password}") private String password;
 
     @Bean
     public DataSource dataSource() {
@@ -667,38 +694,32 @@ public class AppConfig {
         return ds;
     }
 }
-_________________________
+```
 
 
-Using @Value with a properties file
+application.properties
 
-Create application.properties (in src/main/resources):
+- Stores **database connection details** in one place.  
 
+
+```java
 db.driver=com.mysql.cj.jdbc.Driver
 db.url=jdbc:mysql://localhost:3306/testdb
 db.username=root
 db.password=password
-
-
-_______________________
-
-
-
-Spring 
+```
 
 
 
-<beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xsi:schemaLocation="
-        http://www.springframework.org/schema/beans 
-        http://www.springframework.org/schema/beans/spring-beans.xsd">
+- In classic Spring, before Java configuration became popular, you had to define beans in **XML**.  
+- This XML configuration creates the **same DataSource bean** used for database connections.
 
-    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
-        <property name="driverClassName" value="com.mysql.cj.jdbc.Driver"/>
-        <property name="url" value="jdbc:mysql://localhost:3306/testdb"/>
-        <property name="username" value="root"/>
-        <property name="password" value="password"/>
-    </bean>
+```java
+<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
+    <property name="driverClassName" value="com.mysql.cj.jdbc.Driver"/>
+    <property name="url" value="jdbc:mysql://localhost:3306/testdb"/>
+    <property name="username" value="root"/>
+    <property name="password" value="password"/>
+</bean>
+```
 
-</beans>
