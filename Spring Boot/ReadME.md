@@ -372,75 +372,7 @@ Usually, no extra DAO class is needed with Spring Data JPA
 
 _________________________
 
-Logging Levels:
 
-
-TRACE	Very detailed, usually for deep debugging
-DEBUG	Debug info for developers
-INFO	General runtime info, like “server started”
-WARN	Something unexpected but not fatal
-ERROR	Something broke, must fix
-
-
-
-
-Logging Example (SLF4J)
-
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-@Service
-public class ProductService {
-
-    private static final Logger logger = LoggerFactory.getLogger(ProductService.class);
-
-    public void addProduct(Product product) {
-        logger.info("Adding product: {}", product.getName());
-        logger.debug("Product details: {}", product);
-    }
-}
-
-
-____________________
-
-Lombok shortcut with @Slf4j:
-
-
-import lombok.extern.slf4j.Slf4j;
-
-@Slf4j
-@Service
-public class ProductService {
-
-    public void addProduct(Product product) {
-        log.info("Adding product: {}", product.getName());
-        log.debug("Product details: {}", product);
-    }
-}
-
-
-LoggerFactory.getLogger(ProductService.class) creates a logger instance for the class
-
-private static final → shared, constant, class-level
-
-
-
-# Set global log level
-logging.level.root=INFO
-
-
-
-# Enable DEBUG logs globally
-logging.level.root=DEBUG
-
-
-_____________
-
-
-
-
-______________________________
 
 
 
@@ -726,6 +658,113 @@ public class GlobalExceptionHandler {
 
 - `@ControllerAdvice` makes exception handling **centralized**.  
 - `@ExceptionHandler` allows customizing the **HTTP response and status code** for each exception.
+
+
+
+Example:
+
+```java
+@ExceptionHandler(ResourceNotFoundException.class)
+public ResponseEntity<String> handleNotFound(ResourceNotFoundException ex) {
+    return ResponseEntity
+            .status(HttpStatus.NOT_FOUND)  // Set HTTP 404 status
+            .body(ex.getMessage());        // Set response body with exception message
+```
+
+
+How It Works: 
+
+@ExceptionHandler(ResourceNotFoundException.class) tells Spring to call this method when the exception occurs.
+ResponseEntity.status(HttpStatus.NOT_FOUND) sets the HTTP status code.
+.body(ex.getMessage()) sets the response body returned to the client.
+
+
+Sample HTTP Response:
+
+
+HTTP/1.1 404 Not Found
+Content-Type: text/plain
+
+User with ID 123 not found
+
+
+________________
+
+
+Logging Levels:
+
+
+TRACE	Very detailed, usually for deep debugging
+DEBUG	Debug info for developers
+INFO	General runtime info, like “server started”
+WARN	Something unexpected but not fatal
+ERROR	Something broke, must fix
+
+
+
+
+Logging Example (SLF4J)
+
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+@Service
+public class ProductService {
+
+    private static final Logger logger = LoggerFactory.getLogger(ProductService.class);
+
+    public void addProduct(Product product) {
+        logger.info("Adding product: {}", product.getName());
+        logger.debug("Product details: {}", product);
+    }
+}
+
+
+____________________
+
+Lombok shortcut with @Slf4j:
+
+
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
+@Service
+public class ProductService {
+
+    public void addProduct(Product product) {
+        log.info("Adding product: {}", product.getName());
+        log.debug("Product details: {}", product);
+    }
+}
+
+
+LoggerFactory.getLogger(ProductService.class) creates a logger instance for the class
+
+private static final → shared, constant, class-level
+
+
+
+# Set global log level
+logging.level.root=INFO
+
+
+
+# Enable DEBUG logs globally
+logging.level.root=DEBUG
+
+
+_____________
+
+
+
+
+______________________________
+
+
+
+
+
 
 
 
