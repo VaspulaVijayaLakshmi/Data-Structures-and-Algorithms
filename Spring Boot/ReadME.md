@@ -1,5 +1,129 @@
-Spring Boot
+#  Spring Boot
 
+**Spring Boot fundamentals, persistence, REST APIs, advanced features, testing, and interview prep**.  
+
+
+---
+
+## 🔹 1. Core Spring Boot Concepts (Days 1–3)
+
+### Topics
+- Spring vs Spring Boot
+- Auto-configuration, starter dependencies
+- Spring Boot annotations:  
+  - `@SpringBootApplication`, `@RestController`, `@Service`, `@Repository`
+- Application Properties:
+  - `application.properties` vs `application.yml`
+  - Profiles and environment-specific configurations
+- Embedded Server:
+  - How Spring Boot runs standalone (Tomcat/Jetty)
+  - Changing default ports
+
+### Hands-on
+- Create a small REST API with CRUD operations
+- Test endpoints using Postman or cURL
+
+---
+
+## 🔹 2. Spring Boot Data & Persistence (Days 4–6)
+
+### Topics
+- **Spring Data JPA**
+  - `@Entity`, `@Id`, `@GeneratedValue`
+  - `CrudRepository` vs `JpaRepository`
+  - Query methods, JPQL, `@Query`
+- **Database Integration**
+  - H2 in-memory DB for testing
+  - MySQL/PostgreSQL integration
+- **Transactions**
+  - `@Transactional` usage and pitfalls
+
+### Hands-on
+- Build a simple API to manage users/products with a database
+
+---
+
+## 🔹 3. REST APIs & Exception Handling (Days 7–9)
+
+### Topics
+- REST Principles
+  - HTTP methods: GET, POST, PUT, DELETE
+  - `@RequestMapping`, `@GetMapping`, `@PostMapping`, etc.
+- DTOs & Validation
+  - `@Valid`, `@NotNull`, `@Size`, `@Pattern`
+  - Using `BindingResult`
+- Exception Handling
+  - `@ControllerAdvice`, `@ExceptionHandler`
+
+### Hands-on
+- Implement validation and custom exceptions in your CRUD API
+
+---
+
+## 🔹 4. Spring Boot Advanced Features (Days 10–13)
+
+### Topics
+- **Security**
+  - Basics of Spring Security
+  - `@EnableWebSecurity`, `WebSecurityConfigurerAdapter`
+  - JWT Authentication (simple flow)
+- **Caching**
+  - `@Cacheable`, `@CacheEvict`, `@CachePut`
+- **Actuator**
+  - Health checks, metrics, monitoring endpoints
+
+### Hands-on
+- Add basic authentication and caching to your API
+
+---
+
+## 🔹 5. Testing & Microservices Concepts (Days 14–16)
+
+### Topics
+- **Unit Testing**
+  - `@SpringBootTest`, `@MockBean`
+  - JUnit + Mockito
+- **Integration Testing**
+  - MockMVC, H2 for tests
+- **Microservices**
+  - REST communication (`RestTemplate`, `WebClient`)
+  - Feign clients (optional, for extra edge)
+
+### Hands-on
+- Write unit and integration tests for your API
+- Experiment with inter-service calls using `RestTemplate`
+
+---
+
+## 🔹 6. Interview Patterns & Prep (Days 17–20)
+
+### Topics
+- Common Interview Qs:
+  - Difference between `@Component`, `@Service`, `@Repository`
+  - Lazy vs Eager loading
+  - Bean scopes
+  - `@RestController` vs `@Controller`
+  - Pros and cons of Spring Boot over Spring
+- Revision of your mini-project
+- Be ready to discuss design choices
+
+### Hands-on
+- Revise CRUD API
+- Practice interview-style Spring Boot questions
+- Solve coding tasks involving service-layer logic
+
+---
+
+## ✅ Tips
+- Maintain a small **CRUD mini-project** throughout the plan (add new concepts as you learn).  
+- Use **H2 DB** for quick prototyping, switch to **MySQL/Postgres** for real DB experience.  
+- Review **Spring Boot official docs** and **Baeldung articles** for deep dives.  
+- End each module by coding something real → hands-on is what sticks best.
+
+---
+
+
+____________________________
 
 @Configuration
 @PropertySource("classpath:application.properties") // load the properties file
