@@ -553,10 +553,10 @@ ______________________________
 </dependency>
 ```
 
-```
+
 application.properties
 
-
+```
 spring.datasource.url=jdbc:h2:mem:testdb
 spring.datasource.driverClassName=org.h2.Driver
 spring.datasource.username=sa
@@ -565,8 +565,9 @@ spring.jpa.database-platform=org.hibernate.dialect.H2Dialect
 spring.h2.console.enabled=true
 ```
 
-```
+
 Access H2 Console
+```
 Open browser → http://localhost:8080/h2-console
 JDBC URL: jdbc:h2:mem:testdb
 Username: sa
@@ -595,7 +596,7 @@ JPA is a Java specification for **object-relational mapping (ORM)**. It defines 
 
 
 
-
+```
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
 
@@ -605,7 +606,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Query("SELECT u FROM User u WHERE u.email = :email")
     User findByEmail(@Param("email") String email);
 }
-
+```
 __________________
 
 
@@ -616,9 +617,7 @@ If you don’t use JPA, you can use `JdbcTemplate` for **direct SQL queries**.
 - You need to write SQL manually.  
 
 
-## Example Repository
-
-
+```
 @Repository
 public class UserRepository {
 
@@ -640,10 +639,9 @@ public class UserRepository {
         );
     }
 }
+```
 
 
-
-_____________
 
 
 
