@@ -692,6 +692,40 @@ Lazy = load on demand (efficient, but extra queries).
 ____________
 
 
+# Spring Boot Exception Handling
+
+Spring Boot provides annotations to handle exceptions globally and at the controller level.
+
+## Key Annotations
+
+- **@ControllerAdvice**  
+  Used to define a **global exception handler** that applies to multiple controllers.
+
+- **@ExceptionHandler**  
+  Used to **handle specific exceptions** within a controller or globally via `@ControllerAdvice`.
+
+## Example
+
+```java
+@ControllerAdvice
+public class GlobalExceptionHandler {
+
+    @ExceptionHandler(ResourceNotFoundException.class)
+    public ResponseEntity<String> handleNotFound(ResourceNotFoundException ex) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
+    }
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<String> handleGeneric(Exception ex) {
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred");
+    }
+}
+```
+
+@ControllerAdvice makes exception handling centralized.
+@ExceptionHandler allows customizing the HTTP response and status code for each exception.
+
+
 
 
 
