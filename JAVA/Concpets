@@ -2,83 +2,91 @@ https://vaheaslanyan7.medium.com/the-java-interview-prep-handbook-50-questions-s
 
 
 
-Java Interview Checklist
-1. Core Java
+# ☕ Java Interview Checklist
 
- JVM, JRE, JDK (we covered)
+A structured checklist to revise **Java concepts** before interviews.
 
- Compile .java → .class → bytecode
+---
 
- finalize() method
+## 1. Core Java
+- JVM, JRE, JDK → differences and roles  
+- Compilation process → `.java → .class → bytecode → JVM`  
+- `finalize()` method → purpose & why discouraged  
+- Access modifiers → `public`, `protected`, `default`, `private`  
+- Packages → organization & visibility control  
+- Exception handling → `try-catch-finally`, multiple catch blocks, try-with-resources  
+- `transient` keyword → skipping sensitive info during serialization  
+- `super` keyword → accessing parent methods/constructors  
+- Checked vs Unchecked Exceptions  
+- Generics → type safety, compile-time checks  
+- Inheritance → multilevel vs multiple (interfaces)  
+- Interfaces → default & static methods  
+- `volatile` keyword → visibility guarantee, no atomicity  
+- Synchronization  
+  - Synchronized method vs synchronized block  
+  - Intrinsic locks & ReentrantLock  
+- Garbage Collection (GC)  
+  - Reference types: strong, soft, weak, phantom  
+  - Memory leaks & prevention  
+- Threads  
+  - Lifecycle (`NEW → RUNNABLE → RUNNING → WAITING/BLOCKED → TERMINATED`)  
+  - Creating threads (`Thread` vs `Runnable` vs `Callable`)  
+  - `run()` vs `start()` difference  
+  - Thread safety  
+- Iterators → fail-fast vs fail-safe  
 
- Access modifiers, package
+---
 
- try-catch-finally, multiple blocks
+## 2. Collections Framework
+- List → ArrayList, LinkedList, Vector, Stack  
+- Set → HashSet, LinkedHashSet, TreeSet  
+- Queue → PriorityQueue, ArrayDeque  
+- Map → HashMap, LinkedHashMap, TreeMap, Hashtable, ConcurrentHashMap  
+- Tree-based collections → Red-Black Tree (TreeMap/TreeSet)  
+- Dynamic Arrays → ArrayList internal working  
 
- transient keyword, passing sensitive info
+---
 
- super keyword, calling parent methods
+## 3. Multithreading & Concurrency
+- Thread basics → `Thread` class, `Runnable` interface  
+- Thread lifecycle → states & transitions  
+- Synchronization → methods, blocks, Locks  
+- ReentrantLock  
+  - `lock()`, `unlock()`  
+  - `tryLock()` (timed & immediate)  
+  - fairness policies  
+  - Conditions (`await()`, `signal()`)  
+- volatile vs synchronized  
+- Deadlocks → causes, detection, prevention strategies (ordering, timeout, detection tools)  
+- ThreadPool & ExecutorService → usage, benefits over manual thread mgmt  
+- Concurrent Collections → CopyOnWriteArrayList, ConcurrentHashMap, BlockingQueue  
 
- Checked vs Unchecked Exceptions
+---
 
- Generics → type safety
+## 4. Commonly Asked Java Topics
+- Strings → String (immutable), StringBuffer (mutable, synchronized), StringBuilder (mutable, non-synchronized)  
+- Immutable objects → why & how to create  
+- `hashCode()` and `equals()` → contract, importance in HashMap/HashSet  
+- Java 8+ features  
+  - Lambda expressions  
+  - Streams API (map, filter, reduce, collect)  
+  - Optional class  
+  - Method references  
+- Design Patterns (basics)  
+  - Singleton  
+  - Factory  
+  - Observer  
+- OOP principles  
+  - Polymorphism  
+  - Inheritance  
+  - Abstraction  
+  - Encapsulation  
 
- Multilevel / Multiple inheritance → interfaces & default methods
+---
 
- default and static methods in interfaces
+## ⚡ Pro Tips
+- Don’t just memorize — prepare **examples, use-cases, and pitfalls**.  
+- Know *why* certain features exist (e.g., why `volatile` isn’t enough for atomic ops, why `HashMap` needs proper `hashCode()` & `equals()`).  
+- Practice writing short code snippets for tricky areas (threads, collections, GC).  
 
- volatile keyword
-
- synchronized → method vs block, locks, ReentrantLock
-
- Garbage Collection → soft references, memory leaks
-
- Threads → lifecycle, creating threads, run() vs start(), thread safety
-
- fail-fast vs fail-safe iterators
-
-2. Collections Framework
-
- List → ArrayList, LinkedList, Vector, Stack
-
- Set → HashSet, LinkedHashSet, TreeSet
-
- Queue → PriorityQueue, ArrayDeque
-
- Map → HashMap, LinkedHashMap, TreeMap, Hashtable, ConcurrentHashMap
-
- Red-Black Tree → TreeMap, TreeSet
-
- Dynamic Arrays → ArrayList internal working
-
-3. Multithreading / Concurrency
-
- Thread class, Runnable
-
- Thread lifecycle
-
- Synchronization → methods, blocks, Locks
-
- ReentrantLock / tryLock / fairness / Conditions
-
- volatile vs synchronized
-
- Deadlocks → detection & prevention strategies
-
- ThreadPool & ExecutorService → practical usage
-
- Concurrent Collections (briefly touched)
-
-4. Other commonly asked topics
-
- String, StringBuffer, StringBuilder → differences
-
- Immutable objects
-
- hashCode() and equals() → importance in HashMap/HashSet
-
- Java 8+ features → Lambda, Streams, Optional (if interview is modern)
-
- Design patterns (Singleton, Factory, Observer) basics
-
- OOP Concepts → Polymorphism, Inheritance, Abstraction, Encapsulation
+---
