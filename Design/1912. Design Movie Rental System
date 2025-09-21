@@ -1,0 +1,59 @@
+class MovieRentingSystem {
+    map<int, set<pair<int,int>>> available;
+    set<tuple<int,int,int>> rented;
+    map<pair<int,int>, int> priceMap;
+
+public:
+    MovieRentingSystem(int n, vector<vector<int>>& entries) {
+        for (auto &e : entries) {
+            int shop = e[0], movie = e[1], price = e[2];
+            available[movie].insert({price, shop});
+            priceMap[{shop, movie}] = price;
+        }
+    }
+
+    vector<int> search(int movie) {
+        vector<int> res;
+        if (available.count(movie)) {
+            for (auto &p : available[movie]) {
+                res.push_back(p.second);
+                if (res.size() == 5) break;
+            }
+        }
+        return res;
+    }
+
+    void rent(int shop, int movie) {
+        int price = priceMap[{shop, movie}];
+        available[movie].erase({price, shop});
+        rented.insert({price, shop, movie});
+    }
+
+    void drop(int shop, int movie) {
+        int price = priceMap[{shop, movie}];
+        rented.erase({price, shop, movie});
+        available[movie].insert({price, shop});
+    }
+
+    vector<vector<int>> report() {
+        vector<vector<int>> res;
+        for (auto &t : rented) {
+            res.push_back({get<1>(t), get<2>(t)});
+            if (res.size() == 5) break;
+        }
+        return res;
+    }
+};
+
+// shop -> [price,movie] - list
+
+// not only shop.
+// i needt o find movies also...
+
+
+
+// You need to maintain a sorted list for each movie and a sorted list for rented movies
+// When renting a movie remove it from its movies sorted list and added it to the rented list and vice versa in the case of dropping a movie
+
+
+// https://leetcode.com/problems/design-movie-rental-system/solutions/7209682/solve-it-chill-on-netflix-self-explanatory/?envType=daily-question&envId=2025-09-21
