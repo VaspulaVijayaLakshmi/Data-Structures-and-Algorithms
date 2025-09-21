@@ -89,4 +89,12 @@ A structured checklist to revise **Java concepts** before interviews.
 - Know *why* certain features exist (e.g., why `volatile` isn’t enough for atomic ops, why `HashMap` needs proper `hashCode()` & `equals()`).  
 - Practice writing short code snippets for tricky areas (threads, collections, GC).  
 
+
+
+________________________
+
+
+
+
+
 ---
