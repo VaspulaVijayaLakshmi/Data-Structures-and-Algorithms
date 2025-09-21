@@ -143,7 +143,7 @@ DAO (Data Access Object)
 
 # Common Spring Boot Annotations
 
-- `@SpringBootApplication` → Main entry point, enables auto-configuration  
+- `@SpringBootApplication` → Main entry point, =  @AutoConfiguration  + @ComponentScan + @Configuration
 - `@Entity` → JPA entity  
 - `@Id`, `@GeneratedValue` → Primary key  
 - `@Column` → Configure column details  
@@ -247,7 +247,6 @@ _________________________
 - MySQL/PostgreSQL: Persistent, production-ready.  
 - Spring Boot automatically configures `DataSource` and JPA if you provide dependencies and `application.properties`.
 
-> “For development/testing, Spring Boot often uses H2 in-memory database. For production, it integrates with MySQL or PostgreSQL via JDBC"
 
 ---
 
@@ -335,7 +334,7 @@ SELECT * FROM product WHERE category = ? AND price < ?;
 
 
 
-Custom Queries (JPQL)
+Custom Queries (JPQL) - Java Persistence Query Language
 
 If the method name is too complex, use @Query.
 @Param is used to bind method parameters to query parameters.
@@ -495,7 +494,7 @@ ______________________
 
 ## Difference between `@Component`, `@Service`, `@Repository`
 
-All three are stereotype annotations and register beans with the Spring container.
+All three  register beans with the Spring container.
 Use @Component for generic beans, @Service for business logic, and @Repository for persistence layer with built-in exception translation.”
 
 
@@ -515,7 +514,8 @@ Pros and Cons of Spring over Spring Boot
 
 
 ## Overview
-Spring gives you full control but requires lots of configuration, while Spring Boot is opinionated and reduces boilerplate by offering auto-configuration, starters, and embedded servers. In short, Spring Boot makes Spring development faster and easier.
+Spring gives you full control but requires lots of configuration, while Spring Boot is opinionated and reduces boilerplate by offering auto-configuration, starters, and embedded servers. 
+In short, Spring Boot makes Spring development faster and easier.
 
 ---
 
