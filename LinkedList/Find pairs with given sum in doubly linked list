@@ -1,0 +1,39 @@
+class Solution {
+  public:
+    vector<pair<int, int>> findPairsWithGivenSum(Node *head, int target) {
+        
+        if(head==NULL) return {};
+        
+        Node* temp=head;
+        vector<pair<int,int>> res;
+        
+        while(temp->next!=NULL)
+          temp=temp->next;
+          
+        
+        Node* strt=head,*end=temp;
+
+//we need to check this until there is only 1 elemnt left als well.
+        while(strt!=NULL && end!=NULL && strt!=end && end->next!=strt){
+            
+            if(strt->data+end->data > target)
+                end=end->prev;
+
+            
+            else if(strt->data+end->data < target)
+               strt = strt->next;
+               
+            
+            else{
+              res.push_back({strt->data,end->data});        
+              strt=strt->next;
+              end=end->prev;
+            }
+            
+             
+        }
+        
+        return res;
+        
+    }
+};
