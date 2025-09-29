@@ -1,0 +1,43 @@
+
+class Solution {
+  public:
+    int lengthOfLoop(Node *head) {
+        
+        
+        //find if there is a cycle
+        //find strting point of cycle
+        //find length of cycle
+        
+        Node* fst=head,*slw=head;
+        while(fst!=NULL && fst->next!=NULL){
+            fst=fst->next->next;
+            slw=slw->next;
+            
+            if(slw==fst){
+                slw=head;
+                
+                while(slw!=fst){
+                    slw=slw->next;
+                    fst=fst->next;
+                }
+                
+                break;
+            }
+        }
+        
+        if(fst==NULL || fst->next==NULL)
+         return 0;
+         
+        int c=1;
+        fst=fst->next;
+        
+        while(fst!=slw){
+            fst=fst->next;
+            c++;
+        }
+        
+        return c;
+        
+        
+    }
+};
