@@ -1,0 +1,57 @@
+
+class Solution {
+  public:  
+  
+    Node* reverse(Node* head){
+        
+        Node* curr=head,*prev=NULL,*next=NULL;
+        
+         //reverse the LL
+        while(curr!=NULL){
+            
+            next = curr->next ;
+            curr->next = prev;
+            
+            prev=curr;
+            curr=next;
+        }
+        
+        return prev;
+        
+    }
+    
+    
+    
+    Node* addOne(Node* head) {
+        
+        
+        if(head==NULL) return NULL;
+        
+        
+        Node* newHead = reverse(head);
+        
+        Node* temp = newHead,*prev=newHead;
+        int carry=1;
+        
+        while(temp!=NULL){
+            
+            int sum = temp->data + carry;
+            int digit = sum%10;
+            carry = sum/10;
+            
+            temp->data = digit;
+            prev=temp;
+            temp=temp->next;
+            
+        }
+        
+        //reverse again
+        if(carry==1) 
+         prev->next = new Node(1);
+          
+         
+        return reverse(newHead); 
+        
+      
+    }
+};
