@@ -1,0 +1,67 @@
+/*
+class Node {
+public:
+    int data;
+    Node* next;
+    Node* bottom;
+
+    Node(int x) {
+        data = x;
+        next = NULL;
+        bottom = NULL;
+    }
+};
+*/
+
+class Solution {
+  public:
+    Node* newHead;
+    
+    Node* merge(Node* head1,Node* head2){
+        
+        Node* temp1=head1,*temp2 = head2;
+        Node* newHead= new Node(-1), *curr=newHead;
+        
+        while(temp1!=NULL && temp2!=NULL){
+            
+            if(temp1->data <= temp2->data){
+                curr->bottom=temp1;
+                temp1=temp1->bottom;
+            }
+            
+            else{
+                curr->bottom=temp2;
+                temp2=temp2->bottom;
+            }
+            
+            curr=curr->bottom;
+            
+        }
+        
+        if(temp1!=NULL) curr->bottom = temp1;
+        if(temp2!=NULL) curr->bottom = temp2 ; 
+        
+        
+        return newHead->bottom;
+        
+    }
+    
+    
+    Node *flatten(Node *head) {
+       
+        if(head==NULL) return NULL;
+        if(head->next==NULL) return head;
+        
+        Node* curr=head;
+        while(curr->next!=NULL){
+            
+             curr = merge(curr,curr->next);
+             curr=curr->next;
+            
+        }
+        
+ 
+       return head;
+        
+    }
+};
