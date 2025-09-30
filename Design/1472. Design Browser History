@@ -1,0 +1,67 @@
+class HistoryNode{
+public:
+    string val;
+    HistoryNode* next;
+    HistoryNode* prev;
+
+    HistoryNode(string val){
+        this->val=val;
+        next=NULL;
+        prev=NULL;
+    }
+
+};
+
+
+class BrowserHistory {
+public: 
+    HistoryNode* head,*curr,*tail;
+    int size;
+
+    BrowserHistory(string homepage) {
+        head = new HistoryNode(homepage);
+        curr=head;
+        tail=head;
+        size=1;
+    }
+    
+    void visit(string url) {
+        HistoryNode* tmp=new HistoryNode(url);
+        curr->next = tmp;
+        tmp->prev=curr;
+        curr=curr->next; 
+        tail=curr;
+         
+        size++;    
+    }
+    
+string back(int steps) {
+        while (steps > 0 && curr->prev != NULL) {
+            curr = curr->prev;
+            steps--;
+        }
+        return curr->val;   
+    }
+    
+    string forward(int steps) {
+        while (steps > 0 && curr->next != NULL) {
+            curr = curr->next;
+            steps--;
+        }
+        return curr->val;  
+
+    } 
+};
+
+
+// ["BrowserHistory","visit","visit","visit","back","back","forward","visit","forward","back","back"]
+// [["leetcode.com"],["google.com"],["facebook.com"],["youtube.com"],[1],[1],[1],["linkedin.com"],[2],[2],[7]]
+
+
+
+// leetcode -> google -> facebook -> youtube
+
+// youtube back -> 1 -> facebook
+// facebook back -> 1 -> google
+
+// google forwd -> 1 -> facebook
