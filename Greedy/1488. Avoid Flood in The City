@@ -1,0 +1,168 @@
+class Solution {
+public:
+    vector<int> avoidFlood(vector<int>& rains) {
+
+        unordered_map<int,int> mp;
+        set<int> st;
+        vector<int> ans(rains.size(),1);
+
+        for(int i=0;i<rains.size();i++){
+            
+            //dry day, store in set
+            if(rains[i]==0){
+             st.insert(i);
+            }
+
+            else{
+
+                ans[i] = -1;
+              
+              //if ot occired before, then find the min dry day and dry it of
+              
+              //dint occur before, simple record
+              if(mp.count(rains[i])==0){
+                mp[rains[i]]=i;
+              }
+              
+              //occured before
+              else{
+
+                //see if there is a dry day we could use to dry it off
+
+                //find the lowerbound - , also from 0 - mp[rains[i]] - idx
+                auto itr = st.lower_bound(mp[rains[i]]);
+                
+                //if not found in set, flood
+                if(itr==st.end()) {
+                  return {};
+                }
+                
+                //if i found dry day, us etht dry day to dry the lake
+                //remove from the set , also update the map to the curr idx now. 
+                //update ans as well.
+                else{
+                    
+                    mp[rains[i]] = i;
+                    //update ans to point out tht , on this dried day, 
+                    //i dried up this lake
+                    ans[*itr] = rains[i]; 
+                    st.erase(itr);
+
+                }
+
+              }
+
+            } 
+        }
+
+        return ans;
+        
+    }
+};
+
+//so whenever we get a dry day, we need to try the lake. so tht when it rains again it should be empty by then
+
+
+// so one thing - [1,2,3,0,3,4]
+// - now at day 4 - i got a dry day
+
+// but which lake to dry - i can dry 1,2,3 - its better to dry lake 3 because - it occured again
+
+// step1:
+// no.of repetitions - should be <= no of zeroes -  MAYBE then only its possible
+
+
+// eg : rains = [1,2,0,0,2,1] -> reptions are 2 nos - no of dry days - 2 ,, so yes possible
+
+// eg : rains =  [1,2,0,1,2] -> repeyions - 2 , dry days - 1 -not possible
+
+// eg : [1,2,3,4] - no repetions, the not needed only- return an array of all (-1s)
+
+
+
+// steps2:
+// now we know - no.of repetitions - should be <= no of zeroes 
+// now we need to arrange the retun array
+
+
+// - also rains = [1,2,0,0,2,1] 
+// -> here -> when i encounter 0 - i need to upt the duplicate element each
+
+// ->also lets say 3 is also duplicate [1,2,0,0,0,3,2,1,3] -> this is still not possible
+// because i can try lake 1 on 3rd day and lake 2 on 4nd day, but  now to thi point all lakes are empty
+// so ntg to dry..
+
+// so there will be flood in the lakes.
+
+
+
+// so i can go in loop ->
+
+// [1,2,0,0,0,3,2,1,3]
+
+// put in set as u visit lakes
+
+// curr dup =0  , lakes = (1)
+// curr dup =0 , lkes = (1,2)
+// zero came - remove 1 fromm set
+// zero came zero 2 from set
+
+// 3 came - curr dup=0 , set(3)
+// 2 came curr dup - 0 , set(3,2)
+// 1 came curr dup=0, set (3,1,2)
+// 3 came again - so floods
+
+
+//but we wuldnt know which lake will rain again later.
+// so we need to carefully remove
+
+
+// in set we couldnt tell which will rain later right..
+// what is there are (2,3) in set
+// and i got a dry day - which to remove, becaus elater in my array i have 3 lets say
+
+// ...wht i i dried lake 2?
+// thats wrong
+
+
+
+// then can i manitain duplicate array or set as well , and keep count of dred days when ever i see a duplicate i will reduce its count and reduce my dry day -1. This is not prematire like before, im saving dry days
+
+// ths also wont save it.
+// because i need to know the dry day incidees, i ca dry lakes before the dry day only.
+// count may nt keep track of this
+
+
+
+// so i will maintain - dry day indices as well.
+// now when i find the duplicate day
+
+// i will find the indxes of the element when it prev occured 
+// and i will  pick the min dry day possible to dry tht lake 
+
+
+// comstraints :
+
+//  0,1,2,3,4,5,6,7
+// [1,2,3,0,4,3,0,2]
+
+// now idx - 3  - 2 idx
+// idx - dry day - 4 idx
+
+// 3 occured again - i need to find the min dry day available here - after  idx - 2 and b/w 5idx
+// and use this...
+
+
+// case 2:
+
+// [1,2,0,2,0,3,4,0]
+
+// so here idx of 2 -> already used for 2
+
+// so indexes matter.
+
+
+// I can do BS to find the min dry day indx in this idx range.
+
+
+// https://leetcode.com/problems/avoid-flood-in-the-city/editorial/
