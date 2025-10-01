@@ -1,0 +1,43 @@
+class Solution {
+public:
+    int maxBottlesDrunk(int numBottles, int numExchange) {
+     int drunk = numBottles;
+     int empty  = numBottles;
+     while(empty >= numExchange){
+         empty -= numExchange;
+         numExchange++;
+         drunk++;
+         empty++;
+     } 
+     return drunk;
+
+
+    }
+};
+
+        //in one step 
+        //i can either choose to increase the numExchange
+        // or drink the water
+
+        //so multiple paths
+        //so dp / recursion
+
+//same like knapsack.
+
+
+ // https://leetcode.com/problems/water-bottles-ii/solutions/7238254/water-bottles-ii-simple-approach/   
+
+
+
+//  Approach
+
+// Initial drinking phase: Drink all numBottles initially, which gives us numBottles empty bottles
+
+// Exchange loop: While we have enough empty bottles (numBottles >= numExchange):
+
+// Exchange numExchange empty bottles for 1 full bottle
+// Drink it immediately (increment drink counter)
+// Update empty bottles: remove exchanged bottles and add the new empty bottle (numBottles += 1 - numExchange)
+// Increase the exchange cost for next time (++numExchange)
+// Termination: Stop when we can't afford the next exchange
+// The algorithm uses a greedy approach: always exchange when possible, since delaying exchanges only makes future exchanges more expensive.    
