@@ -1,0 +1,30 @@
+
+class Solution {
+public:
+    ListNode* modifiedList(vector<int>& nums, ListNode* head) {
+
+        set<int> st;
+        for(int num:nums)
+           st.insert(num);
+
+        ListNode* newHead=new ListNode(-1),*tmp=head,*prev=newHead;
+        newHead->next=head;
+
+        while(tmp!=NULL){
+
+            if(st.count(tmp->val)){
+                prev->next=tmp->next;
+            }
+
+            else {
+                prev=tmp;
+            }
+
+            tmp=tmp->next;
+
+        } 
+
+        return newHead->next;  
+        
+    }
+};
