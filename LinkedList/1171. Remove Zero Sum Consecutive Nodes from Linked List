@@ -1,0 +1,44 @@
+class Solution {
+public:
+    ListNode* removeZeroSumSublists(ListNode* head) {
+
+        if(head==NULL)
+         return head;
+
+        ListNode* newHead = new ListNode(-1);
+        newHead->next=head;
+
+        ListNode* tmp=head;
+        unordered_map<int,ListNode*> mp;
+        int preSum=0;
+
+        mp[0] = newHead;
+
+        while(tmp!=NULL){
+
+            preSum +=tmp->val;
+            if(mp.count(preSum)){
+               
+                ListNode* to_delete = mp[preSum]->next;
+                int currSum=preSum + to_delete->val;
+
+                while(currSum!=preSum){
+                    mp.erase(currSum);
+                    to_delete = to_delete->next;
+                    currSum += to_delete->val;
+                }
+
+                mp[preSum]->next = tmp->next;
+            }
+
+            else{
+               mp[preSum]=tmp;
+            }
+
+            tmp=tmp->next;
+
+        }
+
+        return newHead->next;
+    }
+};
