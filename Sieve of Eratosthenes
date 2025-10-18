@@ -1,0 +1,15 @@
+
+
+// Step 1: Sieve of Eratosthenes to find all primes up to a given number
+
+    void find_prime(vector<bool>& isprime, int n) {
+        isprime[0] = isprime[1] = false; // 0 and 1 are not prime numbers
+        
+        for (int i = 2; i * i < n; i++) {
+            if (isprime[i]) {
+                for (int j = i * i; j < n; j += i) {
+                    isprime[j] = false; // Mark all multiples of i as non-prime
+                }
+            }
+        }
+    }
