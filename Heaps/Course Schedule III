@@ -1,0 +1,79 @@
+// class Solution {
+// public:
+
+//     static bool cmp(vector<int>& a, vector<int>& b) {
+//         return a[1] < b[1];  // sort by end day (earliest deadline first)
+//     }
+
+
+//     int scheduleCourse(vector<vector<int>>& courses) {
+
+//         sort(courses.begin(),courses.end(),cmp);
+
+//         int timeTaken=0;
+//         int c=0;
+
+//         for(int i=0;i<courses.size();i++){
+
+//             int dur=courses[i][0];
+//             int lastDay = courses[i][1];
+
+//             timeTaken = timeTaken + dur;
+
+//             //this doesnt work because , lets say even if we  pick the earliest completion one
+//             // what if it takes long time , duration is longer
+//             //we should be able to remove the longest time taking course, so tht
+//             //we can remove tht and accomodate other.
+//             if(timeTaken < lastDay)
+//               c++;
+//         }
+
+//         return c ;
+        
+//     }
+// };
+
+
+
+
+//i can pick the early last day cpurses first so tht i can finish before time
+//so sort the array by 2nd elenent
+
+
+
+
+class Solution {
+public:
+
+    static bool cmp(vector<int>& a, vector<int>& b) {
+        return a[1] < b[1];  // sort by end day (earliest deadline first)
+    }
+
+    int scheduleCourse(vector<vector<int>>& courses) {
+
+        sort(courses.begin(),courses.end(),cmp);
+
+        int timeTaken=0;
+        priority_queue<int> pq;
+
+        for(int i=0;i<courses.size();i++){
+
+            int dur=courses[i][0];
+            int lastDay = courses[i][1];
+
+            pq.push(dur);
+
+            //if timetaken exceeded and its smaller accomodate this, and remoce the bigger course one
+            timeTaken += dur;
+
+            if(timeTaken > lastDay){
+                timeTaken -= pq.top(); // remove the longest one
+                pq.pop();
+            }
+
+        }
+
+        return pq.size() ;
+        
+    }
+};
