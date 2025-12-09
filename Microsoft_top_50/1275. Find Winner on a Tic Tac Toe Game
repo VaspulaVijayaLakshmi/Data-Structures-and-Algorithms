@@ -1,0 +1,44 @@
+class Solution {
+public:
+    string tictactoe(vector<vector<int>>& moves) {
+        vector<vector<char>> g(3, vector<char>(3,' '));
+        char curr = 'A';
+
+        for(int i=0;i<moves.size();i++){
+            int r = moves[i][0];
+            int c = moves[i][1];
+            g[r][c] = curr;
+
+            if(i >= 4 && isWin(g, curr, r, c))  // start after move index 4
+                return string(1, curr);
+
+            curr = (curr=='A'?'B':'A');
+        }
+
+        return moves.size()==9 ? "Draw" : "Pending";
+    }
+
+    bool isWin(vector<vector<char>>& g, char p, int r, int c){
+        // check row r
+        if(g[r][0]==p && g[r][1]==p && g[r][2]==p) return true;
+
+        // check col c
+        if(g[0][c]==p && g[1][c]==p && g[2][c]==p) return true;
+
+        // check main diagonal
+        if(r==c && g[0][0]==p && g[1][1]==p && g[2][2]==p) return true;
+
+        // check anti diagonal
+        if(r+c==2 && g[0][2]==p && g[1][1]==p && g[2][0]==p) return true;
+
+        return false;
+    }
+};
+
+
+//check  right and left diagonal
+//check column wise
+//check row wise
+
+//since we need atlest 6moves
+// for any one user to fill all 3 psiitions
