@@ -1,0 +1,41 @@
+class Solution {
+public:
+    string removeDigit(string number, char digit) {
+     string maxStr = "";
+        
+        for (int i = 0; i < number.size(); ++i) {
+            if (number[i] == digit) {
+                string temp = number.substr(0, i) + number.substr(i + 1);
+                if (temp > maxStr) {
+                    maxStr = temp;
+                }
+            }
+        }
+
+        return maxStr;
+    }
+};
+
+
+// 141
+
+// digit = 1
+
+// 14 / 41
+
+
+// 1231
+// d=1
+
+// 231
+
+
+// 1141
+
+// 141
+// 114
+
+
+// To maximize the number after removing exactly one occurrence of a given digit, we should try removing each occurrence of that digit and see which resulting number is the largest.
+
+// By checking every possible removal position, we ensure that we don’t miss a better option that could appear later in the string—even if the digit appears multiple times.
