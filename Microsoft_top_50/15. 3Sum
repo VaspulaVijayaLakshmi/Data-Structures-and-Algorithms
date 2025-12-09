@@ -1,0 +1,56 @@
+class Solution {
+public:
+    vector<vector<int>> threeSum(vector<int>& nums) {
+        
+        sort(nums.begin(),nums.end());
+        int n=nums.size();
+
+        vector<vector<int>> res;
+        
+        for(int i=0;i<n-2;i++){
+
+             int a=i;
+             int b = i+1;
+             int c = n-1;
+
+            if(i > 0 && nums[i] == nums[i-1]) continue;    
+
+             while(b<c){
+
+                if(nums[a]+nums[b]+nums[c]==0){
+                    res.push_back({nums[a],nums[b],nums[c]});
+                    b++;
+                    c--;
+
+                while(c>b && nums[c+1]==nums[c]) c--;
+                while(c>b && nums[b-1]==nums[b]) b++; 
+
+                }
+                
+                else if(nums[a]+nums[b]+nums[c]<0)
+                     b++;   
+                
+                
+                else
+                   c--;
+  
+             }
+
+        }
+
+        return res;
+
+    }
+};
+
+
+// sort the array
+// pick one as base
+// and then do 2 pointer
+
+
+//there could be duplicate pairs also
+//we can use set of pairs
+
+
+// or logically we could skip duplicates
