@@ -1,0 +1,68 @@
+class Solution {
+public:
+
+    vector<vector<int>> res;
+
+    void backtrack(vector<int> &nums,int idx, vector<int> &curr){
+     
+        if(curr.size()>=2){
+              res.push_back(curr);
+        }
+
+       set<int> st;
+       for(int i=idx ; i<nums.size() ; i++){
+
+            if((curr.empty() || nums[i]>=curr.back()) && st.count(nums[i])==0){
+
+                curr.push_back(nums[i]);
+                backtrack(nums,i+1,curr);
+                curr.pop_back();
+
+                st.insert(nums[i]);
+            }
+       }
+
+    }
+
+    vector<vector<int>> findSubsequences(vector<int>& nums) {
+
+        vector<int> curr;
+        backtrack(nums,0,curr);
+
+        return res;
+        
+    }
+};
+
+
+
+// Sorting breaks the problem
+
+// Subsequences must keep original order.
+// Sorting changes order ⇒ you’ll generate invalid subsequences
+
+
+______
+
+Why NOT a global set?
+1. Late deduplication = wasted work
+
+With a global set<vector<int>>:
+You generate duplicate subsequences
+Then throw them away later
+
+That means:
+generate → compare vectors → insert → reject
+Unnecessary overhead.
+
+
+
+_________
+
+
+******
+Why duplicates happen
+
+At the same recursion level, you pick the same value (7) from different indices.
+Minimal fix (expected solution)
+Use a set per recursion level (not global).
