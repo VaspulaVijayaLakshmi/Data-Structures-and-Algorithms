@@ -1,0 +1,85 @@
+class Solution {
+public:
+    int res=0;
+    void maximumRequests(int n, vector<vector<int>>& requests,  vector<int> &balance,int idx,int count){
+
+        if(idx>=requests.size()){
+            
+              for(int i=0;i<n;i++){
+                 if(balance[i]!=0){
+                    return ;
+                 }
+              }
+
+              res = max(res,count);
+              return ;
+        }
+
+        //consider this request
+        balance[requests[idx][0]]--;
+        balance[requests[idx][1]]++;
+        
+        maximumRequests(n,requests,balance,idx+1,count+1);
+        
+        //backtrack
+        balance[requests[idx][0]]++;
+        balance[requests[idx][1]]--;
+
+        //skip
+        maximumRequests(n,requests,balance,idx+1,count);
+       
+    }
+
+    int maximumRequests(int n, vector<vector<int>>& requests) {
+        
+        vector<int> balance(n,0);
+        maximumRequests(n,requests,balance,0,0);
+
+        return res;
+
+    }
+};
+
+
+
+// 0 -> 1
+// 2 people are moving 0 to 1
+
+// vacany[0] = 2 
+// crowd[1] = 2
+
+// 1 -> 0
+
+// vacancy[1] = 1
+// crowd[0] = 1
+
+
+// 1->2
+// vacancy[1] =2
+// crowd[2] = 1
+
+// 2 -> 0
+// vacancy[2] = 1 
+// crowd[0] = 2
+
+// 3 -> 4
+// vacancy[3] = 1
+// crowd[4] = 1
+
+
+// vacancy = [2,2,1,1,0] 
+// crowd =   [2,2,1,0,1]
+
+
+//also for each request we can consider the transfer or skip it.
+//once we consider, then we can check , if it is max acheival reqs.
+
+
+
+// Also instead of 2 arrays we can do this
+
+// vacancy[i]++
+// vacancy[i]--
+
+//so in the end -> we need to check which al are 0 only those we need to consider.
+
