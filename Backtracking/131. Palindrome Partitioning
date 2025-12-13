@@ -1,0 +1,47 @@
+class Solution {
+public:
+    vector<vector<string>> res;
+    bool palindrome(string s,int i,int j){
+         
+         while(i<j){
+
+            if(s[i]==s[j]){
+                i++;
+                j--;
+            }
+
+            else 
+               return false;
+
+         }
+
+         return true;
+    }
+    
+    void palindromic(string s,vector<string> &curr, int idx){
+
+        if(idx>=s.length()){
+            res.push_back(curr);
+            return ;
+        }
+
+        for(int i=idx;i<s.length();i++){
+
+            //if till this part is a palindrome then only partition
+            if(palindrome(s,idx,i)){
+
+                curr.push_back(s.substr(idx,i-idx+1));
+                palindromic(s,curr,i+1);
+                curr.pop_back();
+            }
+        }
+
+    }
+
+    vector<vector<string>> partition(string s) {
+        
+        vector<string> curr;
+        palindromic(s, curr, 0);
+        return res;
+    }
+};
