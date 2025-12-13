@@ -1,0 +1,36 @@
+class Solution {
+public:
+    vector<vector<int>> res;
+
+    void combine(int n, int k,vector<int> &curr,int idx){
+
+       if(curr.size()==k){
+           res.push_back(curr);
+       }
+
+       for(int i=idx;i<=n;i++){
+
+         curr.push_back(i);
+         combine(n,k,curr,i+1);
+         curr.pop_back();
+
+       }
+
+    }
+
+    vector<vector<int>> combine(int n, int k) {
+
+        vector<int> curr;
+        combine(n,k,curr,1);
+        return res;
+        
+    }
+};
+
+
+// n=4 k=2
+
+// [1,2,3,4]
+
+
+
