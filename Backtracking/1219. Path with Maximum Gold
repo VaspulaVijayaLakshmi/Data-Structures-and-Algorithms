@@ -1,0 +1,44 @@
+class Solution {
+public:
+    vector<int> dx = {-1,1,0,0};
+    vector<int> dy = {0,0,-1,1};
+
+    int dfs(vector<vector<int>>& grid,int x,int y){
+
+        if(x<0 || y<0 || x>=grid.size() || y>=grid[0].size() || grid[x][y]==0) 
+        return 0;
+
+        int curr=grid[x][y];
+        grid[x][y] = 0;
+        
+        int gold=0;
+        for(int i=0;i<4;i++){
+             gold = max(gold,dfs(grid,x+dx[i],y+dy[i]));  
+        }
+
+        grid[x][y]=curr;
+        return gold+curr;
+    }
+    
+    int getMaximumGold(vector<vector<int>>& grid) {
+
+        int m=grid[0].size();
+        int n=grid.size();
+
+        int gold=0;
+        for(int i=0;i<n;i++){
+            for(int j=0;j<m;j++){
+
+                if(grid[i][j]!=0){
+                    gold = max(gold,dfs(grid,i,j));
+                }
+            }
+        }
+
+        return gold;
+        
+    }
+};
+
+
+//you cant visit the cell more than once.....
