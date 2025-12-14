@@ -1,0 +1,42 @@
+class Solution {
+public:
+   vector<vector<int>> res;
+   void combinationSum2(vector<int>& nums, int target,int idx,vector<int> &curr){
+
+       if(target==0){
+         res.push_back(curr);
+           return ;
+       }
+       
+       if(idx>=nums.size() || target<0){
+           return ;
+       }
+
+       for(int i=idx;i<nums.size();i++){
+           
+           if(i>idx && nums[i] == nums[i-1])
+              continue;
+
+          curr.push_back(nums[i]);
+          combinationSum2(nums,target-nums[i],i+1,curr);
+          curr.pop_back();
+           
+       }
+
+   }
+    
+    vector<vector<int>> combinationSum2(vector<int>& nums, int target) {
+        
+        sort(nums.begin(),nums.end());
+        vector<int> curr;
+
+        combinationSum2(nums,target,0,curr);
+        return res;
+    }
+};
+
+// [1,1,2,5,6,7,10]
+// target=8
+
+// [1,2,5]
+
