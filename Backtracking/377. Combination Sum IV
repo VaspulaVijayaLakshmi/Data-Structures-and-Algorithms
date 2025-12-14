@@ -1,0 +1,49 @@
+class Solution {
+public:
+    vector<int> dp;
+    int combinationSum4(vector<int>& nums, int target,int idx){
+
+        if(idx>=nums.size() || target<0)
+           return 0;
+
+        if(target==0)
+            return 1;
+
+        if(dp[target]!=-1)
+          return dp[target];    
+        
+    
+        int take = combinationSum4(nums,target-nums[idx],0);
+        int dontTake = combinationSum4(nums,target,idx+1);
+
+        return dp[target] = take+dontTake;
+         
+    }
+
+
+    int combinationSum4(vector<int>& nums, int target) {
+
+       dp.resize(target+1,-1);
+       return combinationSum4(nums,target,0);
+
+    }
+};
+
+// nums = [1,2,3], target = 4
+
+// (1,1,1,1)
+// (1,1,2)
+
+
+
+// Unlike combination Sum I - Here
+
+
+// (1,2,1)
+// (1,1,2)
+// (2,1,1)
+
+// are treated differnt so ordering doesnt matter here....
+// so we can pick one index and from beginning again we can start picking..
+
+
