@@ -1,0 +1,39 @@
+class Solution {
+public:
+    int result=0;
+    void beautifulSubsets(vector<int>& nums, int k,unordered_map<int,int> &mp,int idx){
+     
+        if(idx>=nums.size()){
+            result++;
+            return ;
+        }
+
+        //take
+        int currNum = nums[idx];
+        if(mp[currNum-k]==0 && mp[currNum+k]==0){
+           
+           mp[currNum]++;
+           beautifulSubsets(nums,k,mp,idx+1);
+           mp[currNum]--;
+        }
+
+        //dont take
+        beautifulSubsets(nums,k,mp,idx+1);
+    }
+
+
+    int beautifulSubsets(vector<int>& nums, int k) {
+       
+       unordered_map<int,int> mp;
+       beautifulSubsets(nums,k,mp,0);
+
+       //dot consider empty subset
+       return result-1;
+ 
+        
+    }
+};
+
+
+
+// subset -> so include, dont include will work
