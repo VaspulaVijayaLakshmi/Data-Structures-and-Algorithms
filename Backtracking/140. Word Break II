@@ -1,0 +1,49 @@
+class Solution {
+public:
+    vector<string> res;
+    void wordBreak(string s,unordered_set<string> &mp,int i,string curr){
+
+        if(i>=s.length()){
+            res.push_back(curr);
+            return ;
+        }
+
+        for(int j=i;j<s.length();j++){
+            
+            // find substr till this point 
+            string word = s.substr(i,j-i+1);
+
+            //word found
+            if(mp.find(word)!=mp.end()){
+
+               string originalWord = curr;
+               
+               if(!curr.empty())
+                 curr+=" ";
+
+               curr+=word;
+
+               wordBreak(s,mp,j+1,curr);
+
+               //backtrack
+               curr=originalWord;
+
+            }
+
+        }
+        
+    }
+
+    vector<string> wordBreak(string s, vector<string>& wordDict) {
+        
+        unordered_set<string> mp(wordDict.begin(),wordDict.end());
+        
+        string curr="";
+
+        wordBreak(s,mp,0,curr);
+        return res;
+    }
+};
+
+
+
