@@ -70,7 +70,51 @@ public:
         helper(candidates,res,temp,target,0);
         
         return res;
+
+
+
+
+
+
+
+
+
+
+_________
+
+
+class Solution {
+public:
+    vector<vector<int>> res; 
+    void combinationSum(vector<int>& nums, int target,int idx,vector<int> &curr){
+
+        if(target==0){
+         res.push_back(curr);
+         return ;
+        }
         
-    
+        if(idx>=nums.size()){
+            return ;
+        }
+
+        //dont take
+        combinationSum(nums,target,idx+1,curr);
+
+        //take only if target>0 
+        if(nums[idx]<=target){
+
+          curr.push_back(nums[idx]); 
+          combinationSum(nums,target-nums[idx],idx,curr);  
+          curr.pop_back();
+
+        }      
+    }
+
+    vector<vector<int>> combinationSum(vector<int>& candidates, int target) {
+
+        vector<int> curr;
+        combinationSum(candidates,target,0,curr);
+        return res;
+        
     }
 };
