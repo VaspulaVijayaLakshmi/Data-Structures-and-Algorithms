@@ -1,0 +1,54 @@
+class Solution {
+public:
+    int maxScore=0;
+
+    void maxScoreWords(vector<string>& words,vector<int> &mp,
+    int idx,int score,vector<int> & scores){
+
+     if(idx>=words.size()){
+        maxScore=max(maxScore,score);
+        return ;
+     }   
+
+     //take this word
+     string currWord = words[idx];
+     vector<int> tmp= mp;
+     int currScore =0;
+     int j=0;
+
+     while(j<currWord.length()){
+
+        char ch=currWord[j];
+        if(mp[ch-'a']<=0) break;
+        
+        mp[ch-'a']--;
+        currScore+=scores[ch-'a'];
+        j++;
+     }
+
+      if(j==currWord.length()){
+        maxScoreWords(words,mp,idx+1,score+currScore,scores);
+      }
+
+    //backtrack
+    mp=tmp;
+        
+
+      //domt take this word
+     maxScoreWords(words,mp,idx+1,score,scores);
+
+    }
+
+    int maxScoreWords(vector<string>& words, vector<char>& letters, 
+    vector<int>& scores) {
+        
+        vector<int> mp(26,0);
+        for(int i=0;i<letters.size();i++){
+              mp[letters[i]-'a']++;
+        }
+
+        maxScoreWords(words,mp,0,0,scores);
+        return maxScore;
+
+    }
+};
