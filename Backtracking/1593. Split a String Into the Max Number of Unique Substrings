@@ -1,0 +1,37 @@
+class Solution {
+public:
+
+    int res=0;
+    unordered_set<string> st;
+    void maxUniqueSplit(string s, int i,int curr){
+
+        if(i>=s.length()){
+            res = max(res,curr);
+            return ;
+        }
+
+        for(int j=i;j<s.length();j++){
+            
+            string word = s.substr(i,j-i+1);
+            
+            if(st.find(word) == st.end()){
+
+               //tht sub str is not found
+               st.insert(word);
+               maxUniqueSplit(s,j+1,curr+1);
+               st.erase(word);
+            }
+
+        }
+
+    }
+
+
+    int maxUniqueSplit(string s) {
+        
+        maxUniqueSplit(s,0,0);
+        return res;
+    }
+};
+
+// a b ab c cc
