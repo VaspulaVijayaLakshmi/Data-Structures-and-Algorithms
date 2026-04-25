@@ -1,0 +1,77 @@
+/**
+ * Definition of Interval:
+ * class Interval {
+ * public:
+ *     int start, end;
+ *     Interval(int start, int end) {
+ *         this->start = start;
+ *         this->end = end;
+ *     }
+ * }
+ */
+
+class Solution {
+public:
+    int minMeetingRooms(vector<Interval>& intervals) {
+        if (intervals.empty()) return 0;
+
+        // sort by start time
+        sort(intervals.begin(), intervals.end(), [](Interval &a, Interval &b) {
+            return a.start < b.start;
+        });
+
+        // min heap of end times
+        priority_queue<int, vector<int>, greater<int>> pq;
+
+        pq.push(intervals[0].end);
+
+        for (int i = 1; i < intervals.size(); i++) {
+            // if earliest room gets free
+            if (intervals[i].start >= pq.top()) {
+                pq.pop();
+            }
+            // allocate current meeting
+            pq.push(intervals[i].end);
+        }
+
+        return pq.size();
+    }
+};
+
+
+// (0,40)
+// (5,10)(15,20)
+
+// we need to assign meetings rooms with as early time as possible.
+
+// should we sort
+
+// sort by starting time -> (0,40),(5,10),(15,20)
+
+// sort by ending time -> (5,10),(15,20),(0,40)
+
+
+// //but can we do better like min heap
+
+
+//     (0,40) - room1
+//     (5,10) - so this lies before meet 1 ends - new room
+
+
+//     sort the array -> so tht strt time is strting meet times
+//     min heap with {endtime,strt time}
+
+
+//     now (40,0) -  heap1
+//         (10,5) -  strt time - 5>0 but end - 10<40, so new meeting room
+//         (20,15) - so strt is greater than 5 we know tht because array is sorted
+//                 - now 15>10, so meeting finished and we can remove from the heap
+
+//                  (10,5) - moves out
+//                  and 20,15..
+
+
+//                  return size of heap 
+
+
+// [0,40],[5,10],[15,20]
