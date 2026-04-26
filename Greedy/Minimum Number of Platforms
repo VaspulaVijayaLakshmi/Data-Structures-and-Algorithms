@@ -1,0 +1,36 @@
+class Solution {
+  public:
+    int minPlatform(vector<int>& arr, vector<int>& dep) {
+        // code here
+    int n=arr.size(); 
+
+    vector<pair<int,int>> trains;
+
+    for(int i = 0; i < n; i++){
+        trains.push_back({arr[i], dep[i]});
+    }
+
+    sort(trains.begin(), trains.end());
+
+    priority_queue<int, vector<int>, greater<int>> pq;
+
+    int maxPlatforms = 0;
+
+    for(int i = 0; i < n; i++){
+
+        // free platforms
+        while(!pq.empty() && pq.top() < trains[i].first){
+            pq.pop();
+        }
+
+        // allocate current train
+        pq.push(trains[i].second);
+
+        maxPlatforms = max(maxPlatforms, (int)pq.size());
+    }
+
+    return maxPlatforms;
+}
+        
+        
+};
