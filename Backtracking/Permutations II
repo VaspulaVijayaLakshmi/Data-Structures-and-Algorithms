@@ -2,6 +2,8 @@ APPROACH 1:
 
 class Solution {
 public:
+
+    passed num by reference, so we can backtrack.
     void recursion(vector<int>& num, int idx, vector<vector<int> > &res) {
         
         if (idx == num.size()) {
@@ -41,3 +43,67 @@ public:
 // if(i != idx && num[i] == num[i-1])
 // fails after swaps because array is no longer sorted.
 // So duplicate checking using adjacent elements becomes invalid.
+
+
+__________________________________________________________________
+
+
+APPRAOCH 2:
+
+class Solution {
+public:
+    void recursion(vector<int>& num, int idx, vector<vector<int> > &res) {
+        
+        if (idx == num.size()) {
+            res.push_back(num);
+            return;
+        }
+
+        unordered_set<int> st;
+
+        for (int i=idx; i<num.size() ; i++) {
+
+            if(st.count(num[i])) continue;
+
+            st.insert(num[i]);
+            
+            swap(num[i], num[idx]);
+            recursion(num, idx+1, res);
+            swap(num[i],num[idx]);
+
+
+        }
+    }
+    vector<vector<int> > permuteUnique(vector<int> &num) {
+        
+        vector<vector<int> >res;
+        recursion(num, 0, res);
+        return res;
+    }
+};
+
+
+// so in permutation and combination with duplicates problems
+// we need to just skip the elements at the same recursion level.
+
+//so we can use set at each level.
+
+// For this approach, we do not care if array becomes unsorted after swaps.
+// Because duplicate handling is no longer based on:
+
+// nums[i] == nums[i-1]
+
+// Instead it's based on:
+// unordered_set<int> used
+
+// which only asks:
+
+// “Have I already placed this VALUE at this recursion level?”
+
+// So no need to sort array
+// and also the 2nd swap will restore the pre array
+
+
+// same appraoch like oermuataion I , just with a set to check at each recusion lebel for duplicates
+
+
