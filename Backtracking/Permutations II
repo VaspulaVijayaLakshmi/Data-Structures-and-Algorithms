@@ -1,0 +1,43 @@
+APPROACH 1: 
+
+class Solution {
+public:
+    void recursion(vector<int>& num, int idx, vector<vector<int> > &res) {
+        
+        if (idx == num.size()) {
+            res.push_back(num);
+            return;
+        }
+
+        
+
+        for (int i=idx; i<num.size() ; i++) {
+
+            if (i != idx && num[i] == num[i-1]) 
+              continue;
+            
+            swap(num[i], num[idx]);
+            recursion(num, idx+1, res);
+            swap(num[i],num[idx]);
+
+        }
+    }
+    vector<vector<int> > permuteUnique(vector<int> &num) {
+        
+        sort(num.begin(), num.end());
+        vector<vector<int> >res;
+        recursion(num, 0, res);
+        return res;
+    }
+};
+
+
+// This will fail becuase when we swap array is no longer sorted.
+
+// Yep — exactly the issue I mentioned.
+
+// This condition:
+
+// if(i != idx && num[i] == num[i-1])
+// fails after swaps because array is no longer sorted.
+// So duplicate checking using adjacent elements becomes invalid.
