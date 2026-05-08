@@ -7,10 +7,13 @@ public:
         res.push_back(curr);
         
         for(int i=idx;i<nums.size();i++){
-            
+
+         //comparing with i with i-1 not idx
           if(i>idx && nums[i]==nums[i-1]) continue;
 
            curr.push_back(nums[i]);
+
+           //here it shuld be i+1, becuase the next lement should be i+1
            subsetWithDup(nums,i+1,curr);
            curr.pop_back();
 
