@@ -107,3 +107,42 @@ public:
 // same appraoch like oermuataion I , just with a set to check at each recusion lebel for duplicates
 
 
+
+_________________________________________________
+
+
+APPROACH 3:
+
+class Solution {
+public:
+    void recursion(vector<int> num, int idx, vector<vector<int> > &res) {
+        
+        if (idx == num.size()-1) {
+            res.push_back(num);
+            return;
+        }
+
+        for (int i=idx; i<num.size() ; i++) {
+            
+           if( i != idx && num[i]==num[idx]) 
+              continue;
+
+            //we are swapping and passing by value
+            swap(num[i], num[idx]);
+            recursion(num, idx+1, res);
+          
+        }
+    }
+
+
+    vector<vector<int> > permuteUnique(vector<int> &num) {
+        
+        sort(num.begin(),num.end());
+        vector<vector<int> >res;
+        recursion(num, 0, res);
+        return res;
+    }
+};
+
+HEre array is passed by value so each level it 
+
