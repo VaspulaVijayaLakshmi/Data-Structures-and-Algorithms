@@ -1,0 +1,64 @@
+class Solution {
+public:
+    int subarraysDivByK(vector<int>& nums, int k) {
+
+       //remainder, count subarrays  
+       //which are divisble for k
+        unordered_map<int,int> mp;
+        mp[0]=1;
+
+        int subArrays=0,prefix=0;
+
+        for(int i=0;i<nums.size();i++){
+            prefix+=nums[i];
+
+            int remainder = prefix%k;
+
+            if(remainder < 0)
+                remainder += k;
+
+
+            //that remainder is seen before
+            if(mp.find(remainder) !=mp.end()){
+                 subArrays += mp[remainder];
+            }
+
+            
+            mp[remainder]++;
+
+        }
+
+        return subArrays;
+        
+    }
+};
+
+
+
+
+
+// For example:
+
+// cout << -7 % 5;   // -2
+// cout << -3 % 5;   // -3
+// cout << -10 % 5;  // 0
+
+// Mathematically, we often want the remainder to be in the range:
+
+// 0 to k-1
+// So for k = 5:
+// -7 % 5 = -2
+
+// We normalize it:
+
+// int rem = prefix % k;
+
+// if(rem < 0)
+//     rem += k;
+
+// So:
+
+// -7 % 5 = -2
+// -2 + 5 = 3
+
+// Now rem = 3.
