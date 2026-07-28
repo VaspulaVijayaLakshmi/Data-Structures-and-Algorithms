@@ -1,0 +1,109 @@
+class Solution {
+public:
+    int minOperations(vector<int>& nums, int x, int left, int right) {
+
+        // Successfully removed elements summing to x
+        if(x == 0)
+            return 0;
+
+        // Impossible, left pointer and right pointer
+        if(x < 0 || left > right)
+            return INT_MAX;
+
+        int l = minOperations(
+            nums,
+            x - nums[right],
+            left,
+            right - 1
+        );
+
+        int r = minOperations(
+            nums,
+            x - nums[left],
+            left + 1,
+            right
+        );
+
+        int ans = min(l, r);
+
+        if(ans == INT_MAX)
+            return INT_MAX;
+
+        return 1 + ans;
+    }
+
+    int minOperations(vector<int>& nums, int x) {
+
+        int ans = minOperations(nums, x, 0, nums.size() - 1);
+        return ans == INT_MAX ? -1 : ans;
+    }
+};
+
+// u can either remove the leftmost left most, rightmost
+// rightmost eftmost rightmost or any pattern
+
+
+__________________________________
+
+
+
+
+
+// we will need to be deleting the ends
+// so for mimum eleents to be removed, we need to retain max elements
+
+// So this basically reduces to Max Sum Subarray to sum with sum -> total-x
+
+class Solution {
+public:
+
+    int maxSumSubArray(vector<int>& nums, int sum){
+      
+      //prefix sum,idx
+      unordered_map<int,int> mp;
+      mp[0]=-1;
+      int prefix=0,res=-1;
+
+      for(int i=0;i<nums.size();i++){
+
+        prefix+=nums[i];
+
+        if(mp.find(prefix-sum) !=mp.end()){
+            res = max(res, (i-mp[prefix-sum])) ;
+        }
+
+        if(mp.find(prefix) == mp.end())
+         mp[prefix]=i;
+
+      }
+
+      return res;
+
+    }
+
+    int minOperations(vector<int>& nums, int x) {
+         
+        int totalSum=0; 
+        for(int i=0;i<nums.size();i++){
+            totalSum+=nums[i];
+        }
+
+        int sum = totalSum-x;
+
+
+        // Need to remove all elements
+        if(sum == 0)
+            return nums.size();
+        
+        int res= maxSumSubArray(nums,sum);
+        if(res == -1)
+         return -1;
+
+        //find max sum subarray with sum - sum
+        return nums.size() - res;
+
+    }
+};
+
+
+
