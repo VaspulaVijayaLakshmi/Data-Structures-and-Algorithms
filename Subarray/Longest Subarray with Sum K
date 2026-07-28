@@ -1,0 +1,40 @@
+class Solution {
+  public:
+    int longestSubarray(vector<int>& arr, int k) {
+        // code here
+        
+        //prefix sum, idx
+        unordered_map<int,int> mp;
+        mp[0] = -1;
+        int largest=0;
+        int prefix=0;
+        
+        for(int i=0;i<arr.size();i++){
+            
+            prefix+=arr[i];
+            
+            if(mp.find(prefix-k) != mp.end())
+              largest = max(largest, (i-mp[prefix-k]));
+            
+            
+            //if that element is already there
+            //dont replace because we need farthest indx
+            if(mp.find(prefix) == mp.end())
+               mp[prefix]=i;
+             
+            
+        }
+        
+        return largest;
+      
+        
+    }
+};
+
+
+// [-5,0]
+// [3,1]
+// [-11,2]
+// [-3,3]
+// [1,4]
+// [13,5]
