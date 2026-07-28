@@ -24,23 +24,30 @@ Explanation: There are 4 smooth descent periods: [8], [6], [7], and [7]
 Note that [8,6] is not a smooth descent period as 8 - 6 ≠ 1.
 
 
-
-
-
 class Solution {
 public:
     long long getDescentPeriods(vector<int>& prices) {
-        int *dp = new int[prices.size()];
-        dp[0] = 1;
-        long long ans = 1;
-        for(int i = 1; i < prices.size(); i ++) {
-            if(prices[i] == prices[i - 1] - 1) {
-                dp[i] = dp[i - 1] + 1;
-            } else {
-                dp[i] = 1;
+
+        //we need subarray ending at r
+        //at each indx of descent;
+
+        int l=0,r=0;
+        long long  res= 0;
+
+          for(int r = 0; r < prices.size(); r++) {
+
+            // If current price does not continue
+            // the smooth descent, start a new window
+            if(r > 0 && prices[r] != prices[r - 1] - 1) {
+                l = r;
             }
-            ans += dp[i];
+
+            // Number of valid subarrays ending at r
+            res += (r - l + 1);
         }
-        return ans;
+
+
+        return res;
+        
     }
 };
