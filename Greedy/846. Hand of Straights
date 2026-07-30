@@ -1,0 +1,39 @@
+class Solution {
+public:
+    bool isNStraightHand(vector<int>& hand, int groupSize) {
+
+        if (hand.size() % groupSize != 0)
+            return false;
+
+        unordered_map<int, int> freq;
+        priority_queue<int, vector<int>, greater<int>> pq;
+
+        for (int x : hand) {
+            freq[x]++;
+        }
+
+        // Put unique elements into min heap
+        for (auto &[x, count] : freq) {
+            pq.push(x);
+        }
+
+        while (!pq.empty()) {
+
+            int start = pq.top();
+
+            for (int x = start; x < start + groupSize; x++) {
+
+                if (freq[x] == 0)
+                    return false;
+
+                freq[x]--;
+
+                if (freq[x] == 0) {
+                    pq.pop();
+                }
+            }
+        }
+
+        return true;
+    }
+};
