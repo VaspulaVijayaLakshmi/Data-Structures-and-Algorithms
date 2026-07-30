@@ -1,0 +1,68 @@
+class Solution {
+
+    class TrieNode {
+        TrieNode[] children = new TrieNode[26];
+        boolean isEnd;
+    }
+
+    TrieNode root = new TrieNode();
+    String result = "";
+
+    public String longestWord(String[] words) {
+
+        // Build Trie
+        for (String word : words) {
+            insert(word);
+        }
+
+        dfs(root, new StringBuilder());
+
+        return result;
+    }
+
+    private void insert(String word) {
+
+        TrieNode curr = root;
+
+        for (char ch : word.toCharArray()) {
+
+            int idx = ch - 'a';
+
+            if (curr.children[idx] == null) {
+                curr.children[idx] = new TrieNode();
+            }
+
+            curr = curr.children[idx];
+        }
+
+        curr.isEnd = true;
+    }
+
+    private void dfs(TrieNode node, StringBuilder current) {
+
+        // Try all children
+        for (int i = 0; i < 26; i++) {
+
+            TrieNode child = node.children[i];
+
+            // Prefix must itself be a valid word
+
+            // "lets say" we have "we" and "wo"
+            //so if "we" a valid prfix, then go to other children "wo"
+            if (child != null && child.isEnd) {
+
+                current.append((char) ('a' + i));
+
+                // Update answer
+                if (current.length() > result.length()) {
+                    result = current.toString();
+                }
+
+                dfs(child, current);
+
+                // Backtrack
+                current.deleteCharAt(current.length() - 1);
+            }
+        }
+    }
+}
