@@ -1,0 +1,71 @@
+class WordDictionary {
+
+    class TrieNode {
+        TrieNode[] children = new TrieNode[26];
+        boolean isEnd = false;
+    }
+
+    private TrieNode root;
+
+    public WordDictionary() {
+        root = new TrieNode();
+    }
+
+    public void addWord(String word) {
+
+        TrieNode curr = root;
+
+        for (char ch : word.toCharArray()) {
+
+            int idx = ch - 'a';
+
+            if (curr.children[idx] == null) {
+                curr.children[idx] = new TrieNode();
+            }
+
+            curr = curr.children[idx];
+        }
+
+        curr.isEnd = true;
+    }
+
+    public boolean search(String word) {
+        return dfs(root, word, 0);
+    }
+
+    private boolean dfs(TrieNode node, String word, int index) {
+
+        // Reached end of word
+        if (index == word.length()) {
+            return node.isEnd;
+        }
+
+        char ch = word.charAt(index);
+
+        // Normal character
+        if (ch != '.') {
+
+            int idx = ch - 'a';
+
+            if (node.children[idx] == null) {
+                return false;
+            }
+
+            return dfs(node.children[idx], word, index + 1);
+        }
+
+        // Wildcard '.'
+        // Try all possible characters
+        for (int i = 0; i < 26; i++) {
+
+            if (node.children[i] != null) {
+
+                if (dfs(node.children[i], word, index + 1)) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+}
