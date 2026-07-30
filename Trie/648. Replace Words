@@ -1,0 +1,75 @@
+class Solution {
+
+    class TrieNode {
+        TrieNode[] children = new TrieNode[26];
+        boolean isEnd;
+    }
+
+    TrieNode root = new TrieNode();
+
+    public String replaceWords(List<String> dictionary, String sentence) {
+
+        // Build Trie
+        for (String word : dictionary) {
+            insert(word);
+        }
+
+        String[] words = sentence.split(" ");
+        StringBuilder result = new StringBuilder();
+
+        for (String word : words) {
+
+            String replacement = findRoot(word);
+
+            if (result.length() > 0) {
+                result.append(" ");
+            }
+
+            result.append(replacement);
+        }
+
+        return result.toString();
+    }
+
+    private void insert(String word) {
+
+        TrieNode curr = root;
+
+        for (char ch : word.toCharArray()) {
+
+            int idx = ch - 'a';
+
+            if (curr.children[idx] == null) {
+                curr.children[idx] = new TrieNode();
+            }
+
+            curr = curr.children[idx];
+        }
+
+        curr.isEnd = true;
+    }
+
+    private String findRoot(String word) {
+
+        TrieNode curr = root;
+
+        for (int i = 0; i < word.length(); i++) {
+
+            int idx = word.charAt(i) - 'a';
+
+            // No matching prefix
+            if (curr.children[idx] == null) {
+                return word;
+            }
+
+            curr = curr.children[idx];
+
+            // Found shortest root
+            if (curr.isEnd) {
+                return word.substring(0, i + 1);
+            }
+        }
+
+        return word;
+    }
+}
