@@ -1,0 +1,153 @@
+class Solution {
+
+    class TrieNode{
+
+    TrieNode[] children;
+    String word;
+
+    TrieNode(){
+        children = new TrieNode[26];
+    }
+}
+
+
+class Trie{
+
+  TrieNode root;
+  
+  Trie() {
+    root = new TrieNode();
+  }
+
+
+  void insert(String word){
+
+       TrieNode curr=root;
+       for(char ch: word.toCharArray()){
+          
+          int idx= ch-'a';
+
+          if(curr.children[idx]==null)
+              curr.children[idx] = new TrieNode();
+
+            curr=curr.children[idx];  
+            
+       }
+
+       curr.word = word;
+  }
+
+}
+
+void dfs(char[][] board,TrieNode root,int x,int y,List<String> res){
+
+    if(x<0 || y<0 || x>=board.length || y>=board[0].length)
+     return;
+
+    if(board[x][y] == '#')
+      return;
+
+
+    char ch= board[x][y]; 
+    int idx = ch-'a';
+
+    //no child 
+    //the char present on board, is not present in the trie
+    if(root.children[idx]== null)
+      return; 
+
+    //mark as visited on board
+    board[x][y] = '#';
+
+    // Move in Trie
+    TrieNode next = root.children[idx];
+
+    //Did we find a complete word?
+    if (next.word != null) {
+        res.add(next.word);
+        next.word=null;
+    }
+
+    dfs(board,next,x+1,y,res);
+    dfs(board,next,x-1,y,res);
+    dfs(board,next,x,y+1,res);
+    dfs(board,next,x,y-1,res);
+
+
+    //backtrack
+    board[x][y]=ch;
+
+}
+
+    public List<String> findWords(char[][] board, String[] words) {
+
+        Trie trie = new Trie();
+        for(int i=0;i<words.length;i++){
+             trie.insert(words[i]);
+        }
+
+        int r=board.length;
+        int c=board[0].length;
+
+        List<String> res = new ArrayList<>();
+
+        //dfs call
+        for(int i=0;i<r;i++){
+            for(int j=0;j<c;j++){
+                
+                dfs(board,trie.root,i,j,res);
+            }
+        }
+
+        return res;
+        
+    }
+}
+
+
+// Input: 
+
+// board = [["o","a","a","n"],["e","t","a","e"],["i","h","k","r"],["i","f","l","v"]]
+// words = ["oath","pea","eat","rain"]
+// Output: ["eat","oath"]
+
+// so for each word we need to multiple dfs like WORD SEARCH I
+// How to optimise
+
+// we will see the words that have the common prefix words, we need not do it again.
+// or parse entirely.
+
+// What should the trie contain.
+// Also isEnd should be there to see the word ending here.
+
+// Also in the matrix, we need to know when the word is ending or parsed in the matrix
+// also the index?
+
+
+
+
+//                          ROOT
+//                     /             \
+//                    o               e
+//                    |               |
+//                    a               a
+//                    |               |
+//                    t               t
+//                   / \               |
+//                  h   s              ?
+//                  |   |              |
+//               "oath" "oats"       "eat"
+
+
+
+
+// [["o","a","b","n"],["o","t","a","e"],["a","h","k","r"],["a","f","l","v"]]
+// words = ["oa","oaa"]
+// Output = ["oa","oa","oaa"]
+
+// this is the issue, if we dont mark the word as visited then we will come across the same prefix and we will process them again.
+
+// so make it visited..We can maintain the hashset for this..
+//but we can also make as word.next=null
+
+
