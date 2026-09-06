@@ -1,0 +1,62 @@
+class EventManager {
+public:
+
+    struct compare {
+        bool operator()(pair<int,int>& a, pair<int,int>& b) {
+
+            // higher priority comes first
+            if (a.first == b.first) {
+                // smaller eventId comes first
+                return a.second > b.second;
+            }
+
+            return a.first < b.first;
+        }
+    };
+
+    priority_queue<pair<int,int>,
+                   vector<pair<int,int>>,
+                   compare> q;
+
+    unordered_map<int,int> updatedEvents;
+
+    EventManager(vector<vector<int>>& e) {
+
+        for (int i = 0; i < e.size(); i++) {
+            q.push({e[i][1], e[i][0]});
+        }
+    }
+
+    void updatePriority(int eventId, int newPriority) {
+        updatedEvents[eventId] = newPriority;
+    }
+
+    int pollHighest() {
+
+        while (!q.empty()) {
+
+            auto event = q.top();
+            q.pop();
+
+            int priority = event.first;
+            int eventId = event.second;
+
+            // event was updated
+            if (updatedEvents.find(eventId) != updatedEvents.end()) {
+
+                int newPriority = updatedEvents[eventId];
+
+                // put it back with new priority
+                q.push({newPriority, eventId});
+
+                updatedEvents.erase(eventId);
+
+                continue;
+            }
+
+            return eventId;
+        }
+
+        return -1;
+    }
+};
