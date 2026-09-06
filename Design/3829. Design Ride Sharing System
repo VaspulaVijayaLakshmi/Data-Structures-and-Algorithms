@@ -1,0 +1,57 @@
+class RideSharingSystem {
+public:
+
+    queue<int> drivers;
+    queue<int> riders;
+
+    unordered_map<int, int> rides;
+
+    unordered_set<int> cancelled;
+
+    RideSharingSystem() {}
+
+    void addRider(int riderId) {
+       
+    cancelled.erase(riderId);
+    riders.push(riderId);
+
+    }
+
+    void addDriver(int driverId) {
+        drivers.push(driverId);
+    }
+
+    vector<int> matchDriverWithRider() {
+
+        while (!riders.empty() && cancelled.count(riders.front())) {
+            riders.pop();
+        }
+
+        if (drivers.empty() || riders.empty())
+            return {-1, -1};
+
+        int driverId = drivers.front();
+        int riderId = riders.front();
+
+        drivers.pop();
+        riders.pop();
+
+        rides[riderId] = driverId;
+
+        return {driverId, riderId};
+    }
+
+    void cancelRider(int riderId) {
+
+        cancelled.insert(riderId);
+
+        if (rides.count(riderId)) {
+
+            int driverId = rides[riderId];
+
+            rides.erase(riderId);
+
+          
+        }
+    }
+};
