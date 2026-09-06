@@ -1,0 +1,106 @@
+class Twitter {
+public:
+    
+    int timestamp=0;
+
+    //list would be DLL right
+    unordered_map<int,list<pair<int,int>>> posts;
+    unordered_map<int,set<int>> following;
+
+    Twitter() {}
+    
+    void postTweet(int userId, int tweetId) {
+       
+       posts[userId].push_front({timestamp++, tweetId});
+
+        if (posts[userId].size() > 10) {
+           posts[userId].pop_back();
+        }
+    }
+    
+    
+    vector<int> getNewsFeed(int userId) {
+        
+        //go to all users following and their tweets
+        //along with himself/herself
+
+        //then sort and pick top 10.
+
+        // Min heap: oldest tweet is on top
+        priority_queue<
+            pair<int, int>,
+            vector<pair<int, int>>,
+            greater<pair<int, int>>
+        > pq;
+
+        // Myself + everyone I follow
+        set<int> users = following[userId];
+        users.insert(userId);
+
+        // Go through tweets of all relevant users
+        for (int user : users) {
+
+            for (auto tweet : posts[user]) {
+
+                pq.push(tweet);
+
+                // Keep only 10 most recent tweets
+                if (pq.size() > 10) {
+                    pq.pop();
+                }
+            }
+        }
+
+        // Extract tweets from oldest -> newest
+        vector<int> ans;
+
+        while (!pq.empty()) {
+            ans.push_back(pq.top().second);
+            pq.pop();
+        }
+
+        // We need newest -> oldest
+        reverse(ans.begin(), ans.end());
+
+        return ans;
+    }
+
+    void follow(int followerId, int followeeId) {
+        following[followerId].insert(followeeId);
+    }
+    
+    void unfollow(int followerId, int followeeId) {
+        following[followerId].erase(followeeId);
+    }
+};
+
+
+
+
+
+ //but we need userId -> following
+// unordered_map<int,set<int>> following;
+
+// follow -> userId -> add in set -> who he/she followed
+// unfollow -> remove particular id who/she followed.
+
+// unfollow -> should be done in O(1) or sprted ist kindof sowe can do BS
+
+
+
+// NewsFeed -> we need 10 top tweets.
+//so we go through who user is followingalong with himself and need to sort them and return
+
+
+//we can do offline right. 
+//news feed generation.
+
+//like forst calculate and as new tweets coming in update news feed DS to maintain only top 10m
+
+//what DS to use. SOmething like a ordered set.
+// or even DLL, remove from end and nsert to forst the most recent tweet
+
+//better to have tweets also -> sorted per user.
+//build news feed when iserting tweet only.
+
+
