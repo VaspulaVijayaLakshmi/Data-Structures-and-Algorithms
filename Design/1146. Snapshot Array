@@ -1,0 +1,48 @@
+class SnapshotArray {
+public:
+    vector<vector<pair<int,int>>> arr;
+    int snapId = 0;
+
+    SnapshotArray(int length) {
+        arr.resize(length);
+    }
+    
+    void set(int index, int val) {
+        arr[index].push_back({snapId, val});
+    }
+    
+    int snap() {
+        return snapId++;
+    }
+    
+    int get(int index, int snap_id) {
+
+        vector<pair<int,int>>& v = arr[index];
+
+        int left = 0;
+        int right = v.size() - 1;
+
+        int ans = 0;
+
+        while(left <= right) {
+
+            int mid = left + (right - left) / 2;
+
+            if(v[mid].first <= snap_id) {
+                ans = v[mid].second;
+
+                // look for a newer valid version
+                left = mid + 1;
+            }
+            else {
+                right = mid - 1;
+            }
+        }
+
+        return ans;
+    }
+};
+
+//so we need to maintain versions of the indices
+//so each vector indx is a map
+//buckets bascially.
