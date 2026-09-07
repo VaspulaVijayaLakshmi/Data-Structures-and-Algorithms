@@ -1,0 +1,77 @@
+class ExamTracker {
+public:
+
+    vector<pair<long long, long long>> pre;
+    long long size=0;
+
+    ExamTracker() {}
+    
+    void record(int time, int score) {
+
+        if(pre.size() == 0)
+          pre.push_back({time,score});
+
+        else{
+          long long scoreSoFar = pre[size-1].second;  
+           pre.push_back({time,scoreSoFar+score}); 
+        }  
+
+        size++;
+    }
+    
+    long long totalScore(int startTime, int endTime) {
+
+       //   Binary Search + Prefix Sum 
+
+
+long long left =
+    lower_bound(
+        pre.begin(),
+        pre.end(),
+        make_pair((long long)startTime, 0LL)
+    ) - pre.begin();
+
+long long right =
+    upper_bound(
+        pre.begin(),
+        pre.end(),
+        make_pair((long long)endTime, LLONG_MAX)
+    ) - pre.begin();
+
+
+        // The key trick is:
+        // lower_bound({startTime, 0})
+        //     and
+        // upper_bound({endTime, INT_MAX})
+        
+        // because pairs are compared first by time, then by the second value.
+       
+        if(right == 0)
+        return 0;
+
+    long long rightScore = pre[right - 1].second;
+
+    long long leftScore = 0;
+
+    if(left > 0)
+        leftScore = pre[left - 1].second;
+    
+    return rightScore - leftScore;
+
+    }
+};
+
+
+
+// A segment tree would be overkill because:
+
+// record() times are strictly increasing
+// No updates/deletions to old scores
+// Queries are only asking for a range sum
+// So we can keep everything sorted naturally and use prefix sums.
+
+
+// For a vector:
+
+// int index = lower_bound(v.begin(), v.end(), x) - v.begin();
+// It returns an iterator to the first element >= x.
