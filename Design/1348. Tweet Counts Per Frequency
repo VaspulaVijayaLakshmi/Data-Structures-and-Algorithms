@@ -1,0 +1,56 @@
+class TweetCounts {
+public:
+    unordered_map<string, vector<int>> tweets;
+
+    TweetCounts() {
+        
+    }
+    
+    void recordTweet(string tweetName, int time) {
+        tweets[tweetName].push_back(time);
+    }
+    
+    vector<int> getTweetCountsPerFrequency(
+        string freq,
+        string tweetName,
+        int startTime,
+        int endTime) {
+
+        int interval;
+
+        if(freq == "minute")
+            interval = 60;
+        else if(freq == "hour")
+            interval = 3600;
+        else
+            interval = 86400;
+
+        vector<int>& v = tweets[tweetName];
+
+        // Binary search needs sorted timestamps
+        sort(v.begin(), v.end());
+
+        vector<int> ans;
+
+        for(int start = startTime; start <= endTime; start += interval) {
+
+            int end = min(start + interval - 1, endTime);
+
+            int left = lower_bound(v.begin(), v.end(), start) - v.begin();
+
+            int right = upper_bound(v.begin(), v.end(), end) - v.begin();
+
+            ans.push_back(right - left);
+        }
+
+        return ans;
+    }
+};
+
+
+//sort the tweet by time interval and do BS
+// if its minture current time  and current time -60seconds.
+
+// same for day and hour as well
+
+//and prefix array also i need for tweet count
