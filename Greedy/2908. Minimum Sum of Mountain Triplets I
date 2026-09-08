@@ -1,0 +1,52 @@
+Problem Description
+You are given a 0-indexed array nums of integers.
+
+A triplet of indices (i, j, k) forms a mountain if:
+
+The indices are in strictly increasing order: i < j < k
+The middle element is the peak: nums[i] < nums[j] and nums[k] < nums[j]
+In other words, nums[j] must be greater than both nums[i] and nums[k], creating a mountain-like pattern where the value rises from position i to j, then falls from j to k.
+
+Your task is to find the minimum possible sum of any mountain triplet in the array. The sum of a mountain triplet (i, j, k) is calculated as nums[i] + nums[j] + nums[k].
+
+If no valid mountain triplet exists in the array, return -1.
+
+For example:
+
+If nums = [8, 6, 1, 5, 3], a valid mountain triplet is (2, 3, 4) with values (1, 5, 3), where 1 < 5 > 3. The sum would be 1 + 5 + 3 = 9.
+If nums = [5, 4, 3, 2, 1], no mountain triplet exists since the array is strictly decreasing.
+
+
+class Solution {
+public:
+    int minimumSum(vector<int>& nums) {
+        int n = nums.size();
+        int ans = INT_MAX;
+
+        for (int j = 1; j < n - 1; j++) {
+
+            int left = INT_MAX;
+            int right = INT_MAX;
+
+            // Find minimum valid element on left
+            for (int i = 0; i < j; i++) {
+                if (nums[i] < nums[j]) {
+                    left = min(left, nums[i]);
+                }
+            }
+
+            // Find minimum valid element on right
+            for (int k = j + 1; k < n; k++) {
+                if (nums[k] < nums[j]) {
+                    right = min(right, nums[k]);
+                }
+            }
+
+            if (left != INT_MAX && right != INT_MAX) {
+                ans = min(ans, left + nums[j] + right);
+            }
+        }
+
+        return ans == INT_MAX ? -1 : ans;
+    }
+};
