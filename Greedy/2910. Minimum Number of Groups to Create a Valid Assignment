@@ -1,0 +1,101 @@
+class Solution {
+public:
+    int minGroupsForValidAssignment(vector<int>& balls) {
+
+        unordered_map<int, int> freq;
+
+        // Count frequency
+        for (int x : balls) {
+            freq[x]++;
+        }
+
+        // Find minimum frequency
+        int mn = INT_MAX;
+
+        for (auto& [value, f] : freq) {
+            mn = min(mn, f);
+        }
+
+
+        //now the bag can have min number of balls each, but the condition is 
+        //biggest bag can have only 1 ball more than the smallest box.
+
+        //that means we can have min balls, in a bag, but this condition may be true.
+        //so this is upper bound of how many balls max the bag can hold.
+
+        //now we see from bag holding 1 ball to bag holding atmost min and check.
+
+        int ans = INT_MAX;
+
+        // x = smaller basket size
+        for (int x = 1; x <= mn; x++) {
+
+            int groups = 0;
+            bool possible = true;
+
+            for (auto& [value, f] : freq) {
+
+                //  Because rem is the leftover balls, 
+                //  and big tells us how many (x+1) groups we already made
+                int big = f / (x + 1);
+                int rem = f % (x + 1);
+
+                if (rem == 0) {
+                    // All groups have x + 1 balls
+                    groups += big;
+                }
+                else if (rem == x) {
+                    // One group has x balls,
+                    // remaining groups have x + 1 balls
+                    groups += big + 1;
+                }
+
+                else { // rem < x
+
+                //that means , other boxes have x+1 balls, this bag have less than x, this fails the 2nd condition.
+
+
+                   // Need some of the big groups to contribute 1 ball each
+                //    if its size is x or x+1
+
+
+//if we have enough big bags to convert to x size from x+1 size
+                  if (rem + big >= x) {
+                      groups += big + 1;
+                   }
+                 
+                  else {
+                   possible = false;
+                    break;
+              }
+}
+
+            }
+
+            if (possible) {
+                ans = min(ans, groups);
+            }
+        }
+
+        return ans;
+    }
+};
+
+// put it in hashtable
+// track min balls basket.
+
+// now go through each of the basket and 
+
+
+//  balls = [10,10,10,3,1,1]
+ 
+ 
+//  10-3
+//  3-1
+//  1-2
+
+//  now min is 1.
+//  so the other baskets need to atmost have 1/2 balls in all baskets.
+
+//  fewest baskets means , fill as many as possible.
+//  now 3 balls , how can 3%2 = 1 reminder ball, 3/2 = 1 -> so total 3 baskets.
