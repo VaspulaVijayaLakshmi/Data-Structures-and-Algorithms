@@ -1,0 +1,58 @@
+class RandomizedSet {
+public:
+
+    unordered_map<int,int> mp;
+    vector<int> nums;
+
+    RandomizedSet() { }
+    
+    bool insert(int val) {
+
+        if(mp.find(val) == mp.end()){
+        
+           nums.push_back(val);
+           mp[val] = nums.size()-1;
+           return true;
+        }
+
+        return false;
+    }
+    
+    bool remove(int val) {
+
+        //if not present return false
+        if(mp.find(val) == mp.end())
+          return false;
+
+        //find the idx of that elemennt
+        int idx = mp[val];
+
+        //replace with last element
+        int lastIdx = nums.size()-1;
+        nums[idx] = nums[lastIdx];
+        mp[nums[lastIdx]] = idx;
+
+        //cleqr from vector
+        //cleqr from map
+        mp.erase(val);
+        nums.pop_back();
+
+        return true;   
+        
+    }
+    
+    int getRandom() {
+        
+        return nums[rand()%nums.size()];
+    }
+};
+
+// map/insert or remove.
+// Random -> each should hve same probability
+
+// Maybe I can use Map + DLL -> Everytime Eleent is called return from first and insert at end
+// this way each elment will have same probability of being returned.
+
+//This is O(1) . but it is not random right.
+//like wwe are travrseing elemnts in order. 
+
