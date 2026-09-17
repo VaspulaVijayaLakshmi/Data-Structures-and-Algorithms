@@ -1,0 +1,53 @@
+class MyHashMap {
+private:
+    static const int SIZE = 1009;
+    vector<list<pair<int, int>>> buckets;
+
+    int hash(int key) {
+        return key % SIZE;
+    }
+
+public:
+    MyHashMap() {
+        buckets.resize(SIZE);
+    }
+
+    void put(int key, int value) {
+        int idx = hash(key);
+
+        for (auto &p : buckets[idx]) {
+            if (p.first == key) {
+                p.second = value;
+                return;
+            }
+        }
+
+        buckets[idx].push_back({key, value});
+    }
+
+    int get(int key) {
+        int idx = hash(key);
+
+        for (auto &p : buckets[idx]) {
+            if (p.first == key)
+                return p.second;
+        }
+
+        return -1;
+    }
+
+    void remove(int key) {
+        int idx = hash(key);
+
+        auto &lst = buckets[idx];
+
+        for (auto it = lst.begin(); it != lst.end(); ++it) {
+            if (it->first == key) {
+                lst.erase(it);
+                return;
+            }
+        }
+    }
+};
+
+
