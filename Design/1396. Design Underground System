@@ -1,0 +1,61 @@
+class UndergroundSystem {
+public: 
+    unordered_map<int,pair<string,int>> mp ;
+    unordered_map<string,pair<int,int>> avgMap;
+    
+    UndergroundSystem() {}
+    
+    void checkIn(int id, string stationName, int t) {
+        mp[id] = {stationName,t};
+    }
+    
+    void checkOut(int id, string stationName, int t) {
+        
+        string srcStation = mp[id].first;
+        int strtTime = mp[id].second;
+        
+        string key = srcStation + "#" + stationName;
+        
+        //not present in. map
+        if(avgMap.find(key) == avgMap.end()){
+             avgMap[key] = {(t-strtTime),1};
+             return ;
+        }
+
+        else{
+            auto val = avgMap[key];
+            avgMap[key] = {(val.first + (t-strtTime)) , 
+                            val.second+1};
+        }
+
+    }
+    
+    double getAverageTime(string startStation, string endStation) {
+         
+         string key = startStation + "#" + endStation;
+         auto val = avgMap[key];
+
+         return (double)(val.first)/val.second;
+    }
+};
+
+// ["UndergroundSystem","checkIn","checkIn","checkIn","checkOut","checkOut","checkOut","getAverageTime","getAverageTime","checkIn","getAverageTime","checkOut","getAverageTime"]
+// [[],[45,"Leyton",3],[32,"Paradise",8],[27,"Leyton",10],[45,"Waterloo",15],[27,"Waterloo",20],[32,"Cambridge",22],["Paradise","Cambridge"],["Leyton","Waterloo"],[10,"Leyton",24],["Leyton","Waterloo"],[10,"Waterloo",38],["Leyton","Waterloo"]]
+
+// 45 -> leyton -> 3
+// 45 -> waterloo -> 15
+
+// 27 -> leyton -> 10
+// 27 -> waterloo -> 20
+
+// 32 -> paradise -> 8
+// 32 -> cambridge -> 22
+
+
+// 2 Maps
+
+// MAP1
+// chekinId - src station
+
+// Map2
+// src station + "#" + destination staion - {totalsum,count}
