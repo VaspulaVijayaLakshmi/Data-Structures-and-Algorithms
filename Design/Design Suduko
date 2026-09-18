@@ -1,0 +1,257 @@
+Suduko Rules:
+
+A number cannot repeat in the same row, same column, OR same 3×3 box.
+
+class Sudoku {
+
+    private int[][] board;
+
+    Sudoku() {
+        board = new int[9][9];
+    }
+
+    boolean placeNumber(int row, int col, int num) {
+
+        if (board[row][col] != 0)
+            return false;
+
+        if (!isValid(row, col, num))
+            return false;
+
+        board[row][col] = num;
+        return true;
+    }
+
+    boolean isValid(int row, int col, int num) {
+
+        // Check row
+        for (int c = 0; c < 9; c++) {
+            if (board[row][c] == num)
+                return false;
+        }
+
+        // Check column
+        for (int r = 0; r < 9; r++) {
+            if (board[r][col] == num)
+                return false;
+        }
+
+        // Check 3 x 3 box
+        int startRow = (row / 3) * 3;
+        int startCol = (col / 3) * 3;
+
+        for (int r = startRow; r < startRow + 3; r++) {
+            for (int c = startCol; c < startCol + 3; c++) {
+                if (board[r][c] == num)
+                    return false;
+            }
+        }
+
+        return true;
+    }
+}
+
+
+The above isValid() scans the row/column/box every time → O(9), which is effectively constant for Sudoku.
+
+If you scan the row + column + 3×3 box for every placement:
+
+Row scan → O(9)
+Column scan → O(9)
+Box scan → O(9)
+
+Total:
+
+O(9 + 9 + 9) = O(27) = O(1)
+
+Because Sudoku's board size is fixed at 9 × 9.
+
+If we generalize Sudoku to an N × N board:
+
+Row → O(N)
+Column → O(N)
+Box → O(N)
+
+So validation becomes O(N).
+
+
+
+
+
+Optimisation
+
+This is similar to TIC TAC GAME - check design tic-tac-toe
+ For Sudoku optimized validation, use the same idea as Tic-Tac-Toe: maintain the state instead of scanning the row/column/box every time.
+
+
+// rows[row][num] = whether num already exists in that row
+    private boolean[][] rows = new boolean[9][10];
+
+// cols[col][num] = whether num already exists in that column
+    private boolean[][] cols = new boolean[9][10];
+
+// boxes[box][num] = whether num already exists in that 3x3 box
+    private boolean[][] boxes = new boolean[9][10];
+
+
+
+
+Why this is optimized
+
+Without extra state:
+
+place(4,7,5)
+    ↓
+scan row       O(9)
+scan column    O(9)
+scan box       O(9)
+
+With the boolean arrays:
+
+rows[4][5]      → O(1)
+cols[7][5]      → O(1)
+boxes[5][5]     → O(1)
+
+
+
+boolean[][] rows = new boolean[9][10];
+
+as 9 rows, where each row keeps track of numbers 1–9.
+We use index 0 but don't care about it.
+
+
+Initially
+
+rows
+        num →
+        0 1 2 3 4 5 6 7 8 9
+row 0   F F F F F F F F F F
+row 1   F F F F F F F F F F
+row 2   F F F F F F F F F F
+row 3   F F F F F F F F F F
+row 4   F F F F F F F F F F
+row 5   F F F F F F F F F F
+row 6   F F F F F F F F F F
+row 7   F F F F F F F F F F
+row 8   F F F F F F F F F F
+
+Suppose we place 5 at row 4:
+rows[4][5] = true;
+
+
+So these arrays are basically lookup tables:
+
+rows[row][num]   → Is num in this row?
+cols[col][num]   → Is num in this column?
+boxes[box][num]  → Is num in this box?
+
+That's why the check becomes O(1) instead of scanning.
+
+
+
+Exactly the same idea for boxes.
+
+boolean[][] boxes = new boolean[9][10];
+
+We have 9 boxes, numbered 0–8, and each box tracks numbers 1–9.
+
+
+        num →
+        0 1 2 3 4 5 6 7 8 9
+
+box 0   F F F F F F F F F F
+box 1   F F F F F F F F F F
+box 2   F F F F F F F F F F
+box 3   F F F F F F F F F F
+box 4   F F F F F F F F F F
+box 5   F F F F F F F F F F
+box 6   F F F F F F F F F F
+box 7   F F F F F F F F F F
+box 8   F F F F F F F F F F
+
+
+How do we find the box number?
+
+This is the important formula:
+int box = (row / 3) * 3 + (col / 3);
+
+The Sudoku boxes are numbered:
+┌─────────┬─────────┬─────────┐
+│    0    │    1    │    2    │
+├─────────┼─────────┼─────────┤
+│    3    │    4    │    5    │
+├─────────┼─────────┼─────────┤
+│    6    │    7    │    8    │
+└─────────┴─────────┴─────────┘
+
+
+Suppose:
+
+row = 4
+col = 7
+
+Then:
+(row / 3) * 3 + (col / 3)
+
+= (4 / 3) * 3 + (7 / 3)
+= 1 * 3 + 2
+= 5
+
+So (4,7) belongs to box 5.
+
+If we put 5 there:
+
+boxes[5][5] = true;
+
+
+Meaning:
+
+Box 5 already contains number 5.
+
+Later, if we try to put another 5 anywhere inside that same 3×3 box:
+
+if (boxes[5][5])
+    return false;
+
+Immediately invalid.
+
+
+
+
+class Sudoku {
+
+    private int[][] board = new int[9][9];
+
+    // rows[row][num] = whether num already exists in that row
+    private boolean[][] rows = new boolean[9][10];
+
+    // cols[col][num] = whether num already exists in that column
+    private boolean[][] cols = new boolean[9][10];
+
+    // boxes[box][num] = whether num already exists in that 3x3 box
+    private boolean[][] boxes = new boolean[9][10];
+
+    public boolean placeNumber(int row, int col, int num) {
+
+        if (board[row][col] != 0)
+            return false;
+
+        int box = (row / 3) * 3 + (col / 3);
+
+        // Already present?
+        if (rows[row][num] ||
+            cols[col][num] ||
+            boxes[box][num]) {
+            return false;
+        }
+
+        // Place number
+        board[row][col] = num;
+
+        rows[row][num] = true;
+        cols[col][num] = true;
+        boxes[box][num] = true;
+
+        return true;
+    }
+}
