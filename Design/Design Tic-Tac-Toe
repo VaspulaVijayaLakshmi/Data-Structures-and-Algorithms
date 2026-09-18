@@ -1,9 +1,6 @@
 Core idea
 
 Instead of storing the whole board and checking rows/columns/diagonals after every move, 
-Which is O(n^3) 
-
-
 maintain:
 
 vector<int> rows;
@@ -15,8 +12,6 @@ For player 1 add +1, for player 2 add -1.
 
 If any count reaches n or -n, that player wins.
 //We jsyt need to make sure that a row/col a diagaonal has same count that is tagrte by one player.
-
-//at max it will take O(n^2) complecity where netiegr of them finish the game as there is no possiboe way to place ther val.
 
 
 class TicTacToe {
