@@ -1,0 +1,53 @@
+Prerequisites
+
+208. Implement Trie (Prefix Tree)
+211. Design Add and Search Words Data Structure
+648. Replace Words
+
+
+https://leetcode.com/discuss/post/4628925/an-introduction-to-tries-by-bhavyakashmi-rtld/
+
+
+
+
+
+Problem Description
+You need to design an autocomplete system for a search engine that suggests sentences as users type. The system works with the following specifications:
+
+Initial Setup:
+
+You're given an array of sentences and an array of times (both of length n)
+sentences[i] represents a previously typed sentence
+times[i] represents how many times that sentence was typed
+How the System Works:
+
+Users input characters one by one to form a sentence
+Each sentence ends with the special character '#'
+For each character typed (except '#'), the system returns the top 3 most frequent sentences that start with the prefix typed so far
+Ranking Rules:
+
+Sentences are ranked by their "hot degree" (frequency of being typed)
+Higher frequency sentences appear first
+If two sentences have the same frequency, they're sorted in ASCII order (lexicographically)
+If fewer than 3 matching sentences exist, return all available matches
+Special Behavior:
+
+When '#' is input, it means the current sentence is complete
+The completed sentence is added to the system (increasing its count by 1 if it already exists)
+After '#' is input, return an empty list and reset for the next sentence
+Implementation Requirements:
+
+The AutocompleteSystem class needs two methods:
+
+AutocompleteSystem(sentences, times): Constructor that initializes the system with historical data
+input(c): Processes a single character input
+If c == '#': saves the current sentence and returns []
+Otherwise: returns a list of up to 3 sentence suggestions based on the current prefix
+Example Flow: If a user types "i" then " " then "a", the system would:
+
+After "i": return top 3 sentences starting with "i"
+After "i ": return top 3 sentences starting with "i "
+After "i a": return top 3 sentences starting with "i a"
+After "i a#": save "i a" to the system and return []
+
+
