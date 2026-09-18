@@ -1,0 +1,33 @@
+class AuthenticationManager {
+public:
+    int timeToLive;
+    unordered_map<string, int> mp;
+
+    AuthenticationManager(int timeToLive) {
+        this->timeToLive = timeToLive;
+    }
+    
+    void generate(string tokenId, int currentTime) {
+        mp[tokenId] = currentTime + timeToLive;
+    }
+    
+    void renew(string tokenId, int currentTime) {
+        if (mp.find(tokenId) != mp.end() &&
+            mp[tokenId] > currentTime) {
+            
+            mp[tokenId] = currentTime + timeToLive;
+        }
+    }
+    
+    int countUnexpiredTokens(int currentTime) {
+        int totalTokens = 0;
+
+        for (auto& [token, expiryTime] : mp) {
+            if (expiryTime > currentTime) {
+                totalTokens++;
+            }
+        }
+
+        return totalTokens;
+    }
+};
