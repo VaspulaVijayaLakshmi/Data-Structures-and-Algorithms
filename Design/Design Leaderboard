@@ -1,3 +1,18 @@
+Problem Description
+You need to design a Leaderboard class that manages player scores and provides functionality to track top performers.
+
+The Leaderboard class must implement three main functions:
+
+addScore(playerId, score): This function adds points to a player's current score. If the player doesn't exist on the leaderboard yet, they are added with the given score as their initial score. If they already exist, the score is added to their existing total.
+
+top(K): This function returns the sum of scores of the top K players. The top players are those with the highest scores on the leaderboard.
+
+reset(playerId): This function removes a player from the leaderboard by resetting their score to 0. The problem guarantees that this function will only be called for players who already exist on the leaderboard.
+
+
+
+
+
 class Leaderboard {
     unordered_map<int, int> score;
     unordered_set<int> removed;
