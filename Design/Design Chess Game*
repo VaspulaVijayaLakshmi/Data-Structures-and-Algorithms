@@ -1,0 +1,221 @@
+ChessGame
+   |
+   +-- Board
+   |     |
+   |     +-- Piece
+   |           ├── King
+   |           ├── Queen
+   |           ├── Rook
+   |           ├── Bishop
+   |           ├── Knight
+   |           └── Pawn
+   |
+   +-- Player
+
+
+enum Color {
+    WHITE, BLACK
+}
+
+abstract class Piece {
+    Color color;
+
+    Piece(Color color) {
+        this.color = color;
+    }
+
+    abstract boolean isValidMove(int sr, int sc, int er, int ec);
+}
+
+
+
+
+class King extends Piece {
+
+    King(Color color) {
+        super(color);
+    }
+
+    @Override
+    boolean isValidMove(int sr, int sc, int er, int ec) {
+        return Math.abs(sr - er) <= 1 &&
+               Math.abs(sc - ec) <= 1;
+    }
+}
+
+class Rook extends Piece {
+
+    Rook(Color color) {
+        super(color);
+    }
+
+    @Override
+    boolean isValidMove(int sr, int sc, int er, int ec) {
+        return sr == er || sc == ec;
+    }
+}
+
+class Bishop extends Piece {
+
+    Bishop(Color color) {
+        super(color);
+    }
+
+    @Override
+    boolean isValidMove(int sr, int sc, int er, int ec) {
+        return Math.abs(sr - er) == Math.abs(sc - ec);
+    }
+}
+
+class Knight extends Piece {
+
+    Knight(Color color) {
+        super(color);
+    }
+
+    @Override
+    boolean isValidMove(int sr, int sc, int er, int ec) {
+        int r = Math.abs(sr - er);
+        int c = Math.abs(sc - ec);
+
+        return (r == 2 && c == 1) ||
+               (r == 1 && c == 2);
+    }
+}
+
+class Queen extends Piece {
+
+    Queen(Color color) {
+        super(color);
+    }
+
+    @Override
+    boolean isValidMove(int sr, int sc, int er, int ec) {
+        return sr == er ||
+               sc == ec ||
+               Math.abs(sr - er) == Math.abs(sc - ec);
+    }
+}
+
+class Pawn extends Piece {
+
+    Pawn(Color color) {
+        super(color);
+    }
+
+    @Override
+    boolean isValidMove(int sr, int sc, int er, int ec) {
+        int direction = color == Color.WHITE ? -1 : 1;
+
+        return er - sr == direction &&
+               Math.abs(ec - sc) <= 1;
+    }
+}
+
+
+class Board {
+
+    private Piece[][] board = new Piece[8][8];
+
+    Piece getPiece(int row, int col) {
+        return board[row][col];
+    }
+
+    void setPiece(int row, int col, Piece piece) {
+        board[row][col] = piece;
+    }
+}
+
+
+
+class ChessGame {
+
+    private Board board;
+    private Color currentTurn;
+
+    ChessGame() {
+        board = new Board();
+        currentTurn = Color.WHITE;
+    }
+
+    boolean move(int sr, int sc, int er, int ec) {
+
+        Piece piece = board.getPiece(sr, sc);
+
+        // No piece
+        if (piece == null)
+            return false;
+
+        // Wrong player's turn
+        if (piece.color != currentTurn)
+            return false;
+
+        // Invalid movement
+        if (!piece.isValidMove(sr, sc, er, ec))
+            return false;
+
+        Piece destination = board.getPiece(er, ec);
+
+        // Cannot capture own piece
+        if (destination != null &&
+            destination.color == currentTurn)
+            return false;
+
+        // Move piece
+        board.setPiece(er, ec, piece);
+        board.setPiece(sr, sc, null);
+
+        // Switch turn
+        currentTurn =
+            currentTurn == Color.WHITE
+            ? Color.BLACK
+            : Color.WHITE;
+
+        return true;
+    }
+}
+
+
+
+if (destination != null &&
+            destination.color == currentTurn)
+            return false;
+
+For example:
+
+White King → e1
+White Rook → e2
+
+If White tries:
+
+e1 → e2
+
+destination is the White Rook.
+
+So:
+
+if (destination != null &&
+    destination.color == currentTurn)
+    return false;
+
+Breakdown:
+
+destination != null
+
+→ There is already a piece at the destination.
+
+destination.color == currentTurn
+
+→ That piece belongs to the player whose turn it is.
+
+Therefore:
+
+Your piece → Your piece's square
+             ❌ Invalid
+
+But if the destination contains an opponent's piece:
+
+White Rook → Black Knight
+             ✅ Capture
+
+Then the condition is false, and the move can proceed.
