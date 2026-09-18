@@ -1,0 +1,44 @@
+class Leaderboard {
+    unordered_map<int, int> score;
+    unordered_set<int> removed;
+
+    // {score, playerId}
+    priority_queue<pair<int,int>> pq;
+
+public:
+
+    void addScore(int playerId, int points) {
+        score[playerId] += points;
+
+        pq.push({score[playerId], playerId});
+    }
+
+    void removePlayer(int playerId) {
+        if (score.count(playerId)) {
+            removed.insert(playerId);
+            score.erase(playerId);
+        }
+    }
+
+    vector<int> getTopK(int k) {
+        vector<int> ans;
+
+        while (!pq.empty() && ans.size() < k) {
+
+            auto [sc, id] = pq.top();
+            pq.pop();
+
+            // stale / removed entry - (blacklisted, score is present for tht user, and it is stale)
+            if (removed.count(id) || !score.count(id) || score[id] != sc) {
+                continue;
+            }
+
+            ans.push_back(id);
+
+            // Put it back because getTopK shouldn't remove
+            pq.push({sc, id});
+        }
+
+        return ans;
+    }
+};
