@@ -1,0 +1,73 @@
+Core idea
+
+Instead of storing the whole board and checking rows/columns/diagonals after every move, 
+Which is O(n^3) 
+
+
+maintain:
+
+vector<int> rows;
+vector<int> cols;
+int diagonal;
+int antiDiagonal;
+
+For player 1 add +1, for player 2 add -1.
+
+If any count reaches n or -n, that player wins.
+//We jsyt need to make sure that a row/col a diagaonal has same count that is tagrte by one player.
+
+//at max it will take O(n^2) complecity where netiegr of them finish the game as there is no possiboe way to place ther val.
+
+
+class TicTacToe {
+public:
+
+    vector<int> rows, cols;
+    int diagonal = 0;
+    int antiDiagonal = 0;
+    int target;
+
+    TicTacToe(int n) {
+        target = n;
+        rows.resize(n, 0);
+        cols.resize(n, 0);
+    }
+
+    int move(int row, int col, int player) {
+
+        int value = (player == 1) ? 1 : -1;
+
+        rows[row] += value;
+        cols[col] += value;
+
+        if (row == col)
+            diagonal += value;
+
+        if (row + col == n - 1)
+            antiDiagonal += value;
+
+
+      //this above part can also be written as.
+
+        if (row == col){
+            diagonal += value;
+            antidiagonal+=val
+         } else{
+
+             if(row==0 && col=n-1 || col==0 && row==n-1)
+                 antidiagonal+=val
+         }
+
+        
+
+
+
+        //check if tht row or col or diagonal or anti diagonal have reached reached target
+
+        if (abs(rows[row]) == n || abs(cols[col]) == n || abs(diagonal) == n || abs(antiDiagonal) == n) {
+            return player;
+        }
+
+        return 0;
+    }
+};
