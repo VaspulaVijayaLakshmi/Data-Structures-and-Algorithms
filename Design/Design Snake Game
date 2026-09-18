@@ -1,0 +1,194 @@
+Problem Description
+This problem asks you to implement a Snake game with the following rules and requirements:
+
+Game Setup:
+
+The game is played on a screen with dimensions height x width
+The snake starts at position (0, 0) (top-left corner) with length 1
+Food items are provided as an array where food[i] = (ri, ci) represents the row and column position of the i-th food piece
+Game Mechanics:
+
+When the snake eats food, both its length and the game score increase by 1
+Food appears one at a time - the next food item only appears after the current one is eaten
+Food is guaranteed to never appear on a position occupied by the snake
+Game Over Conditions:
+
+The snake moves out of bounds (hits a wall)
+The snake's head collides with its own body after moving
+Implementation Requirements:
+
+You need to implement a SnakeGame class with two methods:
+
+SnakeGame(int width, int height, int[][] food): Constructor that initializes the game with the screen dimensions and food positions
+
+int move(String direction): Processes one move in the given direction ("U" for up, "D" for down, "L" for left, "R" for right) and returns:
+
+The current score if the move is valid
+-1 if the game is over (snake hits wall or itself)
+
+
+
+
+
+//In snake game, we have couple of things.
+//we need to know the body of snake indices.
+
+//the next move is within bounds.
+//we need to move head forward, tail remove.
+
+//if where head is moving -> if food is present or not.
+//we can move to to tail and tail moved forward.
+
+
+
+
+we can have dequue, for snake body.
+and a hashset or unroderd set for collision check.
+
+
+
+The key point is: food must be eaten in the given order.
+
+In this problem, food is not "all food available on the board." It is a sequence of food positions.
+
+Example:
+
+food = {
+    {1,2},
+    {0,1},
+    {2,3}
+};
+
+Initially:
+
+foodIndex = 0
+
+So the only food currently active is:
+
+food[0] = {1,2}
+
+Even if {0,1} is physically on the board, we don't consider it food yet.
+
+
+
+
+
+
+Every move:
+
+Calculate the new head position.
+Decide whether the new head is on food.
+If not eating, move the tail forward first.
+Check whether the new head is now colliding with the remaining body.
+Add the new head.
+If eating, the tail doesn't move, so the snake grows.
+
+
+
+
+
+class SnakeGame {
+private:
+    
+   int wt, ht;
+
+    vector<vector<int>> food;
+    int foodIdx;
+
+    // tail -> head
+    deque<pair<int, int>> snake;
+
+    // cell -> occupied
+    unordered_set<int> occupied;
+
+    int score;
+
+
+public:
+
+    SnakeGame(int width, int height, vector<vector<int>>& food) {
+        foodIdx=0;
+        wt= width;
+        ht = height;
+        score=0;
+
+        snake.push_back({0,0});
+        occupied.insert({0,0});
+    }
+
+   //store in the set an unique key of curr row and col.
+    int getKey(int row, int col) {
+       return row * width + col;
+    }
+
+    int move(string direction) {
+
+         //head row, head col
+         auto [hr,hc] = snake.front();
+
+         //tail row,tail col
+         auto [tr,tc] = snake.back(); 
+
+        if (direction == "U") hr--;
+        else if (direction == "D") hr++;
+        else if (direction == "L") hc--;
+        else if (direction == "R") hc++;
+
+       //if it is a valid move
+       if(hr<0 || hc<0 || hr>=wt || hc>=ht )
+         return -1;
+
+     //to put this in set., like viisted.
+      int newKey = getKey(r, c);
+
+      //check if new head has food, if new head has food, the snake size anyways grows so we wont remove tail.
+      //also if we didnt eat , there is an edge case.
+     // -> if i didnt eat, then we can move tail forward and occupy tail again.
+     //if i did eat, then size will gorw and i can eat of tail.
+
+      // Check whether we are eating food
+        bool ate = false;
+
+        if (foodIndex < food.size() &&
+            food[foodIndex][0] == r &&
+            food[foodIndex][1] == c) {
+
+            ate = true;
+            foodIndex++;
+            score++;
+        }
+
+       if(!ate){
+           //if i didnt eat
+          //then remove tail
+
+            snake.pop_back();
+            occupied.erase(getKey(tr, tc));
+
+          occupied.erase()
+       }
+
+
+       //now ate or not, we moved tail based on food was avaibale or not.
+
+       Check collision with body
+        if (occupied.count(newKey))
+            return -1;
+
+
+         // 7. Add new HEAD
+        snake.push_front({r, c});
+        occupied.insert(newKey);
+
+        // 8. Return score
+        return score;
+        
+    }
+};
+
+
+
+
+
+
+
