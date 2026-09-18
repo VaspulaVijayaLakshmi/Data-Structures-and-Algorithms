@@ -1,0 +1,108 @@
+Problem Description
+This problem asks you to design a file-sharing system that manages users and file chunks. The system needs to handle three main operations:
+
+System Overview:
+
+A large file is divided into m chunks, numbered from 1 to m
+Users can join the system with certain chunks they already own
+Users can request chunks from other users
+Users can leave the system
+Key Requirements:
+
+User ID Management:
+
+When a user joins, assign them the smallest available positive integer ID
+IDs start from 1 and increment
+When a user leaves, their ID becomes available for reuse
+Reused IDs should be assigned before creating new higher IDs
+Operations to Implement:
+
+FileSharing(m): Initialize the system with a file containing m chunks
+join(ownedChunks): Register a new user who owns the specified chunks, return their assigned ID
+leave(userID): Remove a user from the system, making their ID available for reuse
+request(userID, chunkID): User requests a specific chunk
+Returns a sorted list of all user IDs who own that chunk
+If the list is non-empty (meaning the chunk was found), the requesting user also receives the chunk
+Example Walkthrough:
+
+User joins with chunks [1,2] → gets ID 1
+User joins with chunks [2,3] → gets ID 2
+User joins with chunk [4] → gets ID 3
+User 1 requests chunk 3 → gets [2] (only user 2 has it), now user 1 has chunks [1,2,3]
+User 2 requests chunk 2 → gets [1,2] (both users have it)
+User 1 leaves → ID 1 becomes available
+User 2 requests chunk 1 → gets [] (no one has it after user 1 left)
+New user joins → gets ID 1 (reused)
+
+
+
+
+class FileSharing {
+public:
+    unordered_map<int, unordered_set<int>> userChunks;
+    unordered_map<int, unordered_set<int>> chunkUsers;
+
+    set<int> availableIds;
+    int nextId = 1;
+
+    FileSharing(int m) {
+        // Initially all IDs from 1 to m are available
+        for (int i = 1; i <= m; i++) {
+            availableIds.insert(i);
+        }
+    }
+
+    int join(vector<int> ownedChunks) {
+        int id;
+
+        // Reuse smallest available ID
+        if (!availableIds.empty()) {
+            id = *availableIds.begin();
+            availableIds.erase(availableIds.begin());
+        } else {
+            id = nextId++;
+        }
+
+        for (int chunk : ownedChunks) {
+            userChunks[id].insert(chunk);
+            chunkUsers[chunk].insert(id);
+        }
+
+        return id;
+    }
+
+    void leave(int userID) {
+        // Remove user from every chunk he owns
+        for (int chunk : userChunks[userID]) {
+            chunkUsers[chunk].erase(userID);
+        }
+
+        // Remove user's mapping
+        userChunks.erase(userID);
+
+        // Make ID reusable
+        availableIds.insert(userID);
+    }
+
+    vector<int> request(int userID, int chunkID) {
+        vector<int> result;
+
+        // Nobody has this chunk
+        if (chunkUsers[chunkID].empty()) {
+            return result;
+        }
+
+        // Find all users who have this chunk
+        for (int id : chunkUsers[chunkID]) {
+            result.push_back(id);
+        }
+
+        // User gets the chunk
+        userChunks[userID].insert(chunkID);
+        chunkUsers[chunkID].insert(userID);
+
+        sort(result.begin(), result.end());
+
+        return result;
+    }
+};
