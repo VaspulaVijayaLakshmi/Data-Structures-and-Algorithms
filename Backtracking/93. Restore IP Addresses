@@ -1,0 +1,60 @@
+class Solution {
+public:
+    vector<string> res;
+
+    void restoreIpAddresses(string& s, int idx, string& curr, int parts) {
+
+        // 4 parts created
+        if (parts == 4) {
+            if (idx == s.size()) {
+                curr.pop_back(); // remove last '.'
+                res.push_back(curr);
+                curr.push_back('.');
+            }
+            return;
+        }
+
+        // Put the mark after 1, 2, or 3 characters
+        for (int i = idx; i < min((int)s.size(), idx + 3); i++) {
+
+            string part = s.substr(idx, i - idx + 1);
+
+            // Leading zero
+            if (part.size() > 1 && part[0] == '0')
+                continue;
+
+            // Must be 0 -> 255
+            int num = stoi(part);
+            if (num > 255)
+                continue;
+
+            curr += part;
+            curr += ".";
+
+            restoreIpAddresses(s, i + 1, curr, parts + 1);
+
+            // Backtrack
+            curr.resize(curr.size() - part.size() - 1);
+        }
+    }
+
+    vector<string> restoreIpAddresses(string s) {
+        string curr;
+        restoreIpAddresses(s, 0, curr, 0);
+        return res;
+    }
+};
+
+
+// put a mark at every point
+
+// s = "25525511135"
+
+// like put at 2 - "2 | 5525511135"
+// like put at 5 - "25 | 525511135"
+//            255 - "255 | 25511135"
+
+
+// size should be atmost - 3 of these substrings
+// ad consition should be b/w 0 to 255.
+
